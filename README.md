@@ -1,10 +1,10 @@
 # proyectoAsir
 **1.Gestión de usuarios**
-	- 1.1 Creación de usuarios
-	- 1.2 Eliminación de usuarios
-	- 1.3 Permisos a usuarios
-	- 1.4 Cambiar contraseña de usuario
-    - 1.5 Ver usuarios conectados
+- 1.1 Creación de usuarios
+- 1.2 Eliminación de usuarios
+- 1.3 Permisos a usuarios
+- 1.4 Cambiar contraseña de usuario
+- 1.5 Ver usuarios conectados
 
 2.Gestión de paquetes
 	2.1 Actualizar lista de paquetes
