@@ -6,12 +6,12 @@
 - 1.4 Cambiar contraseña de usuario
 - 1.5 Ver usuarios conectados
 
-2.Gestión de paquetes
-	2.1 Actualizar lista de paquetes
-	2.2 Actualizar el sistema
-	2.3 Eliminar paquetes innecesarios
-	2.4 Buscar un paquete
-	2.5 Instalar un paquete
+**2.Gestión de paquetes**
+- 2.1 Actualizar lista de paquetes
+- 2.2 Actualizar el sistema
+- 2.3 Eliminar paquetes innecesarios
+- 2.4 Buscar un paquete
+- 2.5 Instalar un paquete
 
 3.Gestión del sistema
 	3.1 Ver uso de disco
