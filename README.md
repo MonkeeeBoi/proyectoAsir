@@ -21,3 +21,13 @@
 
 4.Gestión de RED
 	4.1 Mostrar configuración de red
+    4.2 Probar conectividad
+    4.3 Reiniciar red
+    4.4 Ver IP pública
+    4.5 Cambiar IP
+    4.6 Cambiar DNS
+5.Servicios y procesos
+    5.1 Ver servicios activos
+    5.2 Iniciar un servicio
+    5.3 Detener un servicio
+    5.4 Habilitar al inicio
