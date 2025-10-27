@@ -6,19 +6,20 @@
 - 1.4 Cambiar contraseña de usuario
 - 1.5 Ver usuarios conectados
 
-2.Gestión de paquetes
-	2.1 Actualizar lista de paquetes
-	2.2 Actualizar el sistema
-	2.3 Eliminar paquetes innecesarios
-	2.4 Buscar un paquete
-	2.5 Instalar un paquete
+**2.Gestión de paquetes**
+- 2.1 Actualizar lista de paquetes
+- 2.2 Actualizar el sistema
+- 2.3 Eliminar paquetes innecesarios
+- 2.4 Buscar un paquete
+- 2.5 Instalar un paquete
 
-3.Gestión del sistema
-	3.1 Ver uso de disco
-	3.2 Ver uso de memoria
-	3.3 Monitorear procesos
-	3.4 Ver información del sistema
+**3.Gestión del sistema**
+- 3.1 Ver uso de disco
+- 3.2 Ver uso de memoria
+- 3.3 Monitorear procesos
+- 3.4 Ver información del sistema
 
+<<<<<<< HEAD
 4.Gestión de RED
 	4.1 Mostrar configuración de red
     4.2 Probar conectividad
@@ -42,3 +43,18 @@
     8.1 Actualizar reglas de firewall (UFW)
     8.2 Escanear puertos abiertos
     8.3 Revisar usuarios con permisos sudo
+=======
+**4.Gestión de RED**
+- 4.1 Mostrar configuración de red
+- 4.2 Probar conectividad
+- 4.3 Reiniciar red
+- 4.4 Ver IP pública
+- 4.5 Cambiar IP
+- 4.6 Cambiar DNS
+
+**5.Servicios y procesos**
+- 5.1 Ver servicios activos
+- 5.2 Iniciar un servicio
+- 5.3 Detener un servicio
+- 5.4 Habilitar al inicio
+>>>>>>> aff33574ad3c4d5b84d32e0e06fe3cfd6eba0e03
