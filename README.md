@@ -35,3 +35,28 @@
 - 5.2 Iniciar un servicio
 - 5.3 Detener un servicio
 - 5.4 Habilitar al inicio
+
+6.Mantenimiento y limpieza
+    6.1 Limpiar caché de apt
+    6.2 Eliminar dependencias obsoletas
+    6.3 Revisar logs del sistema
+
+7.Copias de seguridad
+    7.1 Crear backup de directorio
+    7.2 Restaurar backup
+
+8.Seguridad
+    8.1 Actualizar reglas de firewall (UFW)
+    8.2 Escanear puertos abiertos
+    8.3 Revisar usuarios con permisos sudo
+
+9.Discos, particiones y RAID
+    9.1 Ver discos y particiones
+    9.2 Crear partición (modo interactivo)
+    9.3 Crear sistema de archivos
+    9.4 Montar y desmontar particiones
+    9.5 Añadir al fstab (montaje automático)
+    9.6 Crear RAID (mdadm)
+    9.7 Guardar configuración RAID
+    9.8 Comprobar estado RAID
+    9.9 Crear volumen LVM
