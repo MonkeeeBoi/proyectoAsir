@@ -13,21 +13,22 @@
 - 2.4 Buscar un paquete
 - 2.5 Instalar un paquete
 
-3.Gestión del sistema
-	3.1 Ver uso de disco
-	3.2 Ver uso de memoria
-	3.3 Monitorear procesos
-	3.4 Ver información del sistema
+**3.Gestión del sistema**
+- 3.1 Ver uso de disco
+- 3.2 Ver uso de memoria
+- 3.3 Monitorear procesos
+- 3.4 Ver información del sistema
 
-4.Gestión de RED
-	4.1 Mostrar configuración de red
-    4.2 Probar conectividad
-    4.3 Reiniciar red
-    4.4 Ver IP pública
-    4.5 Cambiar IP
-    4.6 Cambiar DNS
-5.Servicios y procesos
-    5.1 Ver servicios activos
-    5.2 Iniciar un servicio
-    5.3 Detener un servicio
-    5.4 Habilitar al inicio
+**4.Gestión de RED**
+- 4.1 Mostrar configuración de red
+- 4.2 Probar conectividad
+- 4.3 Reiniciar red
+- 4.4 Ver IP pública
+- 4.5 Cambiar IP
+- 4.6 Cambiar DNS
+
+**5.Servicios y procesos**
+- 5.1 Ver servicios activos
+- 5.2 Iniciar un servicio
+- 5.3 Detener un servicio
+- 5.4 Habilitar al inicio
