@@ -1,6 +1,7 @@
+# shellcheck disable=SC1091
+source funciones.bash
 
 function menuGestUser() {
-    opcSelect=0
    while true; do
     echo "+-------------------------------------+"
     echo "|                                     |"
@@ -10,11 +11,16 @@ function menuGestUser() {
     echo "|    4. Cambiar contraseña de usuario |"
     echo "|    5. Ver usuarios conectados       |"
     echo "|                                     |"
-    echo "|    0. Menu                          |"
+    echo "|    0. Volver                        |"
     echo "+-------------------------------------+"
 
+    read -rp "Introduce una opcion: " opcSelect
+
     case $opcSelect in
-        1) ;;
+        1) 
+            clear
+            crearUsuario
+        ;;
         2) ;;
         3) ;;
         4) ;;
@@ -23,4 +29,14 @@ function menuGestUser() {
         *) echo "Introduce una opcion valida..." ;;
     esac
 done
+}
+
+function crearUsuario() {
+
+    while true; do
+        read -rp "Introduce el nombre del nuevo usuario: " nombre_usuario
+        if comprobarVariable "$nombre_usuario"; then
+            break;
+        fi
+    done
 }

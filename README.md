@@ -5,6 +5,8 @@
 - 1.3 Permisos a usuarios
 - 1.4 Cambiar contraseña de usuario
 - 1.5 Ver usuarios conectados
+- 1.6 Ver tamaños del home
+- 1.7 Ver historial de usuarios
 
 **2.Gestión de paquetes**
 - 2.1 Actualizar lista de paquetes
@@ -18,6 +20,7 @@
 - 3.2 Ver uso de memoria
 - 3.3 Monitorear procesos
 - 3.4 Ver información del sistema
+- 3.5 Montar discos
 
 **4.Gestión de RED**
 - 4.1 Mostrar configuración de red

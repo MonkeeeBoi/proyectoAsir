@@ -6,8 +6,6 @@ source gestUsuarios.bash
 
 # Menu
 
-opcSelect=0
-
 while true; do
     echo "+------------------------------------+"
     echo "|                                    |"
@@ -20,6 +18,8 @@ while true; do
     echo "|    0. Salir                        |"
     echo "+------------------------------------+"
 
+    read -rp "Introduce una opcion: " opcSelect
+    
     case $opcSelect in
         1) menuGestUser ;;
         2) ;;
