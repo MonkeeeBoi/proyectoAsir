@@ -1,5 +1,5 @@
 # proyectoAsir
-**1.Gestión de usuarios**
+1.Gestión de usuarios
 - 1.1 Creación de usuarios
 - 1.2 Eliminación de usuarios
 - 1.3 Permisos a usuarios
@@ -31,3 +31,14 @@
     5.2 Iniciar un servicio
     5.3 Detener un servicio
     5.4 Habilitar al inicio
+6.Mantenimiento y limpieza
+    6.1 Limpiar caché de apt
+    6.2 Eliminar dependencias obsoletas
+    6.3 Revisar logs del sistema
+7.Copias de seguridad
+    7.1 Crear backup de directorio
+    7.2 Restaurar backup
+8.Seguridad
+    8.1 Actualizar reglas de firewall (UFW)
+    8.2 Escanear puertos abiertos
+    8.3 Revisar usuarios con permisos sudo
