@@ -10,6 +10,8 @@ function menuGestUser() {
     echo "|    3. Permisos a usuario            |"
     echo "|    4. Cambiar contraseña de usuario |"
     echo "|    5. Ver usuarios conectados       |"
+    echo "|    6. Ver tamaños del home          |"
+    echo "|    7. Ver historial de usuarios      |"
     echo "|                                     |"
     echo "|    0. Volver                        |"
     echo "+-------------------------------------+"
@@ -25,6 +27,8 @@ function menuGestUser() {
         3) ;;
         4) ;;
         5) ;;
+        6) ;;
+        7) ;;
         0) break ;;
         *) echo "Introduce una opcion valida..." ;;
     esac
