@@ -9,7 +9,6 @@ function comprobarVariable() {
 
 function comprobarUsuario() {
     if id "$1" &> /dev/null; then
-        echo "❌ Error: El usuario existe en el sistema..."
         return 1
     else
         return 0
@@ -28,13 +27,17 @@ function comprobarYesOrNo() {
 }
 
 function YesOrNo() {
-    if ! [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
+    if  [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
         return 0
-    elif ! [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
+    elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
         return 1
     fi
 }
 
 function securePass() {
     (echo "$1" | openssl passwd -6 -stdin)
+}
+
+function estaInstalado() {
+    dpkg-query -W -f='${Status}' "$1" 2>/dev/null | grep -q "ok installed"
 }

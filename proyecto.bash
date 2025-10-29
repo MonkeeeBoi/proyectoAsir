@@ -7,6 +7,7 @@ source gestUsuarios.bash
 # Menu
 
 while true; do
+    clear
     echo "+------------------------------------+"
     echo "|                                    |"
     echo "|    1. Gestión de Usuarios          |"
@@ -25,7 +26,10 @@ while true; do
     read -rp "Introduce una opcion: " opcSelect
     
     case $opcSelect in
-        1) menuGestUser ;;
+        1)  
+            clear
+            menuGestUser 
+        ;;
         2) ;;
         3) ;;
         4) ;;
