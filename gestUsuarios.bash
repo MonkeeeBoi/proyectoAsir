@@ -11,7 +11,7 @@ function menuGestUser() {
     echo "|    4. Cambiar contraseña de usuario |"
     echo "|    5. Ver usuarios conectados       |"
     echo "|    6. Ver tamaños del home          |"
-    echo "|    7. Ver historial de usuarios      |"
+    echo "|    7. Ver historial de usuarios     |"
     echo "|                                     |"
     echo "|    0. Volver                        |"
     echo "+-------------------------------------+"
@@ -39,10 +39,11 @@ function crearUsuario() {
 
     while true; do
         read -rp "Introduce el nombre del nuevo usuario: " nombreUsuario
-        if comprobarVariable "$nombreUsuario"; then
+
+        if ! comprobarVariable "$nombreUsuario"; then
             continue
         fi
-        if comprobarUsuario "$nombreUsuario"; then
+        if ! comprobarUsuario "$nombreUsuario"; then
             continue
         fi
         break
@@ -51,7 +52,7 @@ function crearUsuario() {
     while true; do
         read -rsp "Introduce la contraseña para el usuario: " usuarioPass
 
-        if comprobarVariable "$usuarioPass"; then
+        if ! comprobarVariable "$usuarioPass"; then
             continue
         fi
         break
@@ -60,7 +61,7 @@ function crearUsuario() {
     while true; do
         read -rp "Quieres que se cree el home del usuario [y/n]: " usuarioHome
 
-        if comprobarYesOrNo "$usuarioHome"; then
+        if ! comprobarYesOrNo "$usuarioHome"; then
             continue
         fi
         break

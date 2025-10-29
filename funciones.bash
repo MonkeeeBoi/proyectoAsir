@@ -8,7 +8,7 @@ function comprobarVariable() {
 }
 
 function comprobarUsuario() {
-    if id "$1"; then
+    if id "$1" &> /dev/null; then
         echo "❌ Error: El usuario existe en el sistema..."
         return 1
     else
