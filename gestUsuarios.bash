@@ -34,9 +34,37 @@ done
 function crearUsuario() {
 
     while true; do
-        read -rp "Introduce el nombre del nuevo usuario: " nombre_usuario
-        if comprobarVariable "$nombre_usuario"; then
-            break;
+        read -rp "Introduce el nombre del nuevo usuario: " nombreUsuario
+        if comprobarVariable "$nombreUsuario"; then
+            continue
         fi
+        if comprobarUsuario "$nombreUsuario"; then
+            continue
+        fi
+        break
     done
+
+    while true; do
+        read -rsp "Introduce la contraseña para el usuario: " usuarioPass
+
+        if comprobarVariable "$usuarioPass"; then
+            continue
+        fi
+        break
+    done
+
+    while true; do
+        read -rp "Quieres que se cree el home del usuario [y/n]: " usuarioHome
+
+        if comprobarYesOrNo "$usuarioHome"; then
+            continue
+        fi
+        break
+    done
+
+    if YesOrNo "$usuarioHome"; then
+        useradd -m -p "$(securePass "$usuarioPass")" "$nombreUsuario"
+    else
+        useradd -p "$(securePass "$usuarioPass")" "$nombreUsuario"
+    fi
 }
