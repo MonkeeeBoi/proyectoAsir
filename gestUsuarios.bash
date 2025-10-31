@@ -3,13 +3,18 @@ source funciones.bash
 
 function menuGestUser() {
     echo "comprobando paquetes necesario..."
-    if ! apt update &> /dev/null; then
+    if ! sudo apt update &> /dev/null; then
         echo "❌ Error: fallo al actualizar los paquetes..."
         exit 1
     fi
     if ! estaInstalado "openssl"; then
         echo "instando paquetes necesarios..."
-        apt install openssl
+        sudo apt install openssl
+        if ! estaInstalado ; then
+          echo "❌ Error: fallo al instalar los paquetes..."
+          exit 1
+        fi
+
     fi
     clear
     while true; do
@@ -87,9 +92,9 @@ function crearUsuario() {
 
     if YesOrNo "$usuarioHome"; then
         echo "creando home del usuario..."
-        useradd -m -p "$(securePass "$usuarioPass")" "$nombreUsuario" &> /dev/null
+        sudo useradd -m -p "$(securePass "$usuarioPass")" "$nombreUsuario" &> /dev/null
     else
-        useradd -p "$(securePass "$usuarioPass")" "$nombreUsuario" &> /dev/null
+        sudo useradd -p "$(securePass "$usuarioPass")" "$nombreUsuario" &> /dev/null
     fi
     
     echo "✅ Proceso de creación para '$nombreUsuario' completado."
@@ -123,9 +128,9 @@ function eliminarUsuario() {
 
     if YesOrNo "$usuarioHome"; then
         echo "eliminando home del usuario..."
-        userdel -r "$nombreUsuario" &> /dev/null
+        sudo userdel -r "$nombreUsuario" &> /dev/null
     else
-        userdel "$nombreUsuario" &> /dev/null
+        sudo userdel "$nombreUsuario" &> /dev/null
     fi
     echo "✅ Proceso de eliminación para '$nombreUsuario' completado."
 }
