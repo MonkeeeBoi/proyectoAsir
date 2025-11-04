@@ -20,24 +20,24 @@ function menuGestPacks() {
         1)
             echo "Actualizando lista de paquetes..."
             sudo apt update
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             clear
             ;;
         2)
             echo "Actualizando el sistema..."
             sudo apt upgrade -y
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             clear
             ;;
         3)
             echo "Eliminando paquetes innecesarios..."
             sudo apt autoremove -y
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             clear
             ;;
         4)
             read -rp "Introduce el nombre del paquete a buscar: " paquete
-            resultado=$(apt search "$paquete" | grep -E "^$paquete")
+            resultado=$(apt search "$paquete" )
             if [[ $resultado != "" ]]
             then
                 echo "Paquete encontrado:"
@@ -45,13 +45,13 @@ function menuGestPacks() {
             else
                 echo "No se encontró el paquete '$paquete'."
             fi
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             clear
             ;;
         5)
             read -rp "Introduce el nombre del paquete a instalar: " paquete
             sudo apt install "$paquete" -y
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             clear
             ;;
         0)
@@ -59,7 +59,7 @@ function menuGestPacks() {
             ;;
         *)
             echo "Introduce una opción válida..."
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             clear
             ;;
     esac
