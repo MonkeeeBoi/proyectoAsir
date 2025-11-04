@@ -4,6 +4,7 @@
 # shellcheck disable=SC1091
 source gestUsuarios.bash
 source gestSistem.bash
+source gestPacks.bash
 # Menu
 
 while true; do
@@ -30,7 +31,10 @@ while true; do
             clear
             menuGestUser 
         ;;
-        2) ;;
+        2) 
+            clear
+            menuGestPacks
+        ;;
         3) 
             clear
             menuGestSistem
