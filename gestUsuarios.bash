@@ -193,10 +193,10 @@ permisosUsuario() {
                 echo "Iniciando búsqueda y cambio de permisos..."
 
                 echo "Cambiando permisos de archivos..."
-                sudo find / -user "$nombre_usuario" -type f -exec chmod "$permisos_octal" {} \; 2>/dev/null
+                sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2>/dev/null
 
                 echo "Cambiando permisos de directorios..."
-                sudo find / -user "$nombre_usuario" -type d -exec chmod "$permisos_octal" {} \; 2>/dev/null
+                sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
                 
                 if [ $? -eq 0 ]; then
                     echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
