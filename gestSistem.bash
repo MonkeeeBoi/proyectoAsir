@@ -16,15 +16,36 @@ function menuGestSistem() {
     read -rp "Introduce una opcion: " opcSelect
 
     case $opcSelect in
-        1) ;;
-        2) ;;
-        3) ;;
-        4) ;;
-        5) ;;
-        6) ;;
-        7) ;;
-        0) break ;;
-        *) echo "Introduce una opcion valida..." ;;
+        1)
+            echo "=== USO DE DISCO ==="
+            df -h | grep -E "^/dev|^Filesystem"
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        2)
+            echo "=== USO DE MEMORIA ==="
+            free -h
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        3)
+            echo "=== PROCESOS ACTIVOS ==="
+            ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head -n 10
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        4)
+            echo "=== INFORMACIÓN DEL SISTEMA ==="
+            echo "Hostname: $(hostname)"
+            echo "Kernel: $(uname -r)"
+            echo "Arquitectura: $(uname -m)"
+            echo "Sistema operativo: $(uname -o)"
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        0)
+            break
+            ;;
+        *)
+            echo "Introduce una opción válida..."
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
     esac
 done
 }
