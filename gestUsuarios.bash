@@ -3,7 +3,7 @@ source funciones.bash
 
 function menuGestUser() {
     echo "comprobando paquetes necesario..."
-    if ! sudo apt update &> /dev/null; then
+    if ! sudo apt update; then
         echo "❌ Error: fallo al actualizar los paquetes..."
         exit 1
     fi
