@@ -28,6 +28,8 @@ function disks-partitions-raid() {
         5) ;;
         6) ;;
         7) ;;
+        8) ;;
+        9) ;;
         0) break ;;
         *) echo "Introduce una opcion valida..." ;;
     esac
