@@ -2,7 +2,7 @@
 source funciones.bash
 
 function menuGestUser() {
-    echo "comprobando paquetes necesarios..."
+    echo "comprobando/actualizando paquetes necesarios..."
     touch /home/"$(whoami)"/.gestorLinux
     if ! [[ "$(cat /home/"$(whoami)"/.gestorLinux | cut -d: -f1)" == "OK" ]]; then
         if ! sudo apt update -q; then
