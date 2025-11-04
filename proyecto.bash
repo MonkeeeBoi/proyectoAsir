@@ -40,7 +40,7 @@ while true; do
         0) exit 0 ;;
         *) 
         echo "Introduce una opcion valida..." 
-        read -n1 -s -r -p "Presione una tecla para continuar..."
+        read -n1 -srp "Presione una tecla para continuar..."
         ;;
     esac
 done
