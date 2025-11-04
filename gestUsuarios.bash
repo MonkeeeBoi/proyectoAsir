@@ -2,19 +2,24 @@
 source funciones.bash
 
 function menuGestUser() {
-    echo "comprobando paquetes necesario..."
-    if ! sudo apt update; then
-        echo "❌ Error: fallo al actualizar los paquetes..."
-        exit 1
+
+    echo "comprobando paquetes necesarios..."
+    touch /home/"$(whoami)"/gestorLinux
+    if ! [[ "$(cat /home/"$(whoami)"/gestorLinux | cut -d: -f1)" == "OK" ]]; then
+        if ! sudo apt update &> /dev/null; then
+            echo "❌ Error: fallo al actualizar los paquetes..."
+        else
+            echo "OK:" > /home/"$(whoami)"/gestorLinux
+        fi
     fi
+    
     if ! estaInstalado "openssl"; then
         echo "instando paquetes necesarios..."
         sudo apt install openssl
-        if ! estaInstalado ; then
+        if ! estaInstalado "openssl"; then
           echo "❌ Error: fallo al instalar los paquetes..."
           exit 1
         fi
-
     fi
     clear
     while true; do
@@ -42,7 +47,10 @@ function menuGestUser() {
                 clear
                 eliminarUsuario
             ;;
-            3) ;;
+            3)  
+                clear
+                permisosUsuario
+            ;;
             4) ;;
             5) ;;
             6) ;;
@@ -58,7 +66,7 @@ function crearUsuario() {
     while true; do
         read -rp "Introduce el nombre del nuevo usuario: " nombreUsuario
 
-        if ! comprobarVariable "$nombreUsuario"; then
+        if comprobarCadena "$nombreUsuario"; then
             continue
         fi
         if ! comprobarUsuario "$nombreUsuario"; then
@@ -71,7 +79,7 @@ function crearUsuario() {
     while true; do
         read -rsp "Introduce la contraseña para el usuario: " usuarioPass
 
-        if ! comprobarVariable "$usuarioPass"; then
+        if comprobarCadena "$usuarioPass"; then
             continue
         fi
         break
@@ -81,10 +89,10 @@ function crearUsuario() {
         echo ""
         read -rp "Quieres que se cree el home del usuario [y/n]: " usuarioHome
 
-        if ! comprobarVariable "$usuarioHome"; then
+        if comprobarCadena "$usuarioHome"; then
             continue
         fi
-        if ! comprobarYesOrNo "$usuarioHome"; then
+        if comprobarYesOrNo "$usuarioHome"; then
             continue
         fi
         break
@@ -104,7 +112,7 @@ function eliminarUsuario() {
     while true; do
         read -rp "Introduce el nombre del usuario a eliminar: " nombreUsuario
 
-        if ! comprobarVariable "$nombreUsuario"; then
+        if comprobarCadena "$nombreUsuario"; then
             continue
         fi
         if comprobarUsuario "$nombreUsuario"; then
@@ -117,7 +125,7 @@ function eliminarUsuario() {
     while true; do
         read -rp "Quieres que se elimine el home del usuario [y/n]: " usuarioHome
 
-        if ! comprobarVariable "$usuarioHome"; then
+        if comprobarCadena "$usuarioHome"; then
             continue
         fi
         if ! comprobarYesOrNo "$usuarioHome"; then
@@ -133,4 +141,71 @@ function eliminarUsuario() {
         sudo userdel "$nombreUsuario" &> /dev/null
     fi
     echo "✅ Proceso de eliminación para '$nombreUsuario' completado."
+}
+
+permisosUsuario() {
+    while true; do
+    read -rp "Introduce el NOMBRE DEL USUARIO cuyos archivos quieres modificar: " nombreUsuario
+
+        if comprobarCadena "$nombreUsuario"; then
+            continue
+        fi
+        if comprobarUsuario "$nombreUsuario"; then
+            clear
+            echo "❌ Error: El usuario '$nombreUsuario' no existe en el sistema."
+            continue
+        fi
+        break
+    done
+    clear
+    while true; do
+        echo "--- Modificación de Permisos ---"
+        read -rp "Introduce los NUEVOS PERMISOS para los ARCHIVOS del usuario en octal (644, 755): " permisosArchivos
+        if comprobarCadena "$permisosArchivos" || soloNumerosPermisos "$permisosArchivos"; then
+            clear
+            echo "❌ Error: entrada no aceptada..."
+            echo "Introduce de nuevo los permisos para los Archivos del usuario '$permisosArchivos'."
+            continue
+        fi
+        break
+    done
+    while true; do
+        read -rp "Introduce los NUEVOS PERMISOS para los DIRECTORIOS del usuario en octal (644, 755): " permisosDirectorios
+        if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
+            clear
+            echo "❌ Error: entrada no aceptada..."
+            echo "Introduce de nuevo los permisos para los directorios del usuario '$permisosDirectorios'."
+            continue
+        fi
+        break
+    done
+    while true; do
+        echo ""
+        echo "⚠️ ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos"
+        echo "y directorios propiedad de '$nombreUsuario' en el sistema."
+        read -rp "¿Estás seguro de continuar y aplicar permisos $permisosArchivos para los archivos y $permisosDirectorios para los directorios? [Y/n]:" confirmacion
+
+        if comprobarYesOrNo "$confirmacion"; then
+            continue
+        else
+            if ! YesOrNo "$confirmacion"; then
+                break
+            else
+                echo "Iniciando búsqueda y cambio de permisos..."
+
+                echo "Cambiando permisos de archivos..."
+                sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2>/dev/null
+
+                echo "Cambiando permisos de directorios..."
+                sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
+                
+                if [ $? -eq 0 ]; then
+                    echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
+                else
+                    echo "❌ Error al intentar ejecutar el comando de cambio de permisos."
+                fi
+            fi
+        fi
+        break
+    done
 }

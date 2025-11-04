@@ -1,9 +1,10 @@
-function comprobarVariable() {
+function comprobarCadena() {
     if [[ -z "$1" ]]; then
+        clear
         echo "❌ Error: la cadena introducida no puede ser vacia..."
-        return 1
-    else
         return 0
+    else
+        return 1
     fi
 }
 
@@ -16,13 +17,13 @@ function comprobarUsuario() {
 }
 
 function comprobarYesOrNo() {
-    if ! [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
-        return 0
-    elif ! [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
-        return 0
+    if [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
+        return 1
+    elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
+        return 1
     else
         echo "❌ Error: Opcion no valida..."
-        return 1
+        return 0
     fi
 }
 
@@ -40,4 +41,20 @@ function securePass() {
 
 function estaInstalado() {
     dpkg-query -W -f='${Status}' "$1" 2>/dev/null | grep -q "ok installed"
+}
+
+function soloNumerosPermisos() {
+    if [[ "$1" =~ ^[0-9]{3}$ ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+function soloNumeros(){
+    if [[ "$1" =~ ^[0-9]+$ ]]; then
+        return 1
+    else
+        return 0
+    fi
 }
