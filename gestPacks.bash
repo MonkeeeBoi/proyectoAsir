@@ -17,15 +17,45 @@ function menuGestPacks() {
     read -rp "Introduce una opcion: " opcSelect
 
     case $opcSelect in
-        1) ;;
-        2) ;;
-        3) ;;
-        4) ;;
-        5) ;;
-        6) ;;
-        7) ;;
-        0) break ;;
-        *) echo "Introduce una opcion valida..." ;;
+        1)
+            echo "Actualizando lista de paquetes..."
+            sudo apt update
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        2)
+            echo "Actualizando el sistema..."
+            sudo apt upgrade -y
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        3)
+            echo "Eliminando paquetes innecesarios..."
+            sudo apt autoremove -y
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        4)
+            read -rp "Introduce el nombre del paquete a buscar: " paquete
+            resultado=$(apt search "$paquete" | grep -E "^$paquete")
+            if [[ $resultado != "" ]]
+            then
+                echo "Paquete encontrado:"
+                echo "$resultado"
+            else
+                echo "No se encontró el paquete '$paquete'."
+            fi
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        5)
+            read -rp "Introduce el nombre del paquete a instalar: " paquete
+            sudo apt install "$paquete" -y
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
+        0)
+            break
+            ;;
+        *)
+            echo "Introduce una opción válida..."
+            read -n1 -s -r -p "Presione una tecla para continuar..."
+            ;;
     esac
 done
 }
