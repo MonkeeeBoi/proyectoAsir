@@ -25,7 +25,7 @@
 - 4.1 Mostrar configuración de red
 - 4.2 Probar conectividad
 - 4.3 Reiniciar red
-- 4.4 Ver IP pública
+- 4.4 Ver IP
 - 4.5 Cambiar IP
 - 4.6 Cambiar DNS
 
