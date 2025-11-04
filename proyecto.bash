@@ -31,7 +31,10 @@ while true; do
             menuGestUser 
         ;;
         2) ;;
-        3) ;;
+        3) 
+            clear
+            menuGestSistem
+        ;;
         4) ;;
         5) ;;
         0) exit 0 ;;
