@@ -32,6 +32,7 @@ function menuGestUser() {
         echo "|    5. Ver usuarios conectados       |"
         echo "|    6. Ver tamaños del home          |"
         echo "|    7. Ver historial de usuarios     |"
+        echo "|    8. Ver permisos de usuario       |"
         echo "|                                     |"
         echo "|    0. Volver                        |"
         echo "+-------------------------------------+"
@@ -53,7 +54,7 @@ function menuGestUser() {
             ;;
 
             #esto lo he hecho yo
-            
+
             4) 
                 clear 
                 cambiarPassUsuario 
@@ -69,6 +70,10 @@ function menuGestUser() {
             7)
                 clear 
                 verHistorialUsuarios 
+            ;;
+            8)
+                clear 
+                verPermisosUsuario 
             ;;
             0) break ;;
             *) echo "Introduce una opcion valida..." ;;
@@ -280,4 +285,23 @@ function verHistorialUsuarios() {
     echo "Historial de inicio de sesión de usuarios:"
     last | grep -E "^[a-zA-Z0-9_]+"
     echo "✅ Fin de historial."
+}
+function verPermisosUsuario() {
+    while true; do
+        read -rp "Introduce el nombre del usuario para ver sus permisos: " nombreUsuario
+
+        if comprobarCadena "$nombreUsuario"; then
+            continue
+        fi
+        if comprobarUsuario "$nombreUsuario"; then
+            echo "❌ Error: El usuario '$nombreUsuario' no existe en el sistema..."
+            continue
+        fi
+        break
+    done
+
+    echo "Buscando archivos y directorios propiedad de '$nombreUsuario'..."
+    sudo find / -user "$nombreUsuario" -exec ls -ld {} \; 2>/dev/null | head -n 100
+
+    echo "✅ Mostrando hasta 100 resultados con permisos. Puedes ajustar el límite si lo deseas."
 }
