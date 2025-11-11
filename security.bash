@@ -4,6 +4,7 @@ source funciones.bash
 
 function menuSecurity() {
    while true; do
+    echo #intro para que se vea mejor al ejecutarse
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|   1. Actualizar reglas de firewall  |"
