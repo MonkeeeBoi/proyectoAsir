@@ -59,7 +59,7 @@ function menuGestPacks() {
         6)
             read -rp "Introduce el nombre del paquete a desinstalar: " paquete
             sudo apt remove "$paquete" -y
-            read -n1 -s -r -p "Presione una tecla para continuar..."
+            read -n1 -srp "Presione una tecla para continuar..."
             ;;
         0)
             break

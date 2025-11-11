@@ -6,6 +6,12 @@
 source gestUsuarios.bash
 source gestSistem.bash
 source gestPacks.bash
+source gestNetwork.bash
+source servicesANDprocesses.bash
+source maintenanceANDcleaning.bash
+source backups.bash
+source security.bash
+source disks-partitions-raid.bash
 # Menu
 
 while true; do
@@ -40,8 +46,30 @@ while true; do
             clear
             menuGestSistem
         ;;
-        4) ;;
-        5) ;;
+        4) 
+            clear
+            menuGestNetwork 
+        ;;
+        5) 
+            clear
+            menuServicesANDprocesses
+        ;;
+        6) 
+            clear
+            menuMaintenanceANDcleaning
+        ;;
+        7) 
+            clear
+            menuBackups
+        ;;
+        8) 
+            clear
+            menuSecurity
+        ;;
+        9) 
+            clear
+            disks-partitions-raid
+        ;; 
         0) exit 0 ;;
         *) 
         echo "Introduce una opcion valida..." 

@@ -16,15 +16,30 @@ function menuMaintenanceANDcleaning() {
     read -rp "Introduce una opcion: " opcSelect
 
     case $opcSelect in
-        1) ;;
-        2) ;;
-        3) ;;
-        4) ;;
-        5) ;;
-        6) ;;
-        7) ;;
-        0) break ;;
-        *) echo "Introduce una opcion valida..." ;;
+        1)
+            echo "Limpiando caché de apt..."
+            sudo apt clean
+            echo "Caché de apt limpiada correctamente."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
+        2)
+            echo "Eliminando dependencias obsoletas..."
+            sudo apt autoremove -y
+            echo "Dependencias obsoletas eliminadas."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
+        3)
+            echo "Mostrando logs del sistema (últimos 100 registros)..."
+            journalctl -xe | tail -n 100 | less
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
+        0)
+            break
+            ;;
+        *)
+            echo "Introduce una opcion valida..."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
     esac
 done
 }
