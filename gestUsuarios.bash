@@ -51,10 +51,25 @@ function menuGestUser() {
                 clear
                 permisosUsuario
             ;;
-            4) ;;
-            5) ;;
-            6) ;;
-            7) ;;
+
+            #esto lo he hecho yo
+            
+            4) 
+                clear 
+                cambiarPassUsuario 
+            ;;
+            5)
+                clear 
+                verUsuariosConectados 
+            ;;
+            6)
+                clear 
+                verTamaniosHome  
+            ;;
+            7)
+                clear 
+                verHistorialUsuarios 
+            ;;
             0) break ;;
             *) echo "Introduce una opcion valida..." ;;
         esac
@@ -208,4 +223,61 @@ permisosUsuario() {
         fi
         break
     done
+}
+
+#esto lo he hecho yo
+
+function cambiarPassUsuario() {
+    while true; do
+        read -rp "Introduce el nombre del usuario para cambiar la contraseña: " nombreUsuario
+
+        if comprobarCadena "$nombreUsuario"; then
+            continue
+        fi
+        if comprobarUsuario "$nombreUsuario"; then
+            echo "❌ Error: El usuario no existe en el sistema..."
+            continue
+        fi
+        break
+    done
+
+    while true; do
+        read -rsp "Introduce la nueva contraseña: " nuevaPass
+        echo ""
+        if comprobarCadena "$nuevaPass"; then
+            continue
+        fi
+        break
+    done
+
+    echo "$nombreUsuario:$(securePass "$nuevaPass")" | sudo chpasswd -e
+    echo "✅ Contraseña actualizada para el usuario '$nombreUsuario'."
+}
+
+function verUsuariosConectados() {
+    echo "Usuarios actualmente conectados:"
+    who
+    echo "✅ Fin de listado."
+}
+
+function verTamaniosHome() {
+    echo "Tamaños de los directorios home de usuarios reales:"
+    lista_usuarios=$(cat /etc/passwd | grep -E "^[^:]*:[^:]*:[0-9]{4}:")
+    IFS=$'\n'
+    for linea in $lista_usuarios
+    do
+        usuario=$(echo "$linea" | cut -d: -f1)
+        homeUsuario=$(echo "$linea" | cut -d: -f6)
+        if [[ -d "$homeUsuario" ]]; then
+            tamanio=$(sudo du -sh "$homeUsuario" 2>/dev/null | cut -f1)
+            echo "Usuario: $usuario. Home: $homeUsuario. Tamaño: $tamanio"
+        fi
+    done
+    echo "✅ Fin de listado."
+}
+
+function verHistorialUsuarios() {
+    echo "Historial de inicio de sesión de usuarios:"
+    last | grep -E "^[a-zA-Z0-9_]+"
+    echo "✅ Fin de historial."
 }
