@@ -1,3 +1,4 @@
+#!/bin/bash
 function comprobarCadena() {
     if [[ -z "$1" ]]; then
         clear

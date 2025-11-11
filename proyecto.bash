@@ -1,3 +1,4 @@
+#!/bin/bash
 # Proyecto
 
 #librerias
