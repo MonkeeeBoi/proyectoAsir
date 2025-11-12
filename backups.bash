@@ -1,9 +1,13 @@
 #!/bin/bash
+
+# FUNCIONANDO
+
 # shellcheck disable=SC1091
 source funciones.bash
 
 function menuBackups() {
    while true; do
+    echo ""
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|   1. Crear backup de directorio     |"
