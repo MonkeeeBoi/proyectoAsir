@@ -1,3 +1,4 @@
+#!/bin/bash
 # shellcheck disable=SC1091
 source funciones.bash
 
@@ -10,6 +11,7 @@ function menuGestPacks() {
     echo "|   3. Eliminar paquetes innecesarios |"
     echo "|   4. Buscar un paquete              |"
     echo "|   5. Instalar un paquete            |"
+    echo "|   6. Desinstalar un paquete         |"
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
@@ -53,6 +55,11 @@ function menuGestPacks() {
             sudo apt install "$paquete" -y
             read -n1 -srp "Presione una tecla para continuar..."
             clear
+            ;;
+        6)
+            read -rp "Introduce el nombre del paquete a desinstalar: " paquete
+            sudo apt remove "$paquete" -y
+            read -n1 -srp "Presione una tecla para continuar..."
             ;;
         0)
             break

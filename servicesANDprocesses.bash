@@ -1,3 +1,4 @@
+#!/bin/bash
 # shellcheck disable=SC1091
 source funciones.bash
 
@@ -16,15 +17,36 @@ function menuServicesANDprocesses() {
     read -rp "Introduce una opcion: " opcSelect
 
     case $opcSelect in
-        1) ;;
-        2) ;;
-        3) ;;
-        4) ;;
-        5) ;;
-        6) ;;
-        7) ;;
-        0) break ;;
-        *) echo "Introduce una opcion valida..." ;;
+        1)
+            echo "Servicios activos:"
+            systemctl list-units --type=service --state=running
+            read -n1 -srsp "Presione una tecla para continuar..."
+            ;;
+        2)
+            read -rp "Introduce el nombre del servicio a iniciar (ej: apache2): " servicio
+            sudo systemctl start "$servicio"
+            echo "Servicio '$servicio' iniciado."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
+        3)
+            read -rp "Introduce el nombre del servicio a detener (ej: apache2): " servicio
+            sudo systemctl stop "$servicio"
+            echo "Servicio '$servicio' detenido."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
+        4)
+            read -rp "Introduce el nombre del servicio a habilitar al inicio (ej: apache2): " servicio
+            sudo systemctl enable "$servicio"
+            echo "Servicio '$servicio' habilitado para iniciar con el sistema."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
+        0)
+            break
+            ;;
+        *)
+            echo "Introduce una opcion valida..."
+            read -n1 -srp "Presione una tecla para continuar..."
+            ;;
     esac
 done
 }
