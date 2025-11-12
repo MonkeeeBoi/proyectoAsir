@@ -20,23 +20,7 @@ function menuGestUser() {
       echo "❌ Error: fallo al instalar los paquetes..."
       exit 1
     fi
-<<<<<<< HEAD
   fi
-  clear
-  while true; do
-    echo "+-------------------------------------+"
-    echo "|                                     |"
-    echo "|    1. Creación de usuarios          |"
-    echo "|    2. Eliminación de usuarios       |"
-    echo "|    3. Permisos a usuario            |"
-    echo "|    4. Cambiar contraseña de usuario |"
-    echo "|    5. Ver usuarios conectados       |"
-    echo "|    6. Ver tamaños del home          |"
-    echo "|    7. Ver historial de usuarios     |"
-    echo "|                                     |"
-    echo "|    0. Volver                        |"
-    echo "+-------------------------------------+"
-=======
     clear
     while true; do
         echo "+-------------------------------------+"
@@ -52,33 +36,9 @@ function menuGestUser() {
         echo "|                                     |"
         echo "|    0. Volver                        |"
         echo "+-------------------------------------+"
->>>>>>> 976a682e4e0f1f3baf8a6adecbaefce044792547
 
     read -rp "Introduce una opcion: " opcSelect
 
-<<<<<<< HEAD
-    case $opcSelect in
-    1)
-      clear
-      crearUsuario
-      ;;
-    2)
-      clear
-      eliminarUsuario
-      ;;
-    3)
-      clear
-      permisosUsuario
-      ;;
-    4) ;;
-    5) ;;
-    6) ;;
-    7) ;;
-    0) break ;;
-    *) echo "Introduce una opcion valida..." ;;
-    esac
-  done
-=======
         case $opcSelect in
             1) 
                 clear
@@ -119,7 +79,6 @@ function menuGestUser() {
             *) echo "Introduce una opcion valida..." ;;
         esac
     done
->>>>>>> 976a682e4e0f1f3baf8a6adecbaefce044792547
 }
 
 function crearUsuario() {

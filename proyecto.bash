@@ -32,33 +32,6 @@ while true; do
   echo "+------------------------------------+"
 
   read -rp "Introduce una opcion: " opcSelect
-
-  case $opcSelect in
-  1)
-    clear
-    menuGestUser
-    ;;
-  2)
-    clear
-    menuGestPacks
-    ;;
-  3)
-    clear
-    menuGestSistem
-    ;;
-  4) ;;
-  5) ;;
-  0) exit 0 ;;
-  *)
-    echo "Introduce una opcion valida..."
-    read -n1 -srp "Presione una tecla para continuar..."
-    ;;
-  esac
-done
-
-<<<<<<< HEAD
-=======
-    read -rp "Introduce una opcion: " opcSelect
     
     case $opcSelect in
         1)  
@@ -104,4 +77,3 @@ done
         ;;
     esac
 done
->>>>>>> 976a682e4e0f1f3baf8a6adecbaefce044792547
