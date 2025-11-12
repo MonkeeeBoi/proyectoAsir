@@ -8,6 +8,7 @@
 - 1.6 Ver tamaños del home
 - 1.7 Ver historial de usuarios
 - 1.8 Ver permisos de usuario
+- 1.9 Ver grupos de usuario
 
 **2.Gestión de paquetes**
 - 2.1 Actualizar lista de paquetes
