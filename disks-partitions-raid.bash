@@ -72,7 +72,7 @@ function disks-partitions-raid() {
             read -rp "Introduce los dispositivos para RAID separados por espacio (ej: /dev/sdb1 /dev/sdc1): " dispositivos
             read -rp "Introduce el nombre del RAID (ej: /dev/md0): " nombre
             read -rp "Introduce el nivel RAID (ej: 1): " nivel
-            sudo mdadm --create "$nombre" --level="$nivel" --raid-devices=$(echo "$dispositivos" | wc -w) $dispositivos
+            sudo mdadm --create "$nombre" --level="$nivel" --raid-devices="$(echo "$dispositivos" | wc -w) $dispositivos"
             echo "RAID creado como $nombre."
             read -n1 -srp "Presione una tecla para continuar..."
             ;;

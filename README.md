@@ -29,13 +29,21 @@
 - 4.3 Reiniciar red
 - 4.4 Ver IP
 - 4.5 Cambiar IP
-- 4.6 Cambiar DNS
+- 4.6 Cambiar puerta de enlace
+- 4.7 Cambiar DNS
+- 4.8 Habilitar o desabilitar interfaz de red
+- 4.9 Monstrar redes
+- 4.10 Conectar a una red Wifi
 
 **5.Servicios y procesos**
 - 5.1 Ver servicios activos
 - 5.2 Iniciar un servicio
 - 5.3 Detener un servicio
 - 5.4 Habilitar al inicio
+- 5.5 Cambiar la prioridad de un proceso
+- 5.6 Detener servicios de un usuario
+- 5.7 Ver servicios de un usuario
+- 5.8 Buscar servicios
 
 **6.Mantenimiento y limpieza**
 - 6.1 Limpiar caché de apt
@@ -61,3 +69,26 @@
 - 9.7 Guardar configuración RAID
 - 9.8 Comprobar estado RAID
 - 9.9 Crear volumen LVM
+- 9.10 formatear discos
+
+**10. LDAP**
+- 10.1 Unidad Organizativa
+    - 10.1.1 Añadir unidad organizativa
+    - 10.1.2 Modificar nombre/DN de OU
+    - 10.1.3 Eliminar Unidad Organizativa
+- 10.2 Grupos
+    - 10.2.1 Añadir grupo
+    - 10.2.2 Añadir Usuario a Grupo
+    - 10.2.3 Eliminar Usuario de Grupo
+    - 10.2.4 Mostrar miembros del Grupo
+    - 10.2.5 Eliminar Grupo
+- 10.3 Usuarios
+    - 10.3.1 Añadir usuario
+    - 10.3.2 Modificar atributos de Usuario
+    - 10.3.3 Restablecer Contraseña
+    - 10.3.4 Bloquear/Desbloquear Cuenta
+    - 10.3.5 Eliminar Usuario
+- 10.4 extras
+    - 10.14 Búsqueda Avanzada
+    - 10.15 Importar desde LDIF
+    - 10.16 Exportar a LDIF
