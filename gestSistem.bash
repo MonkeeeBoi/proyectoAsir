@@ -5,6 +5,7 @@ source funciones.bash
 function menuGestSistem() {
    while true; do
     clear
+    echo ""
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|   1. Ver uso de disco               |"
@@ -14,6 +15,7 @@ function menuGestSistem() {
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
+    echo ""
 
     read -rp "Introduce una opcion: " opcSelect
 

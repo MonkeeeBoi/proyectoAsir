@@ -4,6 +4,7 @@ source funciones.bash
 
 function menuMaintenanceANDcleaning() {
    while true; do
+    echo ""
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|  1. Limpiar caché de apt            |"
@@ -12,6 +13,7 @@ function menuMaintenanceANDcleaning() {
     echo "|                                     |"
     echo "|  0. Volver                          |"
     echo "+-------------------------------------+"
+    echo ""
 
     read -rp "Introduce una opcion: " opcSelect
 

@@ -4,6 +4,7 @@ source funciones.bash
 
 function menuGestNetwork() {
    while true; do
+    echo ""
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|   1. Mostrar configuración de red   |"
@@ -15,6 +16,7 @@ function menuGestNetwork() {
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
+    echo ""
 
     read -rp "Introduce una opcion: " opcSelect
 
@@ -48,7 +50,7 @@ function menuGestNetwork() {
             ls -1 $NETPLAN_DIR/*.yaml 2>/dev/null
 
             # Pedir al usuario qué fichero quiere editar
-            read -p "👉 Escribe el nombre del fichero .yaml que quieres editar (ej: 01-netcfg.yaml): " fichero
+            read -p "Escribe el nombre del fichero .yaml que quieres editar (ej: 01-netcfg.yaml): " fichero
 
             NETPLAN_FILE="$NETPLAN_DIR/$fichero"
 
@@ -59,10 +61,10 @@ function menuGestNetwork() {
             fi
 
             # Pedir datos de configuración
-            read -p "👉 Nombre de la interfaz de red (ej: eth0): " interfaz
-            read -p "👉 Dirección IP con máscara (ej: 192.168.1.100/24): " ip
-            read -p "👉 Gateway (ej: 192.168.1.1): " gateway
-            read -p "👉 Servidores DNS separados por comas (ej: 8.8.8.8,8.8.4.4): " dns
+            read -p "Nombre de la interfaz de red (ej: eth0): " interfaz
+            read -p "Dirección IP con máscara (ej: 192.168.1.100/24): " ip
+            read -p "Gateway (ej: 192.168.1.1): " gateway
+            read -p "Servidores DNS separados por comas (ej: 8.8.8.8,8.8.4.4): " dns
 
             # Crear configuración en el fichero YAML
             sudo tee $NETPLAN_FILE > /dev/null <<EOF

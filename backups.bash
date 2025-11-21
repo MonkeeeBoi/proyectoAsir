@@ -15,6 +15,7 @@ function menuBackups() {
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
+    echo ""
 
     read -rp "Introduce una opcion: " opcSelect
 

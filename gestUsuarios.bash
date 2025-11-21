@@ -23,6 +23,7 @@ function menuGestUser() {
   fi
     clear
     while true; do
+        echo ""
         echo "+-------------------------------------+"
         echo "|                                     |"
         echo "|    1. Creación de usuarios          |"
@@ -36,6 +37,7 @@ function menuGestUser() {
         echo "|                                     |"
         echo "|    0. Volver                        |"
         echo "+-------------------------------------+"
+        echo ""
 
     read -rp "Introduce una opcion: " opcSelect
 

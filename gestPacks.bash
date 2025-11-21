@@ -4,6 +4,7 @@ source funciones.bash
 
 function menuGestPacks() {
    while true; do
+    echo ""
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|   1. Actualizar lista de paquetes   |"
@@ -15,6 +16,7 @@ function menuGestPacks() {
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
+    echo ""
 
     read -rp "Introduce una opcion: " opcSelect
 

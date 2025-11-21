@@ -4,6 +4,7 @@ source funciones.bash
 
 function disks-partitions-raid() {
    while true; do
+    echo ""
     echo "+-------------------------------------+"
     echo "|                                     |"
     echo "|   1. Ver discos y particiones       |"
@@ -18,7 +19,7 @@ function disks-partitions-raid() {
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
-
+    echo ""
     read -rp "Introduce una opcion: " opcSelect
 
     case $opcSelect in

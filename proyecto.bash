@@ -16,6 +16,7 @@ source disks-partitions-raid.bash
 
 while true; do
   clear
+  echo ""
   echo "+------------------------------------+"
   echo "|                                    |"
   echo "|    1. Gestión de Usuarios          |"
@@ -30,6 +31,7 @@ while true; do
   echo "|                                    |"
   echo "|    0. Salir                        |"
   echo "+------------------------------------+"
+  echo ""
 
   read -rp "Introduce una opcion: " opcSelect
     

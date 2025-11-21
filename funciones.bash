@@ -2,7 +2,7 @@
 function comprobarCadena() {
     if [[ -z "$1" ]]; then
         clear
-        echo "❌ Error: la cadena introducida no puede ser vacia..."
+        echo "Error: la cadena introducida no puede ser vacia..."
         return 0
     else
         return 1
@@ -23,7 +23,7 @@ function comprobarYesOrNo() {
     elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
         return 1
     else
-        echo "❌ Error: Opcion no valida..."
+        echo "Error: Opcion no valida..."
         return 0
     fi
 }
