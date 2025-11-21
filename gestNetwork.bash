@@ -48,6 +48,7 @@ function menuGestNetwork() {
             echo "=== Configuración de Netplan ==="
             echo "Mostrando ficheros disponibles en $NETPLAN_DIR:"
             ls -1 $NETPLAN_DIR/*.yaml 2>/dev/null
+            echo "================================"
 
             # Pedir al usuario qué fichero quiere editar
             read -p "Escribe el nombre del fichero .yaml que quieres editar (ej: 01-netcfg.yaml): " fichero
