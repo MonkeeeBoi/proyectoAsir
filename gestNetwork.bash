@@ -41,13 +41,32 @@ function menuGestNetwork() {
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         5)
-            read -rp "Introduce el nombre de la interfaz (ej: eth0): " interfaz
-            read -rp "Introduce la nueva IP (ej: 192.168.1.100/24): " nueva_ip
-            sudo ip addr flush dev "$interfaz"
-            sudo ip addr add "$nueva_ip" dev "$interfaz"
-            sudo ip link set "$interfaz" up
-            echo "IP cambiada en la interfaz $interfaz."
-            read -n1 -srp "Presione una tecla para continuar..."
+            NETPLAN_FILE="/etc/netplan/01-netcfg.yaml"
+
+            echo "=== Configuración de Netplan ==="
+
+            # Pedir datos al usuario
+            read -p "👉 Nombre de la interfaz de red (ej: eth0): " interfaz
+            read -p "👉 Dirección IP con máscara (ej: 192.168.1.100/24): " ip
+            read -p "👉 Gateway (ej: 192.168.1.1): " gateway
+            read -p "👉 Servidores DNS separados por comas (ej: 8.8.8.8,8.8.4.4): " dns
+
+            # Crear fichero YAML
+            sudo tee $NETPLAN_FILE > /dev/null <<EOF
+network:
+  version: 2
+  renderer: networkd
+    ethernets:
+        $interfaz:
+            dhcp4: no
+            addresses: [$ip]
+            gateway4: $gateway
+            nameservers:
+            addresses: [${dns//,/ }]
+EOF
+echo "✅ Fichero Netplan configurado en $NETPLAN_FILE"
+echo "⚡ Aplicando configuración..."
+sudo netplan apply
             ;;
         6)
             read -rp "Introduce la nueva IP de DNS (ej: 8.8.8.8): " nuevo_dns
