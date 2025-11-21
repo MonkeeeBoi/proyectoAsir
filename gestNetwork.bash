@@ -25,22 +25,26 @@ function menuGestNetwork() {
             echo "Configuración de red:"
             ip a
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         2)
             read -rp "Introduce una IP o dominio para probar conectividad: " destino
             ping -c 4 "$destino"
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         3)
             echo "Reiniciando servicio de red..."
             sudo systemctl restart NetworkManager || sudo systemctl restart networking
             echo "Servicio de red reiniciado."
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         4)
             ip_actual=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n1)
             echo "IP actual: $ip_actual"
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         5)
             NETPLAN_DIR="/etc/netplan"
@@ -84,12 +88,15 @@ EOF
             echo "✅ Fichero Netplan configurado en $NETPLAN_FILE"
             echo "⚡ Aplicando configuración..."
             sudo netplan apply
+            read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         6)
             read -rp "Introduce la nueva IP de DNS (ej: 8.8.8.8): " nuevo_dns
             echo "nameserver $nuevo_dns" | sudo tee /etc/resolv.conf > /dev/null
             echo "DNS cambiado a $nuevo_dns"
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         0)
             break
@@ -97,6 +104,7 @@ EOF
         *)
             echo "Introduce una opcion valida..."
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
     esac
 done
