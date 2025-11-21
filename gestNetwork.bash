@@ -41,32 +41,46 @@ function menuGestNetwork() {
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         5)
-            NETPLAN_FILE="/etc/netplan/01-netcfg.yaml"
-
+            NETPLAN_DIR="/etc/netplan"
+            
             echo "=== Configuración de Netplan ==="
+            echo "Mostrando ficheros disponibles en $NETPLAN_DIR:"
+            ls -1 $NETPLAN_DIR/*.yaml 2>/dev/null
 
-            # Pedir datos al usuario
+            # Pedir al usuario qué fichero quiere editar
+            read -p "👉 Escribe el nombre del fichero .yaml que quieres editar (ej: 01-netcfg.yaml): " fichero
+
+            NETPLAN_FILE="$NETPLAN_DIR/$fichero"
+
+            # Validar que el fichero existe
+            if [ ! -f "$NETPLAN_FILE" ]; then
+                echo "Error: El fichero '$NETPLAN_FILE' no existe."
+                exit 1
+            fi
+
+            # Pedir datos de configuración
             read -p "👉 Nombre de la interfaz de red (ej: eth0): " interfaz
             read -p "👉 Dirección IP con máscara (ej: 192.168.1.100/24): " ip
             read -p "👉 Gateway (ej: 192.168.1.1): " gateway
             read -p "👉 Servidores DNS separados por comas (ej: 8.8.8.8,8.8.4.4): " dns
 
-            # Crear fichero YAML
+            # Crear configuración en el fichero YAML
             sudo tee $NETPLAN_FILE > /dev/null <<EOF
 network:
   version: 2
   renderer: networkd
-    ethernets:
-        $interfaz:
-            dhcp4: no
-            addresses: [$ip]
-            gateway4: $gateway
-            nameservers:
-            addresses: [${dns//,/ }]
+  ethernets:
+    $interfaz:
+      dhcp4: no
+      addresses: [$ip]
+      gateway4: $gateway
+      nameservers:
+        addresses: [${dns// /}]
 EOF
-echo "✅ Fichero Netplan configurado en $NETPLAN_FILE"
-echo "⚡ Aplicando configuración..."
-sudo netplan apply
+
+            echo "✅ Fichero Netplan configurado en $NETPLAN_FILE"
+            echo "⚡ Aplicando configuración..."
+            sudo netplan apply
             ;;
         6)
             read -rp "Introduce la nueva IP de DNS (ej: 8.8.8.8): " nuevo_dns
