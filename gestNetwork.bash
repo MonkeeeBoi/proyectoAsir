@@ -85,7 +85,7 @@ network:
         addresses: [${dns// /}]
 EOF
 
-            echo "✅ Fichero Netplan configurado en $NETPLAN_FILE"
+            echo "Fichero Netplan configurado en $NETPLAN_FILE"
             echo "⚡ Aplicando configuración..."
             sudo netplan apply
             read -n1 -srp "Presione una tecla para continuar..."
