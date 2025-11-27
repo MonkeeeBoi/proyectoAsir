@@ -77,8 +77,15 @@ function menuGestUser() {
                 clear 
                 verPermisosUsuario 
             ;;
-            0) break ;;
-            *) echo "Introduce una opcion valida..." ;;
+            0) 
+                clear
+                break
+            ;;
+            *)
+              clear 
+              echo "Introduce una opcion valida..."
+              break;   
+            ;;
         esac
     done
 }
@@ -150,7 +157,7 @@ function eliminarUsuario() {
     if comprobarCadena "$usuarioHome"; then
       continue
     fi
-    if ! comprobarYesOrNo "$usuarioHome"; then
+    if comprobarYesOrNo "$usuarioHome"; then
       continue
     fi
     break
@@ -222,7 +229,7 @@ function permisosUsuario() {
         sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
 
         mycmd=$?
-        if $mycmd; then
+        if [[ $mycmd -eq 0 ]]; then
           echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
         else
           echo "❌ Error al intentar ejecutar el comando de cambio de permisos."
