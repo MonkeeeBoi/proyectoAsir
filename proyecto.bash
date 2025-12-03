@@ -4,6 +4,7 @@
 #librerias
 # shellcheck disable=SC1091
 source gestUsuarios.bash
+source gestGrupos.bash
 source gestSistem.bash
 source gestPacks.bash
 source gestNetwork.bash
@@ -19,15 +20,16 @@ while true; do
   echo ""
   echo "+------------------------------------+"
   echo "|                                    |"
-  echo "|    1. Gestión de Usuarios          |"
-  echo "|    2. Gestión de paquetes          |"
-  echo "|    3. Gestión del sistema          |"
-  echo "|    4. Gestión de RED               |"
-  echo "|    5. Servicios y procesos         |"
-  echo "|    6. Mantenimiento y limpieza     |"
-  echo "|    7. Copias de seguridad          |"
-  echo "|    8. Seguridad                    |"
-  echo "|    9. Discos, particiones y RAID   |"
+  echo "|    1. Gestión de usuarios          |"
+  echo "|    2. Gestión de grupos            |"
+  echo "|    3. Gestión de paquetes          |"
+  echo "|    4. Gestión del sistema          |"
+  echo "|    5. Gestión de RED               |"
+  echo "|    6. Servicios y procesos         |"
+  echo "|    7. Mantenimiento y limpieza     |"
+  echo "|    8. Copias de seguridad          |"
+  echo "|    9. Seguridad                    |"
+  echo "|    10. Discos, particiones y RAID   |"
   echo "|                                    |"
   echo "|    0. Salir                        |"
   echo "+------------------------------------+"
@@ -42,33 +44,37 @@ while true; do
         ;;
         2) 
             clear
-            menuGestPacks
+            menuGestGroups
         ;;
         3) 
             clear
-            menuGestSistem
+            menuGestPacks
         ;;
         4) 
             clear
-            menuGestNetwork 
+            menuGestSistem
         ;;
         5) 
             clear
-            menuServicesANDprocesses
+            menuGestNetwork 
         ;;
         6) 
             clear
-            menuMaintenanceANDcleaning
+            menuServicesANDprocesses
         ;;
         7) 
             clear
-            menuBackups
+            menuMaintenanceANDcleaning
         ;;
         8) 
             clear
-            menuSecurity
+            menuBackups
         ;;
         9) 
+            clear
+            menuSecurity
+        ;;
+        10) 
             clear
             disks-partitions-raid
         ;; 

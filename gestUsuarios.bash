@@ -34,7 +34,6 @@ function menuGestUser() {
         echo "|    6. Ver tamaños del home          |"
         echo "|    7. Ver historial de usuarios     |"
         echo "|    8. Ver permisos de usuario       |"
-        echo "|    9. Ver grupos de usuario         |"
         echo "|                                     |"
         echo "|    0. Volver                        |"
         echo "+-------------------------------------+"
@@ -327,13 +326,3 @@ function verPermisosUsuario() {
     echo "Mostrando hasta 100 resultados con permisos. Puedes ajustar el límite si lo deseas."
 }
 
-function verGruposUsuario() {
-    read -rp "Introduce el nombre del usuario: " usuario
-
-    if id "$usuario" &>/dev/null; then
-        echo "El usuario '$usuario' pertenece a los siguientes grupos:"
-        groups "$usuario"
-    else
-        echo "El usuario '$usuario' no existe en el sistema."
-    fi
-}
