@@ -7,7 +7,7 @@ function menuGestUser() {
   touch ~/.gestorLinux
   if ! [[ "$(cut -d: -f1 <~/.gestorLinux)" == "OK" ]]; then
     if ! sudo apt update -q; then
-      echo "❌ Error: fallo al actualizar los paquetes..."
+      echo "Error: fallo al actualizar los paquetes..."
     else
       echo "OK:" >~/.gestorLinux
     fi
@@ -17,7 +17,7 @@ function menuGestUser() {
     echo "instando paquetes necesarios..."
     sudo apt install openssl
     if ! estaInstalado "openssl"; then
-      echo "❌ Error: fallo al instalar los paquetes..."
+      echo "Error: fallo al instalar los paquetes..."
       exit 1
     fi
   fi
@@ -34,6 +34,7 @@ function menuGestUser() {
         echo "|    6. Ver tamaños del home          |"
         echo "|    7. Ver historial de usuarios     |"
         echo "|    8. Ver permisos de usuario       |"
+        echo "|    9. Ver grupos de usuario         |"
         echo "|                                     |"
         echo "|    0. Volver                        |"
         echo "+-------------------------------------+"
@@ -55,8 +56,6 @@ function menuGestUser() {
                 permisosUsuario
             ;;
 
-            #esto lo he hecho yo
-
             4) 
                 clear 
                 cambiarPassUsuario 
@@ -77,6 +76,10 @@ function menuGestUser() {
                 clear 
                 verPermisosUsuario 
             ;;
+            9)
+                clear 
+                verGruposUsuario
+            ;;
             0) break ;;
             *) echo "Introduce una opcion valida..." ;;
         esac
@@ -92,7 +95,7 @@ function crearUsuario() {
       continue
     fi
     if ! comprobarUsuario "$nombreUsuario"; then
-      echo "❌ Error: El usuario existe en el sistema..."
+      echo "Error: El usuario existe en el sistema..."
       continue
     fi
     break
@@ -127,7 +130,7 @@ function crearUsuario() {
     sudo useradd -p "$(securePass "$usuarioPass")" "$nombreUsuario" &>/dev/null
   fi
 
-  echo "✅ Proceso de creación para '$nombreUsuario' completado."
+  echo "Proceso de creación para '$nombreUsuario' completado."
 }
 
 function eliminarUsuario() {
@@ -138,7 +141,7 @@ function eliminarUsuario() {
       continue
     fi
     if comprobarUsuario "$nombreUsuario"; then
-      echo "❌ Error: El usuario no existe en el sistema..."
+      echo "Error: El usuario no existe en el sistema..."
       continue
     fi
     break
@@ -162,7 +165,7 @@ function eliminarUsuario() {
   else
     sudo userdel "$nombreUsuario" &>/dev/null
   fi
-  echo "✅ Proceso de eliminación para '$nombreUsuario' completado."
+  echo "Proceso de eliminación para '$nombreUsuario' completado."
 }
 
 function permisosUsuario() {
@@ -174,7 +177,7 @@ function permisosUsuario() {
     fi
     if comprobarUsuario "$nombreUsuario"; then
       clear
-      echo "❌ Error: El usuario '$nombreUsuario' no existe en el sistema."
+      echo "Error: El usuario '$nombreUsuario' no existe en el sistema."
       continue
     fi
     break
@@ -185,7 +188,7 @@ function permisosUsuario() {
     read -rp "Introduce los NUEVOS PERMISOS para los ARCHIVOS del usuario en octal (644, 755): " permisosArchivos
     if comprobarCadena "$permisosArchivos" || soloNumerosPermisos "$permisosArchivos"; then
       clear
-      echo "❌ Error: entrada no aceptada..."
+      echo "Error: entrada no aceptada..."
       echo "Introduce de nuevo los permisos para los Archivos del usuario '$permisosArchivos'."
       continue
     fi
@@ -195,7 +198,7 @@ function permisosUsuario() {
     read -rp "Introduce los NUEVOS PERMISOS para los DIRECTORIOS del usuario en octal (644, 755): " permisosDirectorios
     if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
       clear
-      echo "❌ Error: entrada no aceptada..."
+      echo "Error: entrada no aceptada..."
       echo "Introduce de nuevo los permisos para los directorios del usuario '$permisosDirectorios'."
       continue
     fi
@@ -203,7 +206,7 @@ function permisosUsuario() {
   done
   while true; do
     echo ""
-    echo "⚠️ ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos"
+    echo "ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos"
     echo "y directorios propiedad de '$nombreUsuario' en el sistema."
     read -rp "¿Estás seguro de continuar y aplicar permisos $permisosArchivos para los archivos y $permisosDirectorios para los directorios? [Y/n]:" confirmacion
 
@@ -223,17 +226,15 @@ function permisosUsuario() {
 
         mycmd=$?
         if $mycmd; then
-          echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
+          echo "Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
         else
-          echo "❌ Error al intentar ejecutar el comando de cambio de permisos."
+          echo "Error al intentar ejecutar el comando de cambio de permisos."
         fi
       fi
     fi
     break
   done
 }
-
-#esto lo he hecho yo
 
 function cambiarPassUsuario() {
     while true; do
@@ -243,7 +244,7 @@ function cambiarPassUsuario() {
             continue
         fi
         if comprobarUsuario "$nombreUsuario"; then
-            echo "❌ Error: El usuario no existe en el sistema..."
+            echo "Error: El usuario no existe en el sistema..."
             continue
         fi
         break
@@ -259,13 +260,13 @@ function cambiarPassUsuario() {
     done
 
     echo "$nombreUsuario:$(securePass "$nuevaPass")" | sudo chpasswd -e
-    echo "✅ Contraseña actualizada para el usuario '$nombreUsuario'."
+    echo "Contraseña actualizada para el usuario '$nombreUsuario'."
 }
 
 function verUsuariosConectados() {
     echo "Usuarios actualmente conectados:"
     who
-    echo "✅ Fin de listado."
+    echo "Fin de listado."
 }
 
 function verTamaniosHome() {
@@ -281,14 +282,15 @@ function verTamaniosHome() {
             echo "Usuario: $usuario. Home: $homeUsuario. Tamaño: $tamanio"
         fi
     done
-    echo "✅ Fin de listado."
+    echo "Fin de listado."
 }
 
 function verHistorialUsuarios() {
     echo "Historial de inicio de sesión de usuarios:"
     last | grep -E "^[a-zA-Z0-9_]+"
-    echo "✅ Fin de historial."
+    echo "Fin de historial."
 }
+
 function verPermisosUsuario() {
     while true; do
         read -rp "Introduce el nombre del usuario para ver sus permisos: " nombreUsuario
@@ -297,7 +299,7 @@ function verPermisosUsuario() {
             continue
         fi
         if comprobarUsuario "$nombreUsuario"; then
-            echo "❌ Error: El usuario '$nombreUsuario' no existe en el sistema..."
+            echo "Error: El usuario '$nombreUsuario' no existe en el sistema..."
             continue
         fi
         break
@@ -306,5 +308,16 @@ function verPermisosUsuario() {
     echo "Buscando archivos y directorios propiedad de '$nombreUsuario'..."
     sudo find / -user "$nombreUsuario" -exec ls -ld {} \; 2>/dev/null | head -n 100
 
-    echo "✅ Mostrando hasta 100 resultados con permisos. Puedes ajustar el límite si lo deseas."
+    echo "Mostrando hasta 100 resultados con permisos. Puedes ajustar el límite si lo deseas."
+}
+
+function verGruposUsuario() {
+    read -rp "Introduce el nombre del usuario: " usuario
+
+    if id "$usuario" &>/dev/null; then
+        echo "El usuario '$usuario' pertenece a los siguientes grupos:"
+        groups "$usuario"
+    else
+        echo "El usuario '$usuario' no existe en el sistema."
+    fi
 }
