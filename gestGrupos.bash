@@ -11,6 +11,7 @@ function menuGestGroups() {
     echo "|   2. Crear un grupo                 |"
     echo "|   3. Añadir grupo a usuario         |"
     echo "|   4. Quitar grupo a usuario         |"
+    echo "|   5. Eliminar un grupo              |"
     echo "|                                     |"
     echo "|   0. Volver                         |"
     echo "+-------------------------------------+"
@@ -61,6 +62,14 @@ function menuGestGroups() {
             fi
             read -n1 -srp "Presione una tecla para continuar..."
             clear
+            ;;
+        5)
+            read -p "Introduce el nombre del grupo a eliminar: " grupo
+            if getent group "$grupo" >/dev/null; then
+                sudo groupdel "$grupo" && echo "Grupo '$grupo' eliminado correctamente."
+            else
+                echo "El grupo '$grupo' no existe en el sistema."
+            fi
             ;;
         0)
             break
