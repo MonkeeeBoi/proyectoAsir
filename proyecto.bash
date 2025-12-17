@@ -30,6 +30,7 @@ while true; do
   echo "|    8. Copias de seguridad          |"
   echo "|    9. Seguridad                    |"
   echo "|    10. Discos, particiones y RAID  |"
+  echo "|    11. LDAP                        |"
   echo "|                                    |"
   echo "|    0. Salir                        |"
   echo "+------------------------------------+"
@@ -77,7 +78,10 @@ while true; do
         10) 
             clear
             disks-partitions-raid
-        ;; 
+        ;;
+        11)
+            clear 
+        ;;
         0) exit 0 ;;
         *) 
         echo "Introduce una opcion valida..." 
