@@ -174,7 +174,7 @@ function permisosUsuario() {
 
     if comprobarUsuario "$nombreUsuario"; then
       clear
-      echo "❌ Error: El usuario '$nombreUsuario' no existe en el sistema."
+      echo "Error: El usuario '$nombreUsuario' no existe en el sistema."
       continue
     fi
 
@@ -189,7 +189,7 @@ function permisosUsuario() {
 
     if comprobarCadena "$permisosArchivos" || soloNumerosPermisos "$permisosArchivos"; then
       clear
-      echo "❌ Error: entrada no aceptada..."
+      echo "Error: entrada no aceptada..."
       echo "Introduce de nuevo los permisos para los Archivos del usuario '$permisosArchivos'."
       continue
     fi
@@ -202,7 +202,7 @@ function permisosUsuario() {
 
     if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
       clear
-      echo "❌ Error: entrada no aceptada..."
+      echo "Error: entrada no aceptada..."
       echo "Introduce de nuevo los permisos para los directorios del usuario '$permisosDirectorios'."
       continue
     fi
@@ -213,7 +213,7 @@ function permisosUsuario() {
   # --- Confirmación ---
   while true; do
     echo ""
-    echo "⚠️ ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos"
+    echo "ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos"
     echo "y directorios propiedad de '$nombreUsuario' en el sistema."
     read -rp "¿Estás seguro de continuar y aplicar permisos $permisosArchivos para los archivos y $permisosDirectorios para los directorios? [Y/n]:" confirmacion
 
@@ -231,23 +231,22 @@ function permisosUsuario() {
 
     # Cambiar permisos de archivos
     printf "\nCambiando permisos de archivos...\n"
-    printf "⚠️ Esto puede tardar unos minutos...\n"
+    printf "Esto puede tardar unos minutos...\n"
     sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2> /dev/null
 
-    echo "Cambiando permisos de directorios..."
-    sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
+        echo "Cambiando permisos de directorios..."
+        sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
 
-    mycmd=$?
-    if $mycmd; then
-      echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
-    else
-      echo "❌ Error al intentar ejecutar el comando de cambio de permisos."
-    fi
+        mycmd=$?
+        if $mycmd; then
+          echo "Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
+        else
+          echo "Error al intentar ejecutar el comando de cambio de permisos."
+        fi
     break
   done
 }
 
-#esto lo he hecho yo
 
 function cambiarPassUsuario() {
     while true; do
