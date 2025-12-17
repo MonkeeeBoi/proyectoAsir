@@ -29,7 +29,7 @@ while true; do
   echo "|    7. Mantenimiento y limpieza     |"
   echo "|    8. Copias de seguridad          |"
   echo "|    9. Seguridad                    |"
-  echo "|    10. Discos, particiones y RAID   |"
+  echo "|    10. Discos, particiones y RAID  |"
   echo "|                                    |"
   echo "|    0. Salir                        |"
   echo "+------------------------------------+"
