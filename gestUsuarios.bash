@@ -234,16 +234,14 @@ function permisosUsuario() {
     printf "⚠️ Esto puede tardar unos minutos...\n"
     sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2> /dev/null
 
-        echo "Cambiando permisos de directorios..."
-        sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
+    echo "Cambiando permisos de directorios..."
+    sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
 
-        mycmd=$?
-        if $mycmd; then
-          echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
-        else
-          echo "❌ Error al intentar ejecutar el comando de cambio de permisos."
-        fi
-      fi
+    mycmd=$?
+    if $mycmd; then
+      echo "✅ Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
+    else
+      echo "❌ Error al intentar ejecutar el comando de cambio de permisos."
     fi
     break
   done
