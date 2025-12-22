@@ -13,8 +13,66 @@ source maintenanceANDcleaning.bash
 source backups.bash
 source security.bash
 source disks-partitions-raid.bash
-# Menu
 
+# librerias necesarias
+echo "SYSTEM: comprobando/actualizando paquetes necesarios..."
+echo "SYSTEM: Actualizando paquetes..."
+if sudo apt update -q; then
+    echo "SYSTEM: se ha realiazado la actualizacion de repositorios correctamente..."
+else
+    echo "ERROR: fallo al actualizar los paquetes..."
+fi
+
+echo "Se necesitan los paquetes \"openssl, inxi, btop, fastfetch\""
+
+while true; do
+    read -rp "quiere continuar [Y/n]: " respuesta
+    if comprobarYesOrNo "$respuesta"; then
+        if YesOrNo; then
+            break
+        else
+            exit 0
+        fi
+    else
+        echo "ERROR: Introduce un respuesta valida..."  
+    fi
+done
+
+echo "instando paquetes necesarios..."
+if ! estaInstalado "openssl"; then
+    sudo apt install openssl -y
+    if ! estaInstalado "openssl"; then
+        echo "ERROR: fallo al instalar los paquetes..."
+        exit 1
+    fi
+fi
+if ! estaInstalado "inxi"; then
+    sudo apt install inxi -y
+    if ! estaInstalado "inxi"; then
+        echo "ERROR: fallo al instalar los paquetes..."
+        exit 1
+    fi
+fi
+
+if ! estaInstalado "btop"; then
+    sudo apt install btop -y
+    if ! estaInstalado "btop"; then
+        echo "ERROR: fallo al instalar los paquetes..."
+        exit 1
+    fi
+fi
+
+if ! estaInstalado "fastfetch"; then
+    sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
+    sudo apt update
+    sudo apt install fastfetch -y
+    if ! estaInstalado "fastfetch"; then
+        echo "ERROR: fallo al instalar los paquetes..."
+        exit 1
+    fi
+fi
+clear
+# Menu
 while true; do
   clear
   echo ""

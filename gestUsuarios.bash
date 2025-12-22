@@ -3,24 +3,6 @@
 source funciones.bash
 
 function menuGestUser() {
-  echo "comprobando/actualizando paquetes necesarios..."
-  touch ~/.gestorLinux
-  if ! [[ "$(cut -d: -f1 <~/.gestorLinux)" == "OK" ]]; then
-    if ! sudo apt update -q; then
-      echo "Error: fallo al actualizar los paquetes..."
-    else
-      echo "OK:" >~/.gestorLinux
-    fi
-  fi
-
-  if ! estaInstalado "openssl"; then
-    echo "instando paquetes necesarios..."
-    sudo apt install openssl
-    if ! estaInstalado "openssl"; then
-      echo "Error: fallo al instalar los paquetes..."
-      exit 1
-    fi
-  fi
     clear
     while true; do
         echo ""
