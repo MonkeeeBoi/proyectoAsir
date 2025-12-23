@@ -10,7 +10,7 @@
 - 1.8 Ver permisos de usuario
 - 1.9 Ver grupos de usuario
 
-**2.Gestión de paquetes**
+**2.Gestión de grupos**
 - 2.1 Ver grupos de usuario
 - 2.2 Crear un grupo
 - 2.3 Añadir grupo a usuario
@@ -24,13 +24,13 @@
 - 3.4 Buscar un paquete
 - 3.5 Instalar un paquete
 
-**4.Gestión del sistema**
+**4.Gestión del sistema (Usar btop y fastfetch)**
 - 4.1 Ver uso de disco
 - 4.2 Ver uso de memoria
 - 4.3 Monitorear procesos
 - 4.4 Ver información del sistema
 
-**5.Gestión de RED**
+**5.Gestión de RED (usar nmcli)** 
 - 5.1 Mostrar configuración de red
 - 5.2 Probar conectividad
 - 5.3 Reiniciar red
