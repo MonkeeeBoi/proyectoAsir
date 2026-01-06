@@ -13,6 +13,7 @@ source maintenanceANDcleaning.bash
 source backups.bash
 source security.bash
 source disks-partitions-raid.bash
+source montarDocker.sh
 
 # librerias necesarias
 comprobar_dependencias
@@ -33,7 +34,8 @@ while true; do
   echo "|    8. Copias de seguridad          |"
   echo "|    9. Seguridad                    |"
   echo "|    10. Discos, particiones y RAID  |"
-  echo "|    11. LDAP                        |"
+  echo "|    11. Docker                       |"
+  echo "|    12. LDAP                        |"
   echo "|                                    |"
   echo "|    0. Salir                        |"
   echo "+------------------------------------+"
@@ -83,6 +85,10 @@ while true; do
             menuDisksPartitionsRaid
         ;;
         11)
+            clear
+            main
+        ;;
+        12)
             clear 
         ;;
         0) exit 0 ;;
