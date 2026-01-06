@@ -27,8 +27,11 @@ function menuBackups() {
                 fecha=$(date +%Y%m%d_%H%M%S)
                 nombre=$(basename "$dir")
                 backup="backup_${nombre}_$fecha.tar.gz"
-                tar -czf "$backup" "$dir"
-                echo "Backup creado: $backup"
+                if tar -czf "$backup" "$dir"; then
+                    echo "Backup creado: $backup"
+                else
+                    echo "ERROR: No se pudo crear el backup."
+                fi
             else
                 echo "El directorio no existe."
             fi

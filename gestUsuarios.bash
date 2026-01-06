@@ -215,12 +215,13 @@ function permisosUsuario() {
     printf "\nCambiando permisos de archivos...\n"
     printf "Esto puede tardar unos minutos...\n"
     sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2> /dev/null
+    archivos_result=$?
 
         echo "Cambiando permisos de directorios..."
         sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
+        directorios_result=$?
 
-        mycmd=$?
-        if $mycmd; then
+        if [[ $archivos_result -eq 0 && $directorios_result -eq 0 ]]; then
           echo "Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
         else
           echo "Error al intentar ejecutar el comando de cambio de permisos."
@@ -253,8 +254,11 @@ function cambiarPassUsuario() {
         break
     done
 
-    echo "$nombreUsuario:$(securePass "$nuevaPass")" | sudo chpasswd -e
-    echo "Contraseña actualizada para el usuario '$nombreUsuario'."
+    if echo "$nombreUsuario:$(securePass "$nuevaPass")" | sudo chpasswd -e; then
+        echo "Contraseña actualizada para el usuario '$nombreUsuario'."
+    else
+        echo "ERROR: No se pudo actualizar la contraseña."
+    fi
 }
 
 function verUsuariosConectados() {

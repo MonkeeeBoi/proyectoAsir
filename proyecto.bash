@@ -80,7 +80,7 @@ while true; do
         ;;
         10) 
             clear
-            disks-partitions-raid
+            menuDisksPartitionsRaid
         ;;
         11)
             clear 

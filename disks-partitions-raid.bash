@@ -2,7 +2,7 @@
 # shellcheck disable=SC1091
 source funciones.bash
 
-function disks-partitions-raid() {
+function menuDisksPartitionsRaid() {
    while true; do
     echo ""
     echo "+-------------------------------------+"
@@ -73,7 +73,11 @@ function disks-partitions-raid() {
             read -rp "Introduce los dispositivos para RAID separados por espacio (ej: /dev/sdb1 /dev/sdc1): " dispositivos
             read -rp "Introduce el nombre del RAID (ej: /dev/md0): " nombre
             read -rp "Introduce el nivel RAID (ej: 1): " nivel
-            sudo mdadm --create "$nombre" --level="$nivel" --raid-devices="$(echo "$dispositivos" | wc -w) $dispositivos"
+            if sudo mdadm --create "$nombre" --level="$nivel" --raid-devices="$(echo "$dispositivos" | wc -w)" $dispositivos; then
+                echo "RAID creado como $nombre."
+            else
+                echo "ERROR: No se pudo crear el RAID."
+            fi
             echo "RAID creado como $nombre."
             read -n1 -srp "Presione una tecla para continuar..."
             ;;

@@ -26,13 +26,21 @@ function menuSecurity() {
             ;;
         2)
             read -rp "Introduce la IP o dominio a escanear: " destino
+            if ! command -v nmap > /dev/null 2>&1; then
+                echo "ERROR: nmap no está instalado. Instalando..."
+                sudo apt update && sudo apt install nmap -y
+            fi
             echo "Escaneando puertos abiertos en $destino..."
-            sudo nmap -Pn "$destino"
+            if sudo nmap -Pn "$destino"; then
+                echo "Escaneo completado."
+            else
+                echo "ERROR: Falló el escaneo de puertos."
+            fi
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         3)
             echo "Usuarios del sistema con UID >= 1000:"
-            getent passwd | grep -E "^[^:]*:[^:]*:[1-9][0-9]{3}:" | cut -d: -f1
+            getent passwd | awk -F: '$3 >= 1000 { print $1 }'
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         0)

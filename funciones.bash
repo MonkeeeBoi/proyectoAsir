@@ -20,7 +20,7 @@ function comprobarUsuario() {
 function comprobarYesOrNo() {
     if [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
         return 1
-    elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
+    elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" || "$1" == "N"  ]]; then
         return 1
     else
         echo "ERROR: Opcion no valida..."
@@ -37,7 +37,7 @@ function YesOrNo() {
 }
 
 function securePass() {
-    (echo "$1" | openssl passwd -6 -stdin)
+    printf '%s\n' "$1" | openssl passwd -6 -stdin 2>/dev/null || echo "ERROR: No se pudo generar hash de contraseña"
 }
 
 function estaInstalado() {
@@ -61,22 +61,28 @@ function soloNumeros(){
 }
 
 comprobar_dependencias() {
-    dependenciasNecesarias="openssl inxi btop fastfetch"
+    dependenciasNecesarias="openssl inxi btop fastfetch network-manager"
     dependenciasNoInstaladas=""
     echo "SYSTEM: comprobando/actualizando paquetes necesarios..."
     echo "SYSTEM: Actualizando paquetes..."
 
     if sudo apt update -q; then
-        echo "SYSTEM: se ha realiazado la actualizacion de repositorios correctamente..."
+        echo "SYSTEM: se ha realizado la actualizacion de repositorios correctamente..."
     else
         echo "ERROR: fallo al actualizar los paquetes..."
     fi
-    for cmd in $dependenciasNecesarias; do
+    for cmd in ${dependenciasNecesarias}; do
         if ! command -v "$cmd" > /dev/null 2>&1; then
             dependenciasNoInstaladas+="$cmd "
         fi
     done
     echo "Se necesitan los paquetes [$dependenciasNoInstaladas]"
+    # Si no hay paquetes que instalar, continuar
+    if [[ -z "${dependenciasNoInstaladas// }" ]]; then
+        return 0
+    fi
+    
+    echo "Se necesitan los paquetes [${dependenciasNoInstaladas}]"
     while true; do
         read -rp "quiere continuar [Y/n]: " respuesta
         if comprobarYesOrNo "$respuesta"; then
@@ -87,9 +93,10 @@ comprobar_dependencias() {
             fi
         else
             echo "ERROR: Introduce un respuesta valida..."  
+            sleep 1
         fi
     done
-    for cmd in $dependenciasNoInstaladas; do
+    for cmd in ${dependenciasNoInstaladas}; do
         echo "SYSTEM: Instalando la dependencia $cmd"
         if ! command -v fastfetch > /dev/null 2>&1; then
             sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
@@ -100,7 +107,7 @@ comprobar_dependencias() {
         fi
     done
 
-    for cmd in $dependenciasNoInstaladas; do
+    for cmd in ${dependenciasNoInstaladas}; do
         if ! command -v "$cmd" > /dev/null 2>&1; then
             echo "ERROR: Falta el comando '$cmd'. Saliendo..."
             exit 1

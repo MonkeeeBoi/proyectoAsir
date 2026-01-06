@@ -31,8 +31,8 @@ function menuMaintenanceANDcleaning() {
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         3)
-            echo "Mostrando logs del sistema (últimos 100 registros)..."
-            journalctl -xe | tail -n 100 | less
+            echo "Mostrando logs del sistema (últimos 20 registros)..."
+            journalctl -xe | tail -n 20
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         0)
