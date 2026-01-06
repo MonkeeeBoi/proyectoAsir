@@ -61,7 +61,7 @@ function soloNumeros(){
 }
 
 comprobar_dependencias() {
-    dependenciasNecesarias="openssl inxi btop fastfetch network-manager"
+    dependenciasNecesarias="openssl inxi btop fastfetch network-manager docker"
     dependenciasNoInstaladas=""
     echo "SYSTEM: comprobando/actualizando paquetes necesarios..."
     echo "SYSTEM: Actualizando paquetes..."
@@ -98,11 +98,13 @@ comprobar_dependencias() {
     done
     for cmd in ${dependenciasNoInstaladas}; do
         echo "SYSTEM: Instalando la dependencia $cmd"
-        if ! command -v fastfetch > /dev/null 2>&1; then
+        [ "$cmd" == "fastfetch" ] && {
+            if ! command -v fastfetch > /dev/null 2>&1; then
             sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
             sudo apt update
             sudo apt install fastfetch -y
-        elif ! command -v "$cmd" > /dev/null 2>&1; then
+        }
+        if ! command -v "$cmd" > /dev/null 2>&1; then
             sudo apt install "$cmd"
         fi
     done
