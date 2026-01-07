@@ -1,5 +1,6 @@
 #!/bin/bash
 # shellcheck disable=SC1091
+source colores.bash
 source funciones.bash
 
 interfaz_seleccionada=""
@@ -37,7 +38,7 @@ function menuGestNetwork() {
     echo "|                                     |"
     echo "|   1. Seleccionar interfaz           |"
     if [ -n "$interfaz_seleccionada" ]; then
-        echo "|      (Actual: $interfaz_seleccionada)   |"
+        echo "|      (Actual: $interfaz_seleccionada)               |"
     fi
     echo "|   2. Mostrar configuración de red   |"
     echo "|   3. Probar conectividad            |"
