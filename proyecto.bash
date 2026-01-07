@@ -3,6 +3,7 @@
 
 #librerias
 # shellcheck disable=SC1091
+source colores.bash
 source gestUsuarios.bash
 source gestGrupos.bash
 source gestSistem.bash

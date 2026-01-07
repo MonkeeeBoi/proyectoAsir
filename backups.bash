@@ -3,6 +3,7 @@
 # FUNCIONANDO
 
 # shellcheck disable=SC1091
+source colores.bash
 source funciones.bash
 
 function menuBackups() {
