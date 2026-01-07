@@ -34,7 +34,7 @@ while true; do
   echo "|    8. Copias de seguridad          |"
   echo "|    9. Seguridad                    |"
   echo "|    10. Discos, particiones y RAID  |"
-  echo "|    11. Docker                       |"
+  echo "|    11. Docker                      |"
   echo "|    12. LDAP                        |"
   echo "|                                    |"
   echo "|    0. Salir                        |"

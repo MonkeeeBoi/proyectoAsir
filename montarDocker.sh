@@ -61,7 +61,7 @@ verificar_instalacion() {
 
 # Función para validar que la carpeta existe
 validar_carpeta() {
-    local carpeta="$1"
+    carpeta="$1"
     if [[ ! -d "$carpeta" ]]; then
         echo -e "${RED}Error: La carpeta '$carpeta' no existe${NC}"
         return 1
@@ -83,7 +83,7 @@ montar_contenedor() {
     
     # Obtener imágenes disponibles actualizadas
     echo -e "${BLUE}=== Imágenes Docker disponibles ===${NC}"
-    local imagenes
+    imagenes
     readarray -t imagenes < <(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v "^<none>" | head -n -1)
     
     if [[ ${#imagenes[@]} -eq 0 ]]; then
@@ -95,9 +95,9 @@ montar_contenedor() {
     # Mostrar imágenes con números
     echo -e "${GREEN}Seleccione una imagen:${NC}"
     for i in "${!imagenes[@]}"; do
-        local num=$((i + 1))
-        local imagen="${imagenes[$i]}"
-        local size=$(docker images --format "{{.Size}}" "$imagen" 2>/dev/null || echo "N/A")
+        num=$((i + 1))
+        imagen="${imagenes[$i]}"
+        size=$(docker images --format "{{.Size}}" "$imagen" 2>/dev/null || echo "N/A")
         echo "  $num) $imagen (Tamaño: $size)"
     done
     
@@ -106,8 +106,8 @@ montar_contenedor() {
         read -p "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#imagenes[@]} ]]; then
-            local indice=$((seleccion - 1))
-            local imagen_seleccionada="${imagenes[$indice]}"
+            indice=$((seleccion - 1))
+            imagen_seleccionada="${imagenes[$indice]}"
             break
         else
             echo -e "${RED}Selección inválida. Por favor ingrese un número entre 1 y ${#imagenes[@]}${NC}"
@@ -119,7 +119,7 @@ montar_contenedor() {
     # Solicitar carpeta para compartir
     echo ""
     echo -e "${BLUE}=== Configuración de carpeta compartida ===${NC}"
-    echo "Ingrese la ruta de la carpeta local que desea compartir con el contenedor"
+    echo "Ingrese la ruta de la carpeta que desea compartir con el contenedor"
     echo "Ejemplos: /home/usuario/proyectos, ./datos, /tmp/compartido"
     
     while true; do
@@ -158,7 +158,7 @@ montar_contenedor() {
     read -p "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma): " puertos
     
     # Construir comando Docker
-    local docker_cmd="docker run -it"
+    docker_cmd="docker run -it"
     
     # Agregar nombre si se especificó
     if [[ -n "$nombre_contenedor" ]]; then
@@ -237,7 +237,7 @@ eliminar_imagen() {
     echo -e "${BLUE}=== Eliminar Imagen Docker ===${NC}"
     
     # Obtener imágenes disponibles
-    local imagenes
+    imagenes
     readarray -t imagenes < <(docker images --format "{{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.Created}}" | head -n -1)
     
     if [[ ${#imagenes[@]} -eq 0 ]]; then
@@ -248,11 +248,11 @@ eliminar_imagen() {
     # Mostrar imágenes con números
     echo -e "${GREEN}Seleccione una imagen para eliminar:${NC}"
     for i in "${!imagenes[@]}"; do
-        local num=$((i + 1))
-        local info="${imagenes[$i]}"
-        local imagen=$(echo "$info" | awk '{print $1}')
-        local size=$(echo "$info" | awk '{print $2}')
-        local created=$(echo "$info" | awk '{print $3,$4,$5,$6}')
+        num=$((i + 1))
+        info="${imagenes[$i]}"
+        imagen=$(echo "$info" | awk '{print $1}')
+        size=$(echo "$info" | awk '{print $2}')
+        created=$(echo "$info" | awk '{print $3,$4,$5,$6}')
         echo "  $num) $imagen (Tamaño: $size, Creada: $created)"
     done
     
@@ -261,9 +261,9 @@ eliminar_imagen() {
         read -p "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#imagenes[@]} ]]; then
-            local indice=$((seleccion - 1))
-            local info="${imagenes[$indice]}"
-            local imagen_seleccionada=$(echo "$info" | awk '{print $1}')
+            indice=$((seleccion - 1))
+            info="${imagenes[$indice]}"
+            imagen_seleccionada=$(echo "$info" | awk '{print $1}')
             break
         else
             echo -e "${RED}Selección inválida. Por favor ingrese un número entre 1 y ${#imagenes[@]}${NC}"
@@ -274,7 +274,7 @@ eliminar_imagen() {
     
     # Verificar si hay contenedores usando esta imagen
     echo -e "${BLUE}Verificando contenedores que usan esta imagen...${NC}"
-    local contenedores_usando=$(docker ps -a --filter "ancestor=$imagen_seleccionada" --format "{{.Names}}" 2>/dev/null)
+    contenedores_usando=$(docker ps -a --filter "ancestor=$imagen_seleccionada" --format "{{.Names}}" 2>/dev/null)
     
     if [[ -n "$contenedores_usando" ]]; then
         echo -e "${YELLOW}ADVERTENCIA: Los siguientes contenedores usan esta imagen:${NC}"
@@ -428,7 +428,7 @@ obtener_imagen() {
 
 # Función para crear contenedor con imagen preseleccionada
 crear_contenedor_con_imagen() {
-    local imagen_preseleccionada="$1"
+    imagen_preseleccionada="$1"
     
     echo -e "${BLUE}=== Crear Contenedor con Imagen: $imagen_preseleccionada ===${NC}"
     
@@ -438,10 +438,10 @@ crear_contenedor_con_imagen() {
     # Solicitar carpeta para compartir
     echo ""
     echo -e "${BLUE}=== Configuración de carpeta compartida ===${NC}"
-    echo "Ingrese la ruta de la carpeta local que desea compartir (deje en blanco para omitir)"
+    echo "Ingrese la ruta de la carpeta que desea compartir (deje en blanco para omitir)"
     
-    local carpeta_local=""
-    local carpeta_contenedor=""
+    carpeta_local=""
+    carpeta_contenedor=""
     while true; do
         read -p "Ruta de la carpeta (o Enter para omitir): " carpeta_local
         
@@ -479,13 +479,13 @@ crear_contenedor_con_imagen() {
     
     # Solicitar si se ejecuta en modo detached
     read -p "¿Ejecutar en modo detached (segundo plano)? (s/N): " detached
-    local detached_flag=""
+    detached_flag=""
     if [[ "$detached" =~ ^[Ss]$ ]]; then
         detached_flag="-d"
     fi
     
     # Construir comando Docker
-    local docker_cmd="docker run $detached_flag"
+    docker_cmd="docker run $detached_flag"
     
     # Agregar nombre si se especificó
     if [[ -n "$nombre_contenedor" ]]; then
@@ -579,7 +579,7 @@ crear_contenedor() {
     echo -e "${BLUE}=== Crear Nuevo Contenedor ===${NC}"
     
     # Obtener imágenes disponibles actualizadas
-    local imagenes
+    imagenes
     readarray -t imagenes < <(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v "^<none>" | head -n -1)
     
     if [[ ${#imagenes[@]} -eq 0 ]]; then
@@ -591,9 +591,9 @@ crear_contenedor() {
     # Mostrar imágenes con números
     echo -e "${GREEN}Seleccione una imagen:${NC}"
     for i in "${!imagenes[@]}"; do
-        local num=$((i + 1))
-        local imagen="${imagenes[$i]}"
-        local size=$(docker images --format "{{.Size}}" "$imagen" 2>/dev/null || echo "N/A")
+        num=$((i + 1))
+        imagen="${imagenes[$i]}"
+        size=$(docker images --format "{{.Size}}" "$imagen" 2>/dev/null || echo "N/A")
         echo "  $num) $imagen (Tamaño: $size)"
     done
     
@@ -602,8 +602,8 @@ crear_contenedor() {
         read -p "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#imagenes[@]} ]]; then
-            local indice=$((seleccion - 1))
-            local imagen_seleccionada="${imagenes[$indice]}"
+            indice=$((seleccion - 1))
+            imagen_seleccionada="${imagenes[$indice]}"
             break
         else
             echo -e "${RED}Selección inválida. Por favor ingrese un número entre 1 y ${#imagenes[@]}${NC}"
@@ -618,10 +618,10 @@ crear_contenedor() {
     # Solicitar carpeta para compartir
     echo ""
     echo -e "${BLUE}=== Configuración de carpeta compartida ===${NC}"
-    echo "Ingrese la ruta de la carpeta local que desea compartir (deje en blanco para omitir)"
+    echo "Ingrese la ruta de la carpeta que desea compartir (deje en blanco para omitir)"
     
-    local carpeta_local=""
-    local carpeta_contenedor=""
+    carpeta_local=""
+    carpeta_contenedor=""
     while true; do
         read -p "Ruta de la carpeta (o Enter para omitir): " carpeta_local
         
@@ -659,13 +659,13 @@ crear_contenedor() {
     
     # Solicitar si se ejecuta en modo detached
     read -p "¿Ejecutar en modo detached (segundo plano)? (s/N): " detached
-    local detached_flag=""
+    detached_flag=""
     if [[ "$detached" =~ ^[Ss]$ ]]; then
         detached_flag="-d"
     fi
     
     # Construir comando Docker
-    local docker_cmd="docker run $detached_flag"
+    docker_cmd="docker run $detached_flag"
     
     # Agregar nombre si se especificó
     if [[ -n "$nombre_contenedor" ]]; then
@@ -751,7 +751,7 @@ eliminar_contenedor() {
     echo -e "${BLUE}=== Eliminar Contenedor ===${NC}"
     
     # Obtener contenedores disponibles
-    local contenedores
+    contenedores
     readarray -t contenedores < <(docker ps -a --format "{{.Names}}\t{{.Status}}\t{{.Image}}" | head -n -1)
     
     if [[ ${#contenedores[@]} -eq 0 ]]; then
@@ -762,11 +762,11 @@ eliminar_contenedor() {
     # Mostrar contenedores con números
     echo -e "${GREEN}Seleccione un contenedor para eliminar:${NC}"
     for i in "${!contenedores[@]}"; do
-        local num=$((i + 1))
-        local info="${contenedores[$i]}"
-        local nombre=$(echo "$info" | awk '{print $1}')
-        local estado=$(echo "$info" | awk '{print $2,$3,$4,$5}')
-        local imagen=$(echo "$info" | awk '{print $NF}')
+        num=$((i + 1))
+        info="${contenedores[$i]}"
+        nombre=$(echo "$info" | awk '{print $1}')
+        estado=$(echo "$info" | awk '{print $2,$3,$4,$5}')
+        imagen=$(echo "$info" | awk '{print $NF}')
         echo "  $num) $nombre (Estado: $estado, Imagen: $imagen)"
     done
     
@@ -775,9 +775,9 @@ eliminar_contenedor() {
         read -p "Ingrese el número del contenedor (1-${#contenedores[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#contenedores[@]} ]]; then
-            local indice=$((seleccion - 1))
-            local info="${contenedores[$indice]}"
-            local contenedor_seleccionado=$(echo "$info" | awk '{print $1}')
+            indice=$((seleccion - 1))
+            info="${contenedores[$indice]}"
+            contenedor_seleccionado=$(echo "$info" | awk '{print $1}')
             break
         else
             echo -e "${RED}Selección inválida. Por favor ingrese un número entre 1 y ${#contenedores[@]}${NC}"
@@ -787,8 +787,8 @@ eliminar_contenedor() {
     echo -e "${GREEN}Contenedor seleccionado: $contenedor_seleccionado${NC}"
     
     # Verificar si está corriendo
-    local estado=$(docker inspect --format '{{.State.Status}}' "$contenedor_seleccionado" 2>/dev/null || echo "unknown")
-    local force_flag=""
+    estado=$(docker inspect --format '{{.State.Status}}' "$contenedor_seleccionado" 2>/dev/null || echo "unknown")
+    force_flag=""
     
     if [[ "$estado" == "running" ]]; then
         echo -e "${YELLOW}El contenedor está corriendo${NC}"
@@ -825,7 +825,7 @@ lanzar_contenedor_interactivo() {
     echo -e "${BLUE}=== Lanzar Contenedor Interactivo ===${NC}"
     
     # Obtener contenedores disponibles
-    local contenedores
+    contenedores
     readarray -t contenedores < <(docker ps -a --format "{{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Ports}}" | head -n -1)
     
     if [[ ${#contenedores[@]} -eq 0 ]]; then
@@ -837,12 +837,12 @@ lanzar_contenedor_interactivo() {
     # Mostrar contenedores con números
     echo -e "${GREEN}Seleccione un contenedor para lanzar:${NC}"
     for i in "${!contenedores[@]}"; do
-        local num=$((i + 1))
-        local info="${contenedores[$i]}"
-        local nombre=$(echo "$info" | awk '{print $1}')
-        local estado=$(echo "$info" | awk '{print $2,$3,$4,$5}')
-        local imagen=$(echo "$info" | awk '{print $(NF-2)}')
-        local puertos=$(echo "$info" | awk '{for(i=NF-1;i<=NF;i++) printf "%s ", $i}' | xargs)
+        num=$((i + 1))
+        info="${contenedores[$i]}"
+        nombre=$(echo "$info" | awk '{print $1}')
+        estado=$(echo "$info" | awk '{print $2,$3,$4,$5}')
+        imagen=$(echo "$info" | awk '{print $(NF-2)}')
+        puertos=$(echo "$info" | awk '{for(i=NF-1;i<=NF;i++) printf "%s ", $i}' | xargs)
         echo "  $num) $nombre (Estado: $estado, Imagen: $imagen, Puertos: $puertos)"
     done
     
@@ -851,9 +851,9 @@ lanzar_contenedor_interactivo() {
         read -p "Ingrese el número del contenedor (1-${#contenedores[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#contenedores[@]} ]]; then
-            local indice=$((seleccion - 1))
-            local info="${contenedores[$indice]}"
-            local contenedor_seleccionado=$(echo "$info" | awk '{print $1}')
+            indice=$((seleccion - 1))
+            info="${contenedores[$indice]}"
+            contenedor_seleccionado=$(echo "$info" | awk '{print $1}')
             break
         else
             echo -e "${RED}Selección inválida. Por favor ingrese un número entre 1 y ${#contenedores[@]}${NC}"
@@ -863,7 +863,7 @@ lanzar_contenedor_interactivo() {
     echo -e "${GREEN}Contenedor seleccionado: $contenedor_seleccionado${NC}"
     
     # Verificar estado actual
-    local estado=$(docker inspect --format '{{.State.Status}}' "$contenedor_seleccionado" 2>/dev/null || echo "unknown")
+    estado=$(docker inspect --format '{{.State.Status}}' "$contenedor_seleccionado" 2>/dev/null || echo "unknown")
     echo -e "${BLUE}Estado actual: $estado${NC}"
     
     # Opciones según el estado
@@ -932,9 +932,9 @@ lanzar_contenedor_interactivo() {
                         echo -e "${BLUE}Reiniciando contenedor con proceso principal...${NC}"
                         
                         # Obtener la configuración del contenedor existente
-                        local imagen=$(docker inspect --format '{{.Config.Image}}' "$contenedor_seleccionado" 2>/dev/null)
-                        local volumes=$(docker inspect --format '{{range .Mounts}}{{.Source}}:{{.Destination}} {{end}}' "$contenedor_seleccionado" 2>/dev/null)
-                        local ports=$(docker inspect --format '{{range $p, $c := .NetworkSettings.Ports}}{{range $c}}-p {{$p}}:{{$c.HostPort}} {{end}}{{end}}' "$contenedor_seleccionado" 2>/dev/null)
+                        imagen=$(docker inspect --format '{{.Config.Image}}' "$contenedor_seleccionado" 2>/dev/null)
+                        volumes=$(docker inspect --format '{{range .Mounts}}{{.Source}}:{{.Destination}} {{end}}' "$contenedor_seleccionado" 2>/dev/null)
+                        ports=$(docker inspect --format '{{range $p, $c := .NetworkSettings.Ports}}{{range $c}}-p {{$p}}:{{$c.HostPort}} {{end}}{{end}}' "$contenedor_seleccionado" 2>/dev/null)
                         
                         if [[ -z "$imagen" ]]; then
                             echo -e "${RED}No se pudo obtener la imagen del contenedor${NC}"
@@ -944,8 +944,8 @@ lanzar_contenedor_interactivo() {
                         echo -e "${YELLOW}Imagen detectada: $imagen${NC}"
                         
                         # Construir comando para recrear el contenedor con proceso principal
-                        local nuevo_nombre="${contenedor_seleccionado}_interactive"
-                        local docker_cmd="docker run -it --name $nuevo_nombre --rm"
+                        nuevo_nombre="${contenedor_seleccionado}_interactive"
+                        docker_cmd="docker run -it --name $nuevo_nombre --rm"
                         
                         # Agregar volúmenes si existen
                         if [[ -n "$volumes" ]]; then
@@ -976,7 +976,7 @@ lanzar_contenedor_interactivo() {
                         ;;
                     3)
                         echo -e "${BLUE}Creando nueva sesión interactiva temporal...${NC}"
-                        local imagen=$(docker inspect --format '{{.Config.Image}}' "$contenedor_seleccionado" 2>/dev/null)
+                        imagen=$(docker inspect --format '{{.Config.Image}}' "$contenedor_seleccionado" 2>/dev/null)
                         if [[ -n "$imagen" ]]; then
                             echo -e "${YELLOW}Usando imagen: $imagen${NC}"
                             docker run -it --rm "$imagen" /bin/bash 2>/dev/null || docker run -it --rm "$imagen" /bin/sh
@@ -1039,7 +1039,7 @@ menu() {
 
 # Función principal
 main() {
-    local verbose=false
+    verbose=false
     
     # Parsear argumentos
     while [[ $# -gt 0 ]]; do
