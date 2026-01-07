@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 source colores.bash
 function comprobarCadena() {
     if [[ -z "$1" ]]; then
