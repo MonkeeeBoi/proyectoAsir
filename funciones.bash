@@ -108,6 +108,10 @@ comprobar_dependencias() {
             if ! command -v nmcli > /dev/null 2>&1; then
                 sudo apt install network-manager
             fi
+        elif [ "$cmd" == "docker" ]; then
+            if ! command -v docker > /dev/null 2>&1; then
+                sudo apt install wmdocker
+            fi
         fi
         if ! command -v "$cmd" > /dev/null 2>&1; then
             sudo apt install "$cmd"

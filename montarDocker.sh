@@ -98,7 +98,7 @@ montar_contenedor() {
     
     # Seleccionar imagen
     while true; do
-        read -p "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
+        read -rp "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#imagenes[@]} ]]; then
             indice=$((seleccion - 1))
@@ -118,7 +118,7 @@ montar_contenedor() {
     echo "Ejemplos: /home/usuario/proyectos, ./datos, /tmp/compartido"
     
     while true; do
-        read -p "Ruta de la carpeta: " carpeta_local
+        read -rp "Ruta de la carpeta: " carpeta_local
         
         # Convertir ruta relativa a absoluta
         if [[ "$carpeta_local" == ./* ]] || [[ "$carpeta_local" == ../* ]] || [[ "$carpeta_local" == /* ]]; then
@@ -128,7 +128,7 @@ montar_contenedor() {
         if validar_carpeta "$carpeta_local"; then
             break
         else
-            read -p "¿Desea crear la carpeta? (s/N): " crear
+            read -rp "¿Desea crear la carpeta? (s/N): " crear
             if [[ "$crear" =~ ^[Ss]$ ]]; then
                 mkdir -p "$carpeta_local"
                 if [[ $? -eq 0 ]]; then
@@ -142,15 +142,15 @@ montar_contenedor() {
     done
     
     # Solicitar ruta dentro del contenedor
-    read -p "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
+    read -rp "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
     carpeta_contenedor=${carpeta_contenedor:-/app/compartido}
     
     # Opciones adicionales
     echo ""
     echo -e "${BLUE}=== Opciones adicionales ===${NC}"
-    read -p "¿Desea especificar un nombre para el contenedor? (opcional): " nombre_contenedor
+    read -rp "¿Desea especificar un nombre para el contenedor? (opcional): " nombre_contenedor
     
-    read -p "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma): " puertos
+    read -rp "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma): " puertos
     
     # Construir comando Docker
     docker_cmd="docker run -it"
@@ -197,7 +197,7 @@ montar_contenedor() {
     echo ""
     
     # Confirmar ejecución
-    read -p "¿Desea ejecutar el contenedor? (S/n): " confirmar
+    read -rp "¿Desea ejecutar el contenedor? (S/n): " confirmar
     if [[ "$confirmar" =~ ^[Nn]$ ]]; then
         echo -e "${YELLOW}Operación cancelada${NC}"
         return 0
@@ -249,7 +249,7 @@ eliminar_imagen() {
     
     # Seleccionar imagen
     while true; do
-        read -p "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
+        read -rp "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#imagenes[@]} ]]; then
             indice=$((seleccion - 1))
@@ -271,7 +271,7 @@ eliminar_imagen() {
         echo -e "${YELLOW}ADVERTENCIA: Los siguientes contenedores usan esta imagen:${NC}"
         echo "$contenedores_usando"
         echo ""
-        read -p "¿Desea eliminar estos contenedores primero? (s/N): " eliminar_contenedores
+        read -rp "¿Desea eliminar estos contenedores primero? (s/N): " eliminar_contenedores
         
         if [[ "$eliminar_contenedores" =~ ^[Ss]$ ]]; then
             for contenedor in $contenedores_usando; do
@@ -291,7 +291,7 @@ eliminar_imagen() {
     
     # Confirmar eliminación
     echo -e "${RED}ADVERTENCIA: Esta acción eliminará permanentemente la imagen${NC}"
-    read -p "¿Está seguro de eliminar la imagen '$imagen_seleccionada'? (s/N): " confirmar
+    read -rp "¿Está seguro de eliminar la imagen '$imagen_seleccionada'? (s/N): " confirmar
     
     if [[ "$confirmar" =~ ^[Ss]$ ]]; then
         echo -e "${BLUE}Eliminando imagen...${NC}"
@@ -328,7 +328,7 @@ obtener_imagen() {
     echo ""
     
     while true; do
-        read -p "Seleccione una opción (1-9): " seleccion
+        read -rp "Seleccione una opción (1-9): " seleccion
         
         case $seleccion in
             1)
@@ -365,7 +365,7 @@ obtener_imagen() {
                 ;;
             9)
                 while true; do
-                    read -p "Ingrese el nombre de la imagen (ej: ubuntu:22.04): " imagen_personalizada
+                    read -rp "Ingrese el nombre de la imagen (ej: ubuntu:22.04): " imagen_personalizada
                     if [[ -n "$imagen_personalizada" ]]; then
                         imagen="$imagen_personalizada"
                         break
@@ -385,7 +385,7 @@ obtener_imagen() {
     echo ""
     
     # Confirmar descarga
-    read -p "¿Desea descargar la imagen '$imagen'? (S/n): " confirmar
+    read -rp "¿Desea descargar la imagen '$imagen'? (S/n): " confirmar
     if [[ "$confirmar" =~ ^[Nn]$ ]]; then
         echo -e "${YELLOW}Operación cancelada${NC}"
         return 0
@@ -407,7 +407,7 @@ obtener_imagen() {
         
         # Preguntar si desea crear un contenedor
         echo ""
-        read -p "¿Desea crear un contenedor con esta imagen ahora? (S/n): " crear_contenedor
+        read -rp "¿Desea crear un contenedor con esta imagen ahora? (S/n): " crear_contenedor
         if [[ ! "$crear_contenedor" =~ ^[Nn]$ ]]; then
             # Llamar a la función crear_contenedor con la imagen preseleccionada
             crear_contenedor_con_imagen "$imagen"
@@ -424,7 +424,7 @@ crear_contenedor_con_imagen() {
     echo -e "${BLUE}=== Crear Contenedor con Imagen: $imagen_preseleccionada ===${NC}"
     
     # Solicitar nombre del contenedor
-    read -p "Nombre del contenedor (opcional): " nombre_contenedor
+    read -rp "Nombre del contenedor (opcional): " nombre_contenedor
     
     # Solicitar carpeta para compartir
     echo ""
@@ -434,7 +434,7 @@ crear_contenedor_con_imagen() {
     carpeta_local=""
     carpeta_contenedor=""
     while true; do
-        read -p "Ruta de la carpeta (o Enter para omitir): " carpeta_local
+        read -rp "Ruta de la carpeta (o Enter para omitir): " carpeta_local
         
         if [[ -z "$carpeta_local" ]]; then
             break
@@ -446,16 +446,16 @@ crear_contenedor_con_imagen() {
         fi
         
         if validar_carpeta "$carpeta_local"; then
-            read -p "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
+            read -rp "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
             carpeta_contenedor=${carpeta_contenedor:-/app/compartido}
             break
         else
-            read -p "¿Desea crear la carpeta? (s/N): " crear
+            read -rp "¿Desea crear la carpeta? (s/N): " crear
             if [[ "$crear" =~ ^[Ss]$ ]]; then
                 mkdir -p "$carpeta_local"
                 if [[ $? -eq 0 ]]; then
                     echo -e "${GREEN}Carpeta creada: $carpeta_local${NC}"
-                    read -p "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
+                    read -rp "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
                     carpeta_contenedor=${carpeta_contenedor:-/app/compartido}
                     break
                 else
@@ -466,10 +466,10 @@ crear_contenedor_con_imagen() {
     done
     
     # Solicitar puertos
-    read -p "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma, o Enter para omitir): " puertos
+    read -rp "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma, o Enter para omitir): " puertos
     
     # Solicitar si se ejecuta en modo detached
-    read -p "¿Ejecutar en modo detached (segundo plano)? (s/N): " detached
+    read -rp "¿Ejecutar en modo detached (segundo plano)? (s/N): " detached
     detached_flag=""
     if [[ "$detached" =~ ^[Ss]$ ]]; then
         detached_flag="-d"
@@ -529,7 +529,7 @@ crear_contenedor_con_imagen() {
     echo ""
     
     # Confirmar ejecución
-    read -p "¿Desea crear el contenedor? (S/n): " confirmar
+    read -rp "¿Desea crear el contenedor? (S/n): " confirmar
     if [[ "$confirmar" =~ ^[Nn]$ ]]; then
         echo -e "${YELLOW}Operación cancelada${NC}"
         return 0
@@ -587,7 +587,7 @@ crear_contenedor() {
     
     # Seleccionar imagen
     while true; do
-        read -p "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
+        read -rp "Ingrese el número de la imagen (1-${#imagenes[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#imagenes[@]} ]]; then
             indice=$((seleccion - 1))
@@ -601,7 +601,7 @@ crear_contenedor() {
     echo -e "${GREEN}Imagen seleccionada: $imagen_seleccionada${NC}"
     
     # Solicitar nombre del contenedor
-    read -p "Nombre del contenedor (opcional): " nombre_contenedor
+    read -rp "Nombre del contenedor (opcional): " nombre_contenedor
     
     # Solicitar carpeta para compartir
     echo ""
@@ -611,7 +611,7 @@ crear_contenedor() {
     carpeta_local=""
     carpeta_contenedor=""
     while true; do
-        read -p "Ruta de la carpeta (o Enter para omitir): " carpeta_local
+        read -rp "Ruta de la carpeta (o Enter para omitir): " carpeta_local
         
         if [[ -z "$carpeta_local" ]]; then
             break
@@ -623,16 +623,16 @@ crear_contenedor() {
         fi
         
         if validar_carpeta "$carpeta_local"; then
-            read -p "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
+            read -rp "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
             carpeta_contenedor=${carpeta_contenedor:-/app/compartido}
             break
         else
-            read -p "¿Desea crear la carpeta? (s/N): " crear
+            read -rp "¿Desea crear la carpeta? (s/N): " crear
             if [[ "$crear" =~ ^[Ss]$ ]]; then
                 mkdir -p "$carpeta_local"
                 if [[ $? -eq 0 ]]; then
                     echo -e "${GREEN}Carpeta creada: $carpeta_local${NC}"
-                    read -p "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
+                    read -rp "Ruta dentro del contenedor (default: /app/compartido): " carpeta_contenedor
                     carpeta_contenedor=${carpeta_contenedor:-/app/compartido}
                     break
                 else
@@ -643,10 +643,10 @@ crear_contenedor() {
     done
     
     # Solicitar puertos
-    read -p "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma, o Enter para omitir): " puertos
+    read -rp "¿Desea exponer puertos? (ejemplo: 8080:80, múltiples separados por coma, o Enter para omitir): " puertos
     
     # Solicitar si se ejecuta en modo detached
-    read -p "¿Ejecutar en modo detached (segundo plano)? (s/N): " detached
+    read -rp "¿Ejecutar en modo detached (segundo plano)? (s/N): " detached
     detached_flag=""
     if [[ "$detached" =~ ^[Ss]$ ]]; then
         detached_flag="-d"
@@ -706,7 +706,7 @@ crear_contenedor() {
     echo ""
     
     # Confirmar ejecución
-    read -p "¿Desea crear el contenedor? (S/n): " confirmar
+    read -rp "¿Desea crear el contenedor? (S/n): " confirmar
     if [[ "$confirmar" =~ ^[Nn]$ ]]; then
         echo -e "${YELLOW}Operación cancelada${NC}"
         return 0
@@ -757,7 +757,7 @@ eliminar_contenedor() {
     
     # Seleccionar contenedor
     while true; do
-        read -p "Ingrese el número del contenedor (1-${#contenedores[@]}): " seleccion
+        read -rp "Ingrese el número del contenedor (1-${#contenedores[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#contenedores[@]} ]]; then
             indice=$((seleccion - 1))
@@ -777,7 +777,7 @@ eliminar_contenedor() {
     
     if [[ "$estado" == "running" ]]; then
         echo -e "${YELLOW}El contenedor está corriendo${NC}"
-        read -p "¿Desea detenerlo y eliminarlo? (s/N): " detener_eliminar
+        read -rp "¿Desea detenerlo y eliminarlo? (s/N): " detener_eliminar
         if [[ ! "$detener_eliminar" =~ ^[Ss]$ ]]; then
             echo -e "${YELLOW}Operación cancelada${NC}"
             return 0
@@ -787,7 +787,7 @@ eliminar_contenedor() {
     
     # Confirmar eliminación
     echo -e "${RED}ADVERTENCIA: Esta acción eliminará permanentemente el contenedor${NC}"
-    read -p "¿Está seguro de eliminar el contenedor '$contenedor_seleccionado'? (s/N): " confirmar
+    read -rp "¿Está seguro de eliminar el contenedor '$contenedor_seleccionado'? (s/N): " confirmar
     
     if [[ "$confirmar" =~ ^[Ss]$ ]]; then
         echo -e "${BLUE}Eliminando contenedor...${NC}"
@@ -833,7 +833,7 @@ lanzar_contenedor_interactivo() {
     
     # Seleccionar contenedor
     while true; do
-        read -p "Ingrese el número del contenedor (1-${#contenedores[@]}): " seleccion
+        read -rp "Ingrese el número del contenedor (1-${#contenedores[@]}): " seleccion
         
         if [[ "$seleccion" =~ ^[0-9]+$ ]] && [[ $seleccion -ge 1 ]] && [[ $seleccion -le ${#contenedores[@]} ]]; then
             indice=$((seleccion - 1))
@@ -863,7 +863,7 @@ lanzar_contenedor_interactivo() {
             echo ""
             
             while true; do
-                read -p "Seleccione una opción (1-3): " opcion_lanzar
+                read -rp "Seleccione una opción (1-3): " opcion_lanzar
                 
                 case $opcion_lanzar in
                     1)
@@ -910,7 +910,7 @@ lanzar_contenedor_interactivo() {
             echo ""
             
             while true; do
-                read -p "Seleccione una opción (1-4): " opcion_lanzar
+                read -rp "Seleccione una opción (1-4): " opcion_lanzar
                 
                 case $opcion_lanzar in
                     1)
