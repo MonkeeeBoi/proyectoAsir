@@ -24,6 +24,10 @@ while true; do
   echo ""
   echo "+------------------------------------+"
   echo "|                                    |"
+  echo "|        GESTOR DE FUNCIONES         |"
+  echo "|                                    |"
+  echo "+------------------------------------+"
+  echo "|                                    |"
   echo "|    1. Gestión de usuarios          |"
   echo "|    2. Gestión de grupos            |"
   echo "|    3. Gestión de paquetes          |"
@@ -86,7 +90,7 @@ while true; do
         ;;
         11)
             clear
-            main
+            menuDocker
         ;;
         12)
             clear 

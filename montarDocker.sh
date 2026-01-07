@@ -1,13 +1,8 @@
 #!/bin/bash
 
 # Script para montar contenedores Docker con selección de imagen y carpeta compartida
-
-# Colores para salida
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# shellcheck disable=SC1091
+source colores.bash
 
 # Función para mostrar el uso
 mostrar_uso() {
@@ -210,10 +205,6 @@ montar_contenedor() {
     
     # Ejecutar comando
     echo -e "${BLUE}Iniciando contenedor...${NC}"
-    if [[ "$verbose" == true ]]; then
-        echo -e "${YELLOW}Ejecutando: $docker_cmd${NC}"
-    fi
-    
     eval "$docker_cmd"
     
     # Mensaje final
@@ -546,9 +537,6 @@ crear_contenedor_con_imagen() {
     
     # Ejecutar comando
     echo -e "${BLUE}Creando contenedor...${NC}"
-    if [[ "$verbose" == true ]]; then
-        echo -e "${YELLOW}Ejecutando: $docker_cmd${NC}"
-    fi
     
     eval "$docker_cmd"
     
@@ -726,9 +714,6 @@ crear_contenedor() {
     
     # Ejecutar comando
     echo -e "${BLUE}Creando contenedor...${NC}"
-    if [[ "$verbose" == true ]]; then
-        echo -e "${YELLOW}Ejecutando: $docker_cmd${NC}"
-    fi
     
     eval "$docker_cmd"
     
@@ -1026,6 +1011,7 @@ menu() {
         echo -e "${GREEN}6.${NC} Eliminar imagen"
         echo -e "${GREEN}7.${NC} Mostrar imágenes disponibles"
         echo -e "${GREEN}8.${NC} Mostrar contenedores"
+        echo -e "${GREEN}9.${NC} Mostrar ayuda"
         echo -e "${RED}0.${NC} Salir"
     else
         echo -e "${RED}Docker no está instalado${NC}"
@@ -1038,93 +1024,67 @@ menu() {
 }
 
 # Función principal
-main() {
-    verbose=false
-    
-    # Parsear argumentos
-    while [[ $# -gt 0 ]]; do
-        case $1 in
-            -h|--help)
-                mostrar_uso
-                exit 0
+menuDocker() {
+    # Si no hay argumentos, mostrar menú interactivo
+    while true; do
+        menu
+        read -r opcion
+        
+        case $opcion in
+            1)
+                if verificar_instalacion; then
+                    montar_contenedor
+                fi
                 ;;
-            -v|--verbose)
-                verbose=true
-                shift
+            2)
+                if verificar_instalacion; then
+                    crear_contenedor
+                fi
+                ;;
+            3)
+                if verificar_instalacion; then
+                    lanzar_contenedor_interactivo
+                fi
+                ;;
+            4)
+                if verificar_instalacion; then
+                    eliminar_contenedor
+                fi
+                ;;
+            5)
+                if verificar_instalacion; then
+                    obtener_imagen
+                fi
+                ;;
+            6)
+                if verificar_instalacion; then
+                    eliminar_imagen
+                fi
+                ;;
+            7)
+                if verificar_instalacion; then
+                    mostrar_imagenes
+                fi
+                ;;
+            8)
+                if verificar_instalacion; then
+                    mostrar_contenedores
+                fi
+                ;;
+            9)
+                mostrar_uso
+                ;;
+            0)
+                echo -e "${YELLOW}Saliendo...${NC}"
+                break
                 ;;
             *)
-                echo -e "${RED}Opción desconocida: $1${NC}"
-                mostrar_uso
-                exit 1
+                echo -e "${RED}Opción no válida${NC}"
                 ;;
         esac
+        
+        echo ""
+        echo -n "Presiona Enter para continuar..."
+        read -r
     done
-    
-    # Si no hay argumentos, mostrar menú interactivo
-    if [[ $# -eq 0 ]]; then
-        while true; do
-            menu
-            read -r opcion
-            
-            case $opcion in
-                1)
-                    if verificar_instalacion; then
-                        montar_contenedor
-                    fi
-                    ;;
-                2)
-                    if verificar_instalacion; then
-                        crear_contenedor
-                    fi
-                    ;;
-                3)
-                    if verificar_instalacion; then
-                        lanzar_contenedor_interactivo
-                    fi
-                    ;;
-                4)
-                    if verificar_instalacion; then
-                        eliminar_contenedor
-                    fi
-                    ;;
-                5)
-                    if verificar_instalacion; then
-                        obtener_imagen
-                    fi
-                    ;;
-                6)
-                    if verificar_instalacion; then
-                        eliminar_imagen
-                    fi
-                    ;;
-                7)
-                    if verificar_instalacion; then
-                        mostrar_imagenes
-                    fi
-                    ;;
-                8)
-                    if verificar_instalacion; then
-                        mostrar_contenedores
-                    fi
-                    ;;
-                0)
-                    echo -e "${YELLOW}Saliendo...${NC}"
-                    exit 0
-                    ;;
-                *)
-                    echo -e "${RED}Opción no válida${NC}"
-                    ;;
-            esac
-            
-            echo ""
-            echo -n "Presiona Enter para continuar..."
-            read -r
-        done
-    else
-        # Si hay argumentos, ejecutar directamente la función de montar
-        montar_contenedor
-    fi
 }
-
-# Ejecutar función principal
-main "$@"

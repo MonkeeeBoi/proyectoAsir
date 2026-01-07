@@ -19,12 +19,12 @@ function comprobarUsuario() {
 
 function comprobarYesOrNo() {
     if [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
-        return 1
+        return 0
     elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" || "$1" == "N"  ]]; then
-        return 1
+        return 0
     else
         echo "ERROR: Opcion no valida..."
-        return 0
+        return 1
     fi
 }
 
@@ -61,7 +61,7 @@ function soloNumeros(){
 }
 
 comprobar_dependencias() {
-    dependenciasNecesarias="openssl inxi btop fastfetch network-manager docker"
+    dependenciasNecesarias="openssl inxi btop fastfetch nmcli docker"
     dependenciasNoInstaladas=""
     echo "SYSTEM: comprobando/actualizando paquetes necesarios..."
     echo "SYSTEM: Actualizando paquetes..."
@@ -98,12 +98,17 @@ comprobar_dependencias() {
     done
     for cmd in ${dependenciasNoInstaladas}; do
         echo "SYSTEM: Instalando la dependencia $cmd"
-        [ "$cmd" == "fastfetch" ] && {
+        if [ "$cmd" == "fastfetch" ]; then
             if ! command -v fastfetch > /dev/null 2>&1; then
-            sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
-            sudo apt update
-            sudo apt install fastfetch -y
-        }
+                sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
+                sudo apt update
+                sudo apt install fastfetch -y
+            fi
+        elif [ "$cmd" == "nmcli" ]; then
+            if ! command -v nmcli > /dev/null 2>&1; then
+                sudo apt install network-manager
+            fi
+        fi
         if ! command -v "$cmd" > /dev/null 2>&1; then
             sudo apt install "$cmd"
         fi

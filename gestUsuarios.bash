@@ -184,7 +184,7 @@ function permisosUsuario() {
 
     if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
       clear
-      echo "Error: entrada no aceptada..."
+      echo "[ERROR] entrada no aceptada..."
       echo "Introduce de nuevo los permisos para los directorios del usuario '$permisosDirectorios'."
       continue
     fi
