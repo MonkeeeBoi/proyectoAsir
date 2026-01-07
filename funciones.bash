@@ -111,7 +111,7 @@ comprobar_dependencias() {
             fi
         elif [ "$cmd" == "docker" ]; then
             if ! command -v docker > /dev/null 2>&1; then
-                sudo apt install wmdocker
+                sudo apt install docker.io
             fi
         fi
         if ! command -v "$cmd" > /dev/null 2>&1; then
