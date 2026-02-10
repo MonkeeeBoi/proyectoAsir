@@ -8,15 +8,15 @@ source funciones.bash
 
 function menuBackups() {
    while true; do
-    echo ""
-    echo "+-------------------------------------+"
-    echo "|                                     |"
-    echo "|   1. Crear backup de directorio     |"
-    echo "|   2. Restaurar backup               |"
-    echo "|                                     |"
-    echo "|   0. Volver                         |"
-    echo "+-------------------------------------+"
-    echo ""
+    echo -e ""
+    echo -e "+-------------------------------------+"
+    echo -e "|                                     |"
+    echo -e "|   1. Crear backup de directorio     |"
+    echo -e "|   2. Restaurar backup               |"
+    echo -e "|                                     |"
+    echo -e "|   0. Volver                         |"
+    echo -e "+-------------------------------------+"
+    echo -e ""
 
     read -rp "Introduce una opcion: " opcSelect
 
@@ -29,12 +29,12 @@ function menuBackups() {
                 nombre=$(basename "$dir")
                 backup="backup_${nombre}_$fecha.tar.gz"
                 if tar -czf "$backup" "$dir"; then
-                    echo "Backup creado: $backup"
+                    echo -e "Backup creado: $backup"
                 else
-                    echo "ERROR: No se pudo crear el backup."
+                    echo -e "ERROR: No se pudo crear el backup."
                 fi
             else
-                echo "El directorio no existe."
+                echo -e "El directorio no existe."
             fi
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
@@ -45,9 +45,9 @@ function menuBackups() {
                 read -rp "Introduce el directorio destino para restaurar: " destino
                 mkdir -p "$destino"
                 tar -xzf "$archivo" -C "$destino"
-                echo "Backup restaurado en: $destino"
+                echo -e "Backup restaurado en: $destino"
             else
-                echo "El archivo no existe."
+                echo -e "El archivo no existe."
             fi
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
@@ -55,7 +55,7 @@ function menuBackups() {
             break
             ;;
         *)
-            echo "Introduce una opcion valida..."
+            echo -e "Introduce una opcion valida..."
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
     esac

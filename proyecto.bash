@@ -22,29 +22,29 @@ clear
 # Menu
 while true; do
   clear
-  echo ""
-  echo "+------------------------------------+"
-  echo "|                                    |"
-  echo "|        GESTOR DE FUNCIONES         |"
-  echo "|                                    |"
-  echo "+------------------------------------+"
-  echo "|                                    |"
-  echo "|    1. Gestión de usuarios          |"
-  echo "|    2. Gestión de grupos            |"
-  echo "|    3. Gestión de paquetes          |"
-  echo "|    4. Gestión del sistema          |"
-  echo "|    5. Gestión de RED               |"
-  echo "|    6. Servicios y procesos         |"
-  echo "|    7. Mantenimiento y limpieza     |"
-  echo "|    8. Copias de seguridad          |"
-  echo "|    9. Seguridad                    |"
-  echo "|    10. Discos, particiones y RAID  |"
-  echo "|    11. Docker                      |"
-  echo "|    12. LDAP                        |"
-  echo "|                                    |"
-  echo "|    0. Salir                        |"
-  echo "+------------------------------------+"
-  echo ""
+  echo -e ""
+  echo -e "+------------------------------------+"
+  echo -e "|                                    |"
+  echo -e "|        GESTOR DE FUNCIONES         |"
+  echo -e "|                                    |"
+  echo -e "+------------------------------------+"
+  echo -e "|                                    |"
+  echo -e "|    1. Gestión de usuarios          |"
+  echo -e "|    2. Gestión de grupos            |"
+  echo -e "|    3. Gestión de paquetes          |"
+  echo -e "|    4. Gestión del sistema          |"
+  echo -e "|    5. Gestión de RED               |"
+  echo -e "|    6. Servicios y procesos         |"
+  echo -e "|    7. Mantenimiento y limpieza     |"
+  echo -e "|    8. Copias de seguridad          |"
+  echo -e "|    9. Seguridad                    |"
+  echo -e "|    10. Discos, particiones y RAID  |"
+  echo -e "|    11. Docker                      |"
+  echo -e "|    12. LDAP                        |"
+  echo -e "|                                    |"
+  echo -e "|    0. Salir                        |"
+  echo -e "+------------------------------------+"
+  echo -e ""
 
   read -rp "Introduce una opcion: " opcSelect
     
@@ -98,7 +98,7 @@ while true; do
         ;;
         0) exit 0 ;;
         *) 
-        echo "Introduce una opcion valida..." 
+        echo -e "Introduce una opcion valida..." 
         read -n1 -srp "Presione una tecla para continuar..."
         ;;
     esac
