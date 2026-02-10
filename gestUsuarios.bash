@@ -67,7 +67,7 @@ function menuGestUser() {
 function crearUsuario() {
 
   while true; do
-    read -rp "Introduce el nombre del nuevo usuario: " nombreUsuario
+    read -rp "${BLUE}Introduce el nombre del nuevo usuario:${NC} " nombreUsuario
 
     if comprobarCadena "$nombreUsuario"; then
       continue
@@ -80,7 +80,7 @@ function crearUsuario() {
   done
 
   while true; do
-    read -rsp "Introduce la contraseña para el usuario: " usuarioPass
+    read -rsp "${BLUE}Introduce la contraseña para el usuario:${NC} " usuarioPass
 
     if comprobarCadena "$usuarioPass"; then
       continue
@@ -90,7 +90,7 @@ function crearUsuario() {
 
   while true; do
     echo -e ""
-    read -rp "Quieres que se cree el home del usuario [y/n]: " usuarioHome
+    read -rp "${BLUE}¿Quieres que se cree el home del usuario? [y/n]:${NC} " usuarioHome
 
     if comprobarCadena "$usuarioHome"; then
       continue
@@ -102,18 +102,19 @@ function crearUsuario() {
   done
 
   if YesOrNo "$usuarioHome"; then
-    echo -e "creando home del usuario..."
+    echo -e "${BLUE}Creando home del usuario...${NC}"
     sudo useradd -m -p "$(securePass "$usuarioPass")" "$nombreUsuario" &>/dev/null
   else
+    echo -e "${BLUE}Creando usuario sin home...${NC}"
     sudo useradd -p "$(securePass "$usuarioPass")" "$nombreUsuario" &>/dev/null
   fi
 
-  echo -e "Proceso de creación para '$nombreUsuario' completado."
+  echo -e "${GREEN}Proceso de creación para '$nombreUsuario' completado.${NC}"
 }
 
 function eliminarUsuario() {
   while true; do
-    read -rp "Introduce el nombre del usuario a eliminar: " nombreUsuario
+    read -rp "${BLUE}Introduce el nombre del usuario a eliminar:${NC} " nombreUsuario
 
     if comprobarCadena "$nombreUsuario"; then
       continue
@@ -126,7 +127,7 @@ function eliminarUsuario() {
   done
 
   while true; do
-    read -rp "Quieres que se elimine el home del usuario [y/n]: " usuarioHome
+    read -rp "${BLUE}¿Quieres que se elimine el home del usuario? [y/n]:${NC} " usuarioHome
 
     if comprobarCadena "$usuarioHome"; then
       continue
@@ -138,18 +139,19 @@ function eliminarUsuario() {
   done
 
   if YesOrNo "$usuarioHome"; then
-    echo -e "eliminando home del usuario..."
+    echo -e "${BLUE}Eliminando home del usuario y usuario...${NC}"
     sudo userdel -r "$nombreUsuario" &>/dev/null
   else
+    echo -e "${BLUE}Eliminando usuario...${NC}"
     sudo userdel "$nombreUsuario" &>/dev/null
   fi
-  echo -e "Proceso de eliminación para '$nombreUsuario' completado."
+  echo -e "${GREEN}Proceso de eliminación para '$nombreUsuario' completado.${NC}"
 }
 
 function permisosUsuario() {
   # --- Selección del usuario ---
   while true; do
-    read -rp "Introduce el NOMBRE DEL USUARIO cuyos archivos quieres modificar: " nombreUsuario
+    read -rp "${BLUE}Introduce el NOMBRE DEL USUARIO cuyos archivos quieres modificar:${NC} " nombreUsuario
 
     if comprobarCadena "$nombreUsuario"; then
       continue
@@ -168,12 +170,12 @@ function permisosUsuario() {
 
   # --- Permisos para archivos ---
   while true; do
-    read -rp "Introduce los NUEVOS PERMISOS en octal para los ARCHIVOS (644, 755): " permisosArchivos
+    read -rp "${BLUE}Introduce los NUEVOS PERMISOS en octal para los ARCHIVOS (644, 755):${NC} " permisosArchivos
 
     if comprobarCadena "$permisosArchivos" || soloNumerosPermisos "$permisosArchivos"; then
       clear
       echo -e "${RED}Error: entrada no aceptada...${NC}"
-      echo -e "Introduce de nuevo los permisos para los Archivos del usuario '$permisosArchivos'."
+      echo -e "${YELLOW}Introduce de nuevo los permisos para los archivos.${NC} '$permisosArchivos'."
       continue
     fi
     break
@@ -181,12 +183,12 @@ function permisosUsuario() {
 
   # --- Permisos para directorios ---
   while true; do
-    read -rp "Introduce los NUEVOS PERMISOS en octal para los DIRECTORIOS (644, 755): " permisosDirectorios
+    read -rp "${BLUE}Introduce los NUEVOS PERMISOS en octal para los DIRECTORIOS (644, 755):${NC} " permisosDirectorios
 
     if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
       clear
       echo -e "${RED}Error: entrada no aceptada...${NC}"
-      echo -e "Introduce de nuevo los permisos para los directorios del usuario '$permisosDirectorios'."
+      echo -e "${YELLOW}Introduce de nuevo los permisos para los directorios del usuario ${NC} '$permisosDirectorios'."
       continue
     fi
     break
@@ -196,34 +198,34 @@ function permisosUsuario() {
   # --- Confirmación ---
   while true; do
     echo -e ""
-    echo -e "ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos"
-    echo -e "y directorios propiedad de '$nombreUsuario' en el sistema."
-    read -rp "¿Estás seguro de continuar y aplicar permisos $permisosArchivos para los archivos y $permisosDirectorios para los directorios? [Y/n]:" confirmacion
+    echo -e "${YELLOW}ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos${NC}"
+    echo -e "${YELLOW}y directorios propiedad de '$nombreUsuario' en el sistema.${NC}"
+    read -rp "${BLUE}¿Estás seguro de continuar y aplicar permisos $permisosArchivos para los archivos y $permisosDirectorios para los directorios? [Y/n]:${NC}" confirmacion
 
     if comprobarYesOrNo "$confirmacion"; then
       continue
     fi
 
     if ! YesOrNo "$confirmacion"; then
-      printf "Operación cancelada.\n"
+      echo -e "${RED}Operación cancelada.${NC}\n"
       break
     fi
 
     # --- Ejecución de cambios ---
-    printf "Iniciando búsqueda y cambio de permisos...\n"
+    echo -e "${BLUE}Iniciando búsqueda y cambio de permisos...${NC}\n"
 
     # Cambiar permisos de archivos
-    printf "\nCambiando permisos de archivos...\n"
-    printf "Esto puede tardar unos minutos...\n"
+    echo -e "\n${YELLOW}Cambiando permisos de archivos...${NC}\n"
+    echo -e "${YELLOW}Esto puede tardar unos minutos...${NC}\n"
     sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2> /dev/null
     archivos_result=$?
 
-        echo -e "Cambiando permisos de directorios..."
+        echo -e "${YELLOW}Cambiando permisos de directorios...${NC}"
         sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
         directorios_result=$?
 
         if [[ $archivos_result -eq 0 && $directorios_result -eq 0 ]]; then
-          echo -e "Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
+          echo -e "${GREEN}Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'${NC}"
         else
           echo -e "${RED}Error al intentar ejecutar el comando de cambio de permisos.${NC}"
         fi
@@ -234,7 +236,7 @@ function permisosUsuario() {
 
 function cambiarPassUsuario() {
     while true; do
-        read -rp "Introduce el nombre del usuario para cambiar la contraseña: " nombreUsuario
+        read -rp "${BLUE}Introduce el nombre del usuario para cambiar la contraseña:${NC} " nombreUsuario
 
         if comprobarCadena "$nombreUsuario"; then
             continue
@@ -247,7 +249,7 @@ function cambiarPassUsuario() {
     done
 
     while true; do
-        read -rsp "Introduce la nueva contraseña: " nuevaPass
+        read -rsp "${BLUE}Introduce la nueva contraseña:${NC} " nuevaPass
         echo -e ""
         if comprobarCadena "$nuevaPass"; then
             continue
@@ -256,20 +258,20 @@ function cambiarPassUsuario() {
     done
 
     if echo -e "$nombreUsuario:$(securePass "$nuevaPass")" | sudo chpasswd -e; then
-        echo -e "Contraseña actualizada para el usuario '$nombreUsuario'."
+        echo -e "${GREEN}Contraseña actualizada para el usuario '$nombreUsuario'.${NC}"
     else
         echo -e "${RED}ERROR: No se pudo actualizar la contraseña.${NC}"
     fi
 }
 
 function verUsuariosConectados() {
-    echo -e "Usuarios actualmente conectados:"
+    echo -e "${BLUE}Usuarios actualmente conectados:${NC}"
     who
-    echo -e "Fin de listado."
+    echo -e "${GREEN}Fin de listado.${NC}"
 }
 
 function verTamaniosHome() {
-    echo -e "Tamaños de los directorios home de usuarios reales:"
+    echo -e "${BLUE}Tamaños de los directorios home de usuarios reales:${NC}"
     lista_usuarios=$(cat /etc/passwd | grep -E "^[^:]*:[^:]*:[0-9]{4}:")
     IFS=$'\n'
     for linea in $lista_usuarios
@@ -278,21 +280,21 @@ function verTamaniosHome() {
         homeUsuario=$(echo -e "$linea" | cut -d: -f6)
         if [[ -d "$homeUsuario" ]]; then
             tamanio=$(sudo du -sh "$homeUsuario" 2>/dev/null | cut -f1)
-            echo -e "Usuario: $usuario. Home: $homeUsuario. Tamaño: $tamanio"
+            echo -e "${YELLOW}Usuario:${NC} $usuario. ${YELLOW}Home:${NC} $homeUsuario. ${YELLOW}Tamaño:${NC} $tamanio"
         fi
     done
-    echo -e "Fin de listado."
+    echo -e "${GREEN}Fin de listado.${NC}"
 }
 
 function verHistorialUsuarios() {
-    echo -e "Historial de inicio de sesión de usuarios:"
+    echo -e "${BLUE}Historial de inicio de sesión de usuarios:${NC}"
     last | grep -E "^[a-zA-Z0-9_]+"
-    echo -e "Fin de historial."
+    echo -e "${GREEN}Fin de historial.${NC}"
 }
 
 function verPermisosUsuario() {
     while true; do
-        read -rp "Introduce el nombre del usuario para ver sus permisos: " nombreUsuario
+        read -rp "${BLUE}Introduce el nombre del usuario para ver sus permisos:${NC} " nombreUsuario
 
         if comprobarCadena "$nombreUsuario"; then
             continue
@@ -304,9 +306,9 @@ function verPermisosUsuario() {
         break
     done
 
-    echo -e "Buscando archivos y directorios propiedad de '$nombreUsuario'..."
+    echo -e "${BLUE}Buscando archivos y directorios propiedad de '$nombreUsuario'...${NC}"
     sudo find / -user "$nombreUsuario" -exec ls -ld {} \; 2>/dev/null | head -n 100
 
-    echo -e "Mostrando hasta 100 resultados con permisos. Puedes ajustar el límite si lo deseas."
+    echo -e "${GREEN}Mostrando hasta 100 resultados con permisos.${NC}"
 }
 

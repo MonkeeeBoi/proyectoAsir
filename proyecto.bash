@@ -98,7 +98,7 @@ while true; do
         ;;
         0) exit 0 ;;
         *) 
-        echo -e "Introduce una opcion valida..." 
+        echo -e "${RED}Introduce una opción válida...${NC}" 
         read -n1 -srp "Presione una tecla para continuar..."
         ;;
     esac

@@ -20,19 +20,19 @@ function menuMaintenanceANDcleaning() {
 
     case $opcSelect in
         1)
-            echo -e "Limpiando caché de apt..."
+            echo -e "${BLUE}Limpiando caché de apt...${NC}"
             sudo apt clean
-            echo -e "Caché de apt limpiada correctamente."
+            echo -e "${GREEN}Caché de apt limpiada correctamente.${NC}"
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         2)
-            echo -e "Eliminando dependencias obsoletas..."
+            echo -e "${BLUE}Eliminando dependencias obsoletas...${NC}"
             sudo apt autoremove -y
-            echo -e "Dependencias obsoletas eliminadas."
+            echo -e "${GREEN}Dependencias obsoletas eliminadas.${NC}"
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
         3)
-            echo -e "Mostrando logs del sistema (últimos 20 registros)..."
+            echo -e "${BLUE}Mostrando logs del sistema (últimos 20 registros)...${NC}"
             journalctl -xe | tail -n 20
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
@@ -40,7 +40,7 @@ function menuMaintenanceANDcleaning() {
             break
             ;;
         *)
-            echo -e "Introduce una opcion valida..."
+            echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "Presione una tecla para continuar..."
             ;;
     esac
