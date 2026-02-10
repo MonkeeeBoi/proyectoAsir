@@ -73,7 +73,7 @@ function crearUsuario() {
       continue
     fi
     if ! comprobarUsuario "$nombreUsuario"; then
-      echo "Error: El usuario existe en el sistema..."
+      echo "${RED}Error: El usuario existe en el sistema...${NC}"
       continue
     fi
     break
@@ -119,7 +119,7 @@ function eliminarUsuario() {
       continue
     fi
     if comprobarUsuario "$nombreUsuario"; then
-      echo "Error: El usuario no existe en el sistema..."
+      echo "${RED}Error: El usuario no existe en el sistema...${NC}"
       continue
     fi
     break
@@ -157,7 +157,7 @@ function permisosUsuario() {
 
     if comprobarUsuario "$nombreUsuario"; then
       clear
-      echo "Error: El usuario '$nombreUsuario' no existe en el sistema."
+      echo "${RED}Error: El usuario '$nombreUsuario' no existe en el sistema.${NC}"
       continue
     fi
 
@@ -172,7 +172,7 @@ function permisosUsuario() {
 
     if comprobarCadena "$permisosArchivos" || soloNumerosPermisos "$permisosArchivos"; then
       clear
-      echo "Error: entrada no aceptada..."
+      echo "${RED}Error: entrada no aceptada...${NC}"
       echo "Introduce de nuevo los permisos para los Archivos del usuario '$permisosArchivos'."
       continue
     fi
@@ -185,7 +185,7 @@ function permisosUsuario() {
 
     if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
       clear
-      echo "[ERROR] entrada no aceptada..."
+      echo "${RED}Error: entrada no aceptada...${NC}"
       echo "Introduce de nuevo los permisos para los directorios del usuario '$permisosDirectorios'."
       continue
     fi
@@ -225,7 +225,7 @@ function permisosUsuario() {
         if [[ $archivos_result -eq 0 && $directorios_result -eq 0 ]]; then
           echo "Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'"
         else
-          echo "Error al intentar ejecutar el comando de cambio de permisos."
+          echo "${RED}Error al intentar ejecutar el comando de cambio de permisos.${NC}"
         fi
     break
   done
@@ -240,7 +240,7 @@ function cambiarPassUsuario() {
             continue
         fi
         if comprobarUsuario "$nombreUsuario"; then
-            echo "Error: El usuario no existe en el sistema..."
+            echo "${RED}Error: El usuario no existe en el sistema...${NC}"
             continue
         fi
         break
@@ -258,7 +258,7 @@ function cambiarPassUsuario() {
     if echo "$nombreUsuario:$(securePass "$nuevaPass")" | sudo chpasswd -e; then
         echo "Contraseña actualizada para el usuario '$nombreUsuario'."
     else
-        echo "ERROR: No se pudo actualizar la contraseña."
+        echo "${RED}ERROR: No se pudo actualizar la contraseña.${NC}"
     fi
 }
 
@@ -298,7 +298,7 @@ function verPermisosUsuario() {
             continue
         fi
         if comprobarUsuario "$nombreUsuario"; then
-            echo "Error: El usuario '$nombreUsuario' no existe en el sistema..."
+            echo "${RED}Error: El usuario '$nombreUsuario' no existe en el sistema...${NC}"
             continue
         fi
         break
