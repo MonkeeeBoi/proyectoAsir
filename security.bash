@@ -24,6 +24,7 @@ function menuSecurity() {
             sudo ufw reload
             echo -e "Reglas de firewall actualizadas."
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         2)
             read -rp "Introduce la IP o dominio a escanear: " destino
@@ -38,11 +39,13 @@ function menuSecurity() {
                 echo -e "ERROR: Falló el escaneo de puertos."
             fi
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         3)
             echo -e "Usuarios del sistema con UID >= 1000:"
             getent passwd | awk -F: '$3 >= 1000 { print $1 }'
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
         0)
             break
@@ -50,6 +53,7 @@ function menuSecurity() {
         *)
             echo -e "Introduce una opcion valida..."
             read -n1 -srp "Presione una tecla para continuar..."
+            clear
             ;;
     esac
 done
