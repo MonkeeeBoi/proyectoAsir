@@ -20,23 +20,28 @@ function comprobarUsuario() {
 }
 
 function comprobarYesOrNo() {
-    if [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
-        return 0
-    elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" || "$1" == "N"  ]]; then
-        return 0
-    else
-        echo -e "ERROR: Opcion no valida..."
-        return 1
-    fi
+    case "$1" in
+        y|Y|yes|YES|Yes|n|N|no|NO|No)
+            return 0   # Entrada válida
+            ;;
+        *)
+            echo -e "ERROR: Opción no válida..."
+            return 1   # Entrada inválida
+            ;;
+    esac
 }
 
 function YesOrNo() {
-    if  [[ "$1" == "y" || "$1" == "yes" || "$1" == "YES" ||  "$1" == "Y" ]]; then
-        return 0
-    elif [[  "$1" == "n" || "$1" == "no" || "$1" == "NO" ||  "$1" == "N"  ]]; then
-        return 1
-    fi
+    case "$1" in
+        y|Y|yes|YES|Yes)
+            return 0   # Sí
+            ;;
+        n|N|no|NO|No)
+            return 1   # No
+            ;;
+    esac
 }
+
 
 function securePass() {
     printf '%s\n' "$1" | openssl passwd -6 -stdin 2>/dev/null || echo -e "ERROR: No se pudo generar hash de contraseña"

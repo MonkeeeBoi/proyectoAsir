@@ -66,41 +66,52 @@ function menuGestUser() {
 
 function crearUsuario() {
 
+  # Pedir nombre de usuario
   while true; do
     read -rp "${BLUE}Introduce el nombre del nuevo usuario:${NC} " nombreUsuario
 
     if comprobarCadena "$nombreUsuario"; then
       continue
     fi
+
     if ! comprobarUsuario "$nombreUsuario"; then
       echo -e "${RED}Error: El usuario existe en el sistema...${NC}"
       continue
     fi
+
     break
   done
 
+  # Pedir contraseña
   while true; do
     read -rsp "${BLUE}Introduce la contraseña para el usuario:${NC} " usuarioPass
+    echo ""
 
     if comprobarCadena "$usuarioPass"; then
       continue
     fi
+
     break
   done
 
+  # Preguntar si quiere home
   while true; do
-    echo -e ""
+    echo ""
     read -rp "${BLUE}¿Quieres que se cree el home del usuario? [y/n]:${NC} " usuarioHome
 
     if comprobarCadena "$usuarioHome"; then
       continue
     fi
-    if comprobarYesOrNo "$usuarioHome"; then
+
+    # AHORA SÍ: validar correctamente
+    if ! comprobarYesOrNo "$usuarioHome"; then
       continue
     fi
+
     break
   done
 
+  # Crear usuario según respuesta
   if YesOrNo "$usuarioHome"; then
     echo -e "${BLUE}Creando home del usuario...${NC}"
     sudo useradd -m -p "$(securePass "$usuarioPass")" "$nombreUsuario" &>/dev/null
@@ -112,6 +123,7 @@ function crearUsuario() {
   echo -e "${GREEN}Proceso de creación para '$nombreUsuario' completado.${NC}"
 }
 
+
 function eliminarUsuario() {
   while true; do
     read -rp "${BLUE}Introduce el nombre del usuario a eliminar:${NC} " nombreUsuario
@@ -119,10 +131,12 @@ function eliminarUsuario() {
     if comprobarCadena "$nombreUsuario"; then
       continue
     fi
+
     if comprobarUsuario "$nombreUsuario"; then
       echo -e "${RED}Error: El usuario no existe en el sistema...${NC}"
       continue
     fi
+
     break
   done
 
@@ -132,9 +146,12 @@ function eliminarUsuario() {
     if comprobarCadena "$usuarioHome"; then
       continue
     fi
-    if comprobarYesOrNo "$usuarioHome"; then
+
+    # VALIDACIÓN CORRECTA
+    if ! comprobarYesOrNo "$usuarioHome"; then
       continue
     fi
+
     break
   done
 
@@ -145,8 +162,10 @@ function eliminarUsuario() {
     echo -e "${BLUE}Eliminando usuario...${NC}"
     sudo userdel "$nombreUsuario" &>/dev/null
   fi
+
   echo -e "${GREEN}Proceso de eliminación para '$nombreUsuario' completado.${NC}"
 }
+
 
 function permisosUsuario() {
   # --- Selección del usuario ---
