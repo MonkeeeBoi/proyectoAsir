@@ -8,7 +8,7 @@ function menuSecurity() {
     echo -e ""
     echo -e "+-------------------------------------+"
     echo -e "|                                     |"
-    echo -e "|   1. Actualizar reglas de firewall  |"
+    echo -e "|   1. Recargar  firewall             |"
     echo -e "|   2. Escanear puertos abiertos      |"
     echo -e "|   3. Revisar usuarios               |"
     echo -e "|                                     |"
