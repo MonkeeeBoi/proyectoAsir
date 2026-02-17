@@ -7,19 +7,19 @@ function menuGestUser() {
     clear
     while true; do
         echo -e ""
-        echo -e "+-------------------------------------+"
-        echo -e "|                                     |"
-        echo -e "|    1. Creación de usuarios          |"
-        echo -e "|    2. Eliminación de usuarios       |"
-        echo -e "|    3. Permisos a usuario            |"
-        echo -e "|    4. Cambiar contraseña de usuario |"
-        echo -e "|    5. Ver usuarios conectados       |"
-        echo -e "|    6. Ver tamaños del home          |"
-        echo -e "|    7. Ver historial de usuarios     |"
-        echo -e "|    8. Ver permisos de usuario       |"
-        echo -e "|                                     |"
-        echo -e "|    0. Volver                        |"
-        echo -e "+-------------------------------------+"
+        echo -e "${BLUE}+-------------------------------------+${NC}"
+        echo -e "${BLUE}|                                     |${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}1.${NC} Creación de usuarios          ${BLUE}|${NC} "
+        echo -e "${BLUE}|${NC}    ${GREEN}2.${NC} Eliminación de usuarios       ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}3.${NC} Permisos a usuario            ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}4.${NC} Cambiar contraseña de usuario ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}5.${NC} Ver usuarios conectados       ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}6.${NC} Ver tamaños del home          ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}7.${NC} Ver historial de usuarios     ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}8.${NC} Ver permisos de usuario       ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}                                     ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${RED}0.${NC} Volver                        ${BLUE}|${NC}"
+        echo -e "${BLUE}+-------------------------------------+${NC}"
         echo -e ""
 
     read -rp "Introduce una opcion: " opcSelect
@@ -28,38 +28,58 @@ function menuGestUser() {
             1) 
                 clear
                 crearUsuario
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             2) 
                 clear
                 eliminarUsuario
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             3)  
                 clear
                 permisosUsuario
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
 
             4) 
                 clear 
                 cambiarPassUsuario 
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             5)
                 clear 
                 verUsuariosConectados 
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             6)
                 clear 
                 verTamaniosHome  
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             7)
                 clear 
                 verHistorialUsuarios 
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             8)
                 clear 
                 verPermisosUsuario 
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
             0) break ;;
-            *) echo -e "Introduce una opcion valida..." ;;
+            *) 
+            echo -e "${RED}Introduce una opción válida...${NC}" 
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
+            ;;
         esac
     done
 }

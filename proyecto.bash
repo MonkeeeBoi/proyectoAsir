@@ -23,26 +23,26 @@ clear
 while true; do
   clear
   echo -e ""
-  echo -e "+------------------------------------+"
-  echo -e "|                                    |"
-  echo -e "|        GESTOR DE FUNCIONES         |"
-  echo -e "|                                    |"
-  echo -e "+------------------------------------+"
-  echo -e "|                                    |"
-  echo -e "|    1. Gestión de usuarios          |"
-  echo -e "|    2. Gestión de grupos            |"
-  echo -e "|    3. Gestión de paquetes          |"
-  echo -e "|    4. Gestión del sistema          |"
-  echo -e "|    5. Gestión de RED               |"
-  echo -e "|    6. Servicios y procesos         |"
-  echo -e "|    7. Mantenimiento y limpieza     |"
-  echo -e "|    8. Copias de seguridad          |"
-  echo -e "|    9. Seguridad                    |"
-  echo -e "|    10. Discos, particiones y RAID  |"
-  echo -e "|    11. Docker                      |"
-  echo -e "|                                    |"
-  echo -e "|    0. Salir                        |"
-  echo -e "+------------------------------------+"
+  echo -e "${BLUE}+------------------------------------+${NC}"
+  echo -e "${BLUE}|                                    |${NC}"
+  echo -e "${BLUE}|${NC}        GESTOR DE FUNCIONES         ${BLUE}|${NC}"
+  echo -e "${BLUE}|                                    |${NC}"
+  echo -e "${BLUE}+------------------------------------+${NC}"
+  echo -e "${BLUE}|                                    |${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}1.${NC} Gestión de usuarios          ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}2.${NC} Gestión de grupos            ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}3.${NC} Gestión de paquetes          ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}4.${NC} Gestión del sistema          ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}5.${NC} Gestión de RED               ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}6.${NC} Servicios y procesos         ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}7.${NC} Mantenimiento y limpieza     ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}8.${NC} Copias de seguridad          ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}9.${NC} Seguridad                    ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}10.${NC} Discos, particiones y RAID  ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${GREEN}11.${NC} Docker                      ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}                                    ${BLUE}|${NC}"
+  echo -e "${BLUE}|${NC}    ${RED}0.${NC} Salir                        ${BLUE}|${NC}"
+  echo -e "${BLUE}+------------------------------------+${NC}"
   echo -e ""
 
   read -rp "Introduce una opcion: " opcSelect
@@ -95,7 +95,8 @@ while true; do
         0) exit 0 ;;
         *) 
         echo -e "${RED}Introduce una opción válida...${NC}" 
-        read -n1 -srp "Presione una tecla para continuar..."
+        read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+        clear
         ;;
     esac
 done

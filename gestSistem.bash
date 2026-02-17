@@ -7,19 +7,19 @@ function menuGestSistem() {
    while true; do
     clear
     echo -e ""
-    echo -e "+-----------------------------------------------+"
-    echo -e "|                                               |"
-    echo -e "|   1. Información completa del sistema (inxi)   |"
-    echo -e "|   2. Hardware y componentes (inxi)             |"
-    echo -e "|   3. Uso de disco detallado (inxi)            |"
-    echo -e "|   4. Información de memoria (inxi)             |"
-    echo -e "|   5. Información de red (inxi)                 |"
-    echo -e "|   6. Monitor de procesos en tiempo real (btop) |"
-    echo -e "|   7. Temperaturas y sensores (inxi)           |"
-    echo -e "|   8. Información de batería (inxi)             |"
-    echo -e "|                                               |"
-    echo -e "|   0. Volver                                   |"
-    echo -e "+-----------------------------------------------+"
+    echo -e "${BLUE}+------------------------------------------------+${NC}"
+    echo -e "${BLUE}|                                                |${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}1.${NC} Información completa del sistema (inxi)   ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}2.${NC} Hardware y componentes (inxi)             ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}3.${NC} Uso de disco detallado (inxi)             ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}4.${NC} Información de memoria (inxi)             ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}5.${NC} Información de red (inxi)                 ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}6.${NC} Monitor de procesos en tiempo real (btop) ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}7.${NC} Temperaturas y sensores (inxi)            ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}8.${NC} Información de batería (inxi)             ${BLUE}|${NC}"
+    echo -e "${BLUE}|                                                |${NC}"
+    echo -e "${BLUE}|${NC}   ${RED}0.${NC} Volver                                    ${BLUE}|${NC}"
+    echo -e "${BLUE}+------------------------------------------------+${NC}"
     echo -e ""
 
     read -rp "Introduce una opcion: " opcSelect
@@ -27,81 +27,83 @@ function menuGestSistem() {
     case $opcSelect in
         1)
             clear
-            echo -e "=== INFORMACIÓN COMPLETA DEL SISTEMA ==="
+            echo -e "${BLUE}=== INFORMACIÓN COMPLETA DEL SISTEMA ===${NC}"
             inxi -F
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         2)
             clear
-            echo -e "=== HARDWARE Y COMPONENTES ==="
+            echo -e "${BLUE}=== HARDWARE Y COMPONENTES ===${NC}"
             inxi -c0 -D
             echo -e ""
             inxi -c0 -C
             echo -e ""
             inxi -c0 -G
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         3)
             clear
-            echo -e "=== USO DE DISCO DETALLADO ==="
+            echo -e "${BLUE}=== USO DE DISCO DETALLADO ===${NC}"
             inxi -c0 -D
             echo -e ""
-            echo -e "=== ESPACIO EN PARTICIONES ==="
+            echo -e "${BLUE}=== ESPACIO EN PARTICIONES ===${NC}"
             df -h | grep -E "^/dev|^Filesystem"
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         4)
             clear
-            echo -e "=== INFORMACIÓN DE MEMORIA ==="
+            echo -e "${BLUE}=== INFORMACIÓN DE MEMORIA ===${NC}"
             inxi -c0 -m
             echo -e ""
-            echo -e "=== MEMORIA LIBRE ==="
+            echo -e "${BLUE}=== MEMORIA LIBRE ===${NC}"
             free -h
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         5)
             clear
-            echo -e "=== INFORMACIÓN DE RED ==="
+            echo -e "${BLUE}=== INFORMACIÓN DE RED ===${NC}"
             inxi -c0 -n
             echo -e ""
-            echo -e "=== INTERFACES DE RED ACTIVAS ==="
+            echo -e "${BLUE}=== INTERFACES DE RED ACTIVAS ===${NC}"
             ip addr show
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         6)
             clear
-            echo -e "=== MONITOR DE PROCESOS EN TIEMPO REAL ==="
-            echo -e "Iniciando btop... Presione 'q' para salir"
+            echo -e "${BLUE}=== MONITOR DE PROCESOS EN TIEMPO REAL ===${NC}"
+            echo -e "${YELLOW}Iniciando btop... Para salir una vez iniciado btop presionar${NC} ${RED}'q'${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             btop
             ;;
         7)
             clear
-            echo -e "=== TEMPERATURAS Y SENSORES ==="
+            echo -e "${BLUE}=== TEMPERATURAS Y SENSORES ===${NC}"
             inxi -c0 -s
             echo -e ""
-            echo -e "=== SENSORES DETALLADOS ==="
+            echo -e "${BLUE}=== SENSORES DETALLADOS ===${NC}"
             if command -v sensors > /dev/null 2>&1; then
                 sensors
             else
-                echo -e "Comando 'sensors' no disponible"
+                echo -e "${RED}Comando 'sensors' no disponible${NC}"
             fi
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         8)
             clear
-            echo -e "=== INFORMACIÓN DE BATERÍA ==="
+            echo -e "${BLUE}=== INFORMACIÓN DE BATERÍA ===${NC}"
             inxi -c0 -B
             echo -e ""
-            echo -e "=== ESTADO DE ENERGÍA ==="
-            upower -i /org/freedesktop/UPower/devices/battery_BAT0 2>/dev/null || echo -e "Batería no detectada o upower no disponible"
-            read -n1 -srp "Presione una tecla para continuar..."
+            echo -e "${BLUE}=== ESTADO DE ENERGÍA ===${NC}"
+            upower -i /org/freedesktop/UPower/devices/battery_BAT0 2>/dev/null || echo -e "${RED}Batería no detectada o upower no disponible${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
         0)
             break
             ;;
-        *)
-            echo -e "Introduce una opción válida..."
-            read -n1 -srp "Presione una tecla para continuar..."
+        *) 
+            echo -e "${RED}Introduce una opción válida...${NC}" 
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
     esac
 done
