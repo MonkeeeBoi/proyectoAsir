@@ -40,7 +40,6 @@ while true; do
   echo -e "|    9. Seguridad                    |"
   echo -e "|    10. Discos, particiones y RAID  |"
   echo -e "|    11. Docker                      |"
-  echo -e "|    12. LDAP                        |"
   echo -e "|                                    |"
   echo -e "|    0. Salir                        |"
   echo -e "+------------------------------------+"
@@ -92,9 +91,6 @@ while true; do
         11)
             clear
             menuDocker
-        ;;
-        12)
-            clear 
         ;;
         0) exit 0 ;;
         *) 
