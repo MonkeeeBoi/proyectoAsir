@@ -4,8 +4,8 @@ source colores.bash
 source funciones.bash
 
 function menuGestUser() {
-    clear
     while true; do
+    clear
         echo -e ""
         echo -e "${BLUE}+-------------------------------------+${NC}"
         echo -e "${BLUE}|                                     |${NC}"
