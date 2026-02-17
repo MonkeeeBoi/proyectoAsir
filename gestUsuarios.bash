@@ -340,14 +340,26 @@ function verPermisosUsuario() {
         fi
         if comprobarUsuario "$nombreUsuario"; then
             echo -e "${RED}Error: El usuario '$nombreUsuario' no existe en el sistema...${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             continue
         fi
         break
     done
 
-    echo -e "${BLUE}Buscando archivos y directorios propiedad de '$nombreUsuario'...${NC}"
-    sudo find / -user "$nombreUsuario" -exec ls -ld {} \; 2>/dev/null | head -n 100
+    echo -e "\n${BLUE}===== INFORMACIÓN DEL USUARIO =====${NC}"
+    id "$nombreUsuario"
 
-    echo -e "${GREEN}Mostrando hasta 100 resultados con permisos.${NC}"
+    echo -e "\n${BLUE}===== GRUPOS DEL USUARIO =====${NC}"
+    groups "$nombreUsuario"
+
+    echo -e "\n${BLUE}===== VERIFICANDO PERMISOS SUDO =====${NC}"
+    if sudo -l -U "$nombreUsuario" &>/dev/null; then
+        echo -e "${GREEN}El usuario '$nombreUsuario' tiene permisos sudo.${NC}"
+        sudo -l -U "$nombreUsuario"
+    else
+        echo -e "${RED}El usuario '$nombreUsuario' NO tiene permisos sudo o no está en sudoers.${NC}"
+    fi
+
+    echo -e "\n${GREEN}Proceso finalizado.${NC}"
 }
-
