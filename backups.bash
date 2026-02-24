@@ -22,25 +22,31 @@ function menuBackups() {
 
     case $opcSelect in
         1)
-            read -rp "${BLUE}Introduce el directorio a respaldar:${NC} " dir
-            if [[ -d "$dir" ]]
-            then
-                fecha=$(date +%Y%m%d_%H%M%S)
-                nombre=$(basename "$dir")
-                backup="backup_${nombre}_$fecha.tar.gz"
+        read -rp "${BLUE}Introduce ruta a respaldar:${NC} " ruta
 
-                echo -e "${BLUE}Creando backup...${NC}"
-                if tar -czf "$backup" "$dir"; then
-                    echo -e "${GREEN}Backup creado: $backup${NC}"
-                else
-                    echo -e "${RED}ERROR: No se pudo crear el backup.${NC}"
-                fi
+        if [[ -e "$ruta" ]]; then
+            fecha=$(date +%Y%m%d_%H%M%S)
+            nombre=$(basename "$ruta")
+            backup="/copias_de_seguridad/backup_${nombre}_$fecha.tar.gz"
+
+            # Crear carpeta si no existe
+            sudo mkdir -p /copias_de_seguridad
+
+            echo -e "${BLUE}Creando backup...${NC}"
+            if sudo tar -czf "$backup" "$ruta"; then
+                echo -e "${GREEN}Backup creado correctamente:${NC} $backup"
             else
-                echo -e "${RED}El directorio no existe.${NC}"
+                echo -e "${RED}ERROR: No se pudo crear el backup.${NC}"
             fi
-            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
-            clear
-            ;;
+        else
+            echo -e "${RED}La ruta no existe.${NC}"
+        fi
+
+        read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+        clear
+        ;;
+
+
         2)
             read -rp "${BLUE}Introduce el nombre del archivo de backup (.tar.gz):${NC} " archivo
             if [[ -f "$archivo" ]]
