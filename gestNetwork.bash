@@ -36,16 +36,16 @@ function menuGestNetwork() {
     echo -e ""
     echo -e "${BLUE}+-------------------------------------+${NC}"
     echo -e "${BLUE}|                                     |${NC}"
-    echo -e "${BLUE}|${NC}   1. Seleccionar interfaz           ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}1.${NC} Seleccionar interfaz           ${BLUE}|${NC}"
     if [ -n "$interfaz_seleccionada" ]; then
         echo -e "${BLUE}|${NC}      (Actual: $interfaz_seleccionada)               ${BLUE}|${NC}"
     fi
-    echo -e "${BLUE}|${NC}   2. Mostrar configuración de red   ${BLUE}|${NC}"
-    echo -e "${BLUE}|${NC}   3. Probar conectividad            ${BLUE}|${NC}"
-    echo -e "${BLUE}|${NC}   4. Reiniciar red                  ${BLUE}|${NC}"
-    echo -e "${BLUE}|${NC}   5. Cambiar configuracion de red   ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}2.${NC} Mostrar configuración de red   ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}3.${NC} Probar conectividad            ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}4.${NC} Reiniciar red                  ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}5.${NC} Cambiar configuracion de red   ${BLUE}|${NC}"
     echo -e "${BLUE}|${NC}                                     ${BLUE}|${NC}"
-    echo -e "${BLUE}|${NC}   0. Volver                         ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${RED}0.${NC} Volver                         ${BLUE}|${NC}"
     echo -e "${BLUE}+-------------------------------------+${NC}"
     echo -e ""
 
