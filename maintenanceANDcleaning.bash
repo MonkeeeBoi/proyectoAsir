@@ -17,7 +17,7 @@ function menuMaintenanceANDcleaning() {
     echo -e "${BLUE}+--------------------------------------+${NC}"
     echo -e ""
 
-    read -rp "${BLUE}Introduce una opción:${NC} " opcSelect
+    read -rp "Introduce una opción: " opcSelect
 
     case $opcSelect in
         1)

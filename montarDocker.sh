@@ -997,26 +997,30 @@ lanzar_contenedor_interactivo() {
 # Menú principal
 menu() {
     clear
-    echo -e "${BLUE}========================================${NC}"
-    echo -e "${BLUE}     MONTAR CONTENEDORES DOCKER       ${NC}"
-    echo -e "${BLUE}========================================${NC}"
-    echo ""
-    
+
     if verificar_instalacion; then
-        echo -e "${GREEN}1.${NC} Montar contenedor interactivo"
-        echo -e "${GREEN}2.${NC} Crear nuevo contenedor"
-        echo -e "${GREEN}3.${NC} Lanzar contenedor existente"
-        echo -e "${GREEN}4.${NC} Eliminar contenedor"
-        echo -e "${GREEN}5.${NC} Obtener nueva imagen"
-        echo -e "${GREEN}6.${NC} Eliminar imagen"
-        echo -e "${GREEN}7.${NC} Mostrar imágenes disponibles"
-        echo -e "${GREEN}8.${NC} Mostrar contenedores"
-        echo -e "${GREEN}9.${NC} Mostrar ayuda"
-        echo -e "${RED}0.${NC} Salir"
+        echo -e ""
+        echo -e "${BLUE}+------------------------------------------------+${NC}"
+        echo -e "${BLUE}|                                                |${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}1.${NC} Montar contenedor interactivo             ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}2.${NC} Crear nuevo contenedor                    ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}3.${NC} Lanzar contenedor existente               ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}4.${NC} Eliminar contenedor                       ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}5.${NC} Obtener nueva imagen                      ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}6.${NC} Eliminar imagen                           ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}7.${NC} Mostrar imágenes disponibles              ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}8.${NC} Mostrar contenedores                      ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}   ${GREEN}9.${NC} Mostrar ayuda                             ${BLUE}|${NC}"
+        echo -e "${BLUE}|                                                |${NC}"
+        echo -e "${BLUE}|${NC}   ${RED}0.${NC} Salir                                     ${BLUE}|${NC}"
+        echo -e "${BLUE}+------------------------------------------------+${NC}"
     else
         echo -e "${RED}Docker no está instalado${NC}"
         echo -e "${YELLOW}Por favor, instala Docker primero${NC}"
-        echo -e "${RED}0.${NC} Salir"
+        echo -e ""
+        echo -e "${BLUE}+------------------------------------------------+${NC}"
+        echo -e "${BLUE}|${NC}   ${RED}0.${NC} Salir                                     ${BLUE}|${NC}"
+        echo -e "${BLUE}+------------------------------------------------+${NC}"
     fi
     
     echo ""
