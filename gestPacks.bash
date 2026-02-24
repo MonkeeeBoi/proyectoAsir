@@ -6,70 +6,71 @@ source funciones.bash
 function menuGestPacks() {
    while true; do
     echo -e ""
-    echo -e "+-------------------------------------+"
-    echo -e "|                                     |"
-    echo -e "|   1. Actualizar lista de paquetes   |"
-    echo -e "|   2. Actualizar el sistema          |"
-    echo -e "|   3. Eliminar paquetes innecesarios |"
-    echo -e "|   4. Buscar un paquete              |"
-    echo -e "|   5. Instalar un paquete            |"
-    echo -e "|   6. Desinstalar un paquete         |"
-    echo -e "|                                     |"
-    echo -e "|   0. Volver                         |"
-    echo -e "+-------------------------------------+"
+    echo -e "${BLUE}+-------------------------------------+${NC}"
+    echo -e "${BLUE}|                                     |${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}1.${NC} Actualizar lista de paquetes   ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}2.${NC} Actualizar el sistema          ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}3.${NC} Eliminar paquetes innecesarios ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}4.${NC} Buscar un paquete              ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}5.${NC} Instalar un paquete            ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}6.${NC} Desinstalar un paquete         ${BLUE}|${NC}"
+    echo -e "${BLUE}|                                     |${NC}"
+    echo -e "${BLUE}|${NC}   ${RED}0.${NC} Volver                         ${BLUE}|${NC}"
+    echo -e "${BLUE}+-------------------------------------+${NC}"
     echo -e ""
 
     read -rp "Introduce una opcion: " opcSelect
 
     case $opcSelect in
         1)
-            echo -e "Actualizando lista de paquetes..."
+            echo -e "${BLUE}Actualizando lista de paquetes...${NC}"
             sudo apt update
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         2)
-            echo -e "Actualizando el sistema..."
+            echo -e "${BLUE}Actualizando el sistema...${NC}"
             sudo apt upgrade -y
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         3)
-            echo -e "Eliminando paquetes innecesarios..."
+            echo -e "${BLUE}Eliminando paquetes innecesarios...${NC}"
             sudo apt autoremove -y
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         4)
-            read -rp "Introduce el nombre del paquete a buscar: " paquete
+            read -rp "${BLUE}Introduce el nombre del paquete a buscar:${NC} " paquete
             resultado=$(apt search "$paquete" )
             if [[ $resultado != "" ]]
             then
-                echo -e "Paquete encontrado:"
+                echo -e "${GREEN}Paquete encontrado:${NC}"
                 echo -e "$resultado"
             else
-                echo -e "No se encontró el paquete '$paquete'."
+                echo -e "${RED}No se encontró el paquete '$paquete'.${NC}"
             fi
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         5)
-            read -rp "Introduce el nombre del paquete a instalar: " paquete
+            read -rp "${BLUE}Introduce el nombre del paquete a instalar:${NC} " paquete
             sudo apt install "$paquete" -y
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         6)
-            read -rp "Introduce el nombre del paquete a desinstalar: " paquete
+            read -rp "${BLUE}Introduce el nombre del paquete a desinstalar:${NC} " paquete
             sudo apt remove "$paquete" -y
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
         0)
             break
             ;;
         *)
-            echo -e "Introduce una opción válida..."
-            read -n1 -srp "Presione una tecla para continuar..."
+            echo -e "${RED}Introduce una opción válida...${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
     esac
