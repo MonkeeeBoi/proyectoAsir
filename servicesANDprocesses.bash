@@ -24,24 +24,28 @@ function menuServicesANDprocesses() {
             echo -e "${BLUE}Servicios activos:${NC}"
             systemctl list-units --type=service --state=running
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
         2)
             read -rp "${BLUE}Introduce el nombre del servicio a iniciar (ej: cron):${NC} " servicio
             sudo systemctl start "$servicio"
             echo -e "${GREEN}Servicio '$servicio' iniciado.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
         3)
             read -rp "${BLUE}Introduce el nombre del servicio a detener (ej: cron):${NC} " servicio
             sudo systemctl stop "$servicio"
             echo -e "${GREEN}Servicio '$servicio' detenido.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
         4)
             read -rp "${BLUE}Introduce el nombre del servicio a habilitar al inicio (ej: cron):${NC} " servicio
             sudo systemctl enable "$servicio"
             echo -e "${GREEN}Servicio '$servicio' habilitado para iniciar con el sistema.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
         0)
             break
@@ -49,6 +53,7 @@ function menuServicesANDprocesses() {
         *)
             echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
     esac
 done
