@@ -76,4 +76,4 @@
 - 10.7 Guardar configuración RAID
 - 10.8 Comprobar estado RAID
 - 10.9 Crear volumen LVM
-- 10.10 formatear discos
+- 10.10 Formatear discos

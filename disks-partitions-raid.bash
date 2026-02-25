@@ -17,6 +17,7 @@ function menuDisksPartitionsRaid() {
     echo -e "${BLUE}|${NC}   ${GREEN}7.${NC} Guardar configuración RAID     ${BLUE}|${NC}"
     echo -e "${BLUE}|${NC}   ${GREEN}8.${NC} Comprobar estado RAID          ${BLUE}|${NC}"
     echo -e "${BLUE}|${NC}   ${GREEN}9.${NC} Crear volumen LVM              ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}10.${NC} Formatear disco duro          ${BLUE}|${NC}"
     echo -e "${BLUE}|                                     |${NC}"
     echo -e "${BLUE}|${NC}   ${RED}0.${NC} Volver                         ${BLUE}|${NC}"
     echo -e "${BLUE}+-------------------------------------+${NC}"
@@ -129,6 +130,54 @@ function menuDisksPartitionsRaid() {
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
+        10)
+            clear
+# Mostrar discos disponibles
+echo "Discos detectados:"
+lsblk -d -o NAME,SIZE,MODEL
+echo ""
+
+# Pedir disco
+read -rp "Introduce el disco a formatear (ej: /dev/sdb): " disco
+
+# Comprobar que existe
+if [ ! -b "$disco" ]; then
+    echo "ERROR: El disco no existe."
+    exit 1
+fi
+
+echo ""
+echo "Has seleccionado el disco: $disco"
+lsblk "$disco"
+echo ""
+
+# Primera confirmación
+read -rp "¿Seguro que quieres formatear este disco? (yes/no): " conf1
+if [[ "$conf1" != "yes" ]]; then
+    echo "Operación cancelada."
+    exit 0
+fi
+
+# Segunda confirmación
+read -rp "ESTO BORRARÁ TODO. Escribe: FORMATEAR $disco : " conf2
+if [[ "$conf2" != "FORMATEAR $disco" ]]; then
+    echo "Operación cancelada."
+    exit 0
+fi
+
+# Elegir sistema de archivos
+echo ""
+read -rp "Introduce el sistema de archivos (ext4, xfs, etc.): " fs
+
+echo ""
+echo "Formateando $disco como $fs..."
+sudo mkfs -t "$fs" "$disco"
+
+echo ""
+echo "Disco formateado correctamente."
+read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
+
 
         0)
             break
