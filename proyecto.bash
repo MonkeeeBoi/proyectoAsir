@@ -93,7 +93,8 @@ while true; do
             menuDocker
         ;;
         0) exit 0 ;;
-        *) 
+        *)
+        clear 
         echo -e "${RED}Introduce una opción válida...${NC}" 
         read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
         clear

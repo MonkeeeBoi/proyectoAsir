@@ -6,55 +6,88 @@ source funciones.bash
 function menuSecurity() {
    while true; do
     echo -e ""
-    echo -e "+-------------------------------------+"
-    echo -e "|                                     |"
-    echo -e "|   1. Recargar  firewall             |"
-    echo -e "|   2. Escanear puertos abiertos      |"
-    echo -e "|   3. Revisar usuarios               |"
-    echo -e "|                                     |"
-    echo -e "|   0. Volver                         |"
-    echo -e "+-------------------------------------+"
+    echo -e "${BLUE}+-------------------------------------+${NC}"
+    echo -e "${BLUE}|                                     |${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}1.${NC} Recargar firewall              ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}2.${NC} Escanear puertos abiertos      ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}3.${NC} Activar/Desactivar firewall    ${BLUE}|${NC}"
+    echo -e "${BLUE}|                                     |${NC}"
+    echo -e "${BLUE}|${NC}   ${RED}0.${NC} Volver                         ${BLUE}|${NC}"
+    echo -e "${BLUE}+-------------------------------------+${NC}"
     echo -e ""
 
-    read -rp "Introduce una opcion: " opcSelect
+    read -rp "Introduce una opción: " opcSelect
 
     case $opcSelect in
         1)
-            echo -e "Actualizando reglas de firewall (UFW)..."
-            sudo ufw reload
-            echo -e "Reglas de firewall actualizadas."
-            read -n1 -srp "Presione una tecla para continuar..."
-            clear
-            ;;
-        2)
-            read -rp "Introduce la IP o dominio a escanear: " destino
-            if ! command -v nmap > /dev/null 2>&1; then
-                echo -e "ERROR: nmap no está instalado. Instalando..."
-                sudo apt update && sudo apt install nmap -y
-            fi
-            echo -e "Escaneando puertos abiertos en $destino..."
-            if sudo nmap -Pn "$destino"; then
-                echo -e "Escaneo completado."
+        clear
+            echo -e "${BLUE}Actualizando reglas de firewall (UFW)...${NC}"
+            if sudo ufw reload; then
+                echo -e "${GREEN}Reglas de firewall actualizadas correctamente.${NC}"
             else
-                echo -e "ERROR: Falló el escaneo de puertos."
+                echo -e "${RED}ERROR: No se pudieron recargar las reglas.${NC}"
             fi
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
+
+        2)
+        clear
+        # Comprobar si ss está instalado
+        if ! command -v ss > /dev/null 2>&1; then
+            echo "El comando 'ss' no está instalado. Instalando..."
+            sudo apt update -q
+            sudo apt install iproute2 -y
+        fi
+
+        echo "Mostrando puertos abiertos..."
+        echo ""
+
+        sudo ss -tulnp
+        read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+
+            clear
+            ;;
+
+
         3)
-            echo -e "Usuarios del sistema con UID >= 1000:"
-            getent passwd | awk -F: '$3 >= 1000 { print $1 }'
-            read -n1 -srp "Presione una tecla para continuar..."
+        clear
+            estado=$(sudo ufw status | head -n1 | awk '{print $2}')
+
+            if [[ "$estado" == "activo" ]]; then
+                echo -e "${YELLOW}El firewall está actualmente ACTIVADO.${NC}"
+                read -rp "${BLUE}¿Desea desactivarlo? [Y/n]:${NC} " resp
+                if YesOrNo "$resp"; then
+                    echo -e "${BLUE}Desactivando firewall...${NC}"
+                    sudo ufw disable
+                    echo -e "${GREEN}Firewall desactivado.${NC}"
+                fi
+            else
+                echo -e "${YELLOW}El firewall está actualmente DESACTIVADO.${NC}"
+                read -rp "${BLUE}¿Desea activarlo? [Y/n]:${NC} " resp
+                if YesOrNo "$resp"; then
+                    echo -e "${BLUE}Activando firewall...${NC}"
+                    sudo ufw enable
+                    echo -e "${GREEN}Firewall activado.${NC}"
+                fi
+            fi
+
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
+
+
         0)
             break
             ;;
+
         *)
-            echo -e "Introduce una opcion valida..."
-            read -n1 -srp "Presione una tecla para continuar..."
+        clear
+            echo -e "${RED}ERROR: Introduce una opción válida...${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
     esac
 done
 }
+

@@ -17,6 +17,7 @@ function menuGestUser() {
         echo -e "${BLUE}|${NC}    ${GREEN}6.${NC} Ver tamaños del home          ${BLUE}|${NC}"
         echo -e "${BLUE}|${NC}    ${GREEN}7.${NC} Ver historial de usuarios     ${BLUE}|${NC}"
         echo -e "${BLUE}|${NC}    ${GREEN}8.${NC} Ver permisos de usuario       ${BLUE}|${NC}"
+        echo -e "${BLUE}|${NC}    ${GREEN}9.${NC} Revisar usuarios              ${BLUE}|${NC}"
         echo -e "${BLUE}|${NC}                                     ${BLUE}|${NC}"
         echo -e "${BLUE}|${NC}    ${RED}0.${NC} Volver                        ${BLUE}|${NC}"
         echo -e "${BLUE}+-------------------------------------+${NC}"
@@ -74,11 +75,19 @@ function menuGestUser() {
                 read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
                 clear
             ;;
+            9)
+                clear
+                echo -e "${BLUE}Usuarios del sistema con UID >= 1000:${NC}"
+                getent passwd | awk -F: '$3 >= 1000 { print " - " $1 }'
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
+            ;;
             0) break ;;
             *) 
-            echo -e "${RED}Introduce una opción válida...${NC}" 
-            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
-            clear
+                clear
+                echo -e "${RED}Introduce una opción válida...${NC}" 
+                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+                clear
             ;;
         esac
     done

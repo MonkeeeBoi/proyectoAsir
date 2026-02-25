@@ -8,7 +8,7 @@
 - 1.6 Ver tamaños del home
 - 1.7 Ver historial de usuarios
 - 1.8 Ver permisos de usuario
-- 1.9 Ver grupos de usuario
+- 1.9 Revisar usuarios
 
 **2.Gestión de grupos**
 - 2.1 Ver grupos de usuario
@@ -64,7 +64,7 @@
 **9.Seguridad**
 - 9.1 Actualizar reglas de firewall (UFW)
 - 9.2 Escanear puertos abiertos
-- 9.3 Revisar usuarios con permisos sudo
+- 9.3 Activar/Desactivar firewall
 
 **10.Discos, particiones y RAID**
 - 10.1 Ver discos y particiones

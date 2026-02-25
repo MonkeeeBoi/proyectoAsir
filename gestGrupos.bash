@@ -22,6 +22,7 @@ function menuGestGroups() {
 
     case $opcSelect in
         1)
+        clear
             read -rp "${BLUE}Introduce el nombre del usuario:${NC} " usuario
             if id "$usuario" &>/dev/null; then
                 echo -e "${BLUE}El usuario '${NC}$usuario${BLUE}' pertenece a los siguientes grupos:${NC}"
@@ -33,6 +34,7 @@ function menuGestGroups() {
             clear
             ;;
         2)
+        clear
             read -rp "${BLUE}Introduce el nombre del grupo a crear:${NC} " grupo
             if getent group "$grupo" >/dev/null; then
                 echo -e "${RED}El grupo '$grupo' ya existe.${NC}"
@@ -43,6 +45,7 @@ function menuGestGroups() {
             clear
             ;;
         3)
+        clear
             read -rp "${BLUE}Introduce el nombre del usuario:${NC} " usuario
             read -rp "${BLUE}Introduce el nombre del grupo:${NC} " grupo
             if id "$usuario" &>/dev/null && getent group "$grupo" >/dev/null; then
@@ -54,6 +57,7 @@ function menuGestGroups() {
             clear
             ;;
         4)
+        clear
             read -rp "${BLUE}Introduce el nombre del usuario:${NC} " usuario
             read -rp "${BLUE}Introduce el nombre del grupo:${NC} " grupo
             if id "$usuario" &>/dev/null && getent group "$grupo" >/dev/null; then
@@ -65,6 +69,7 @@ function menuGestGroups() {
             clear
             ;;
         5)
+        clear
             read -rp "${BLUE}Introduce el nombre del grupo a eliminar:${NC} " grupo
             if getent group "$grupo" >/dev/null; then
                 sudo groupdel "$grupo" && echo -e "${GREEN}Grupo '$grupo' eliminado correctamente.${NC}"
@@ -77,8 +82,10 @@ function menuGestGroups() {
             break
             ;;
         *)
+        clear
             echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
     esac
 done

@@ -6,109 +6,141 @@ source funciones.bash
 function menuDisksPartitionsRaid() {
    while true; do
     echo -e ""
-    echo -e "+-------------------------------------+"
-    echo -e "|                                     |"
-    echo -e "|   1. Ver discos y particiones       |"
-    echo -e "|   2. Crear partición                |"
-    echo -e "|   3. Crear sistema de archivos      |"
-    echo -e "|   4. Montar y desmontar particiones |"
-    echo -e "|   5. Añadir al fstab                |"
-    echo -e "|   6. Crear RAID                     |"
-    echo -e "|   7. Guardar configuración RAID     |"
-    echo -e "|   8. Comprobar estado RAID          |"
-    echo -e "|   9. Crear volumen LVM              |"
-    echo -e "|                                     |"
-    echo -e "|   0. Volver                         |"
-    echo -e "+-------------------------------------+"
+    echo -e "${BLUE}+-------------------------------------+${NC}"
+    echo -e "${BLUE}|                                     |${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}1.${NC} Ver discos y particiones       ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}2.${NC} Crear partición                ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}3.${NC} Crear sistema de archivos      ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}4.${NC} Montar y desmontar particiones ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}5.${NC} Añadir al fstab                ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}6.${NC} Crear RAID                     ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}7.${NC} Guardar configuración RAID     ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}8.${NC} Comprobar estado RAID          ${BLUE}|${NC}"
+    echo -e "${BLUE}|${NC}   ${GREEN}9.${NC} Crear volumen LVM              ${BLUE}|${NC}"
+    echo -e "${BLUE}|                                     |${NC}"
+    echo -e "${BLUE}|${NC}   ${RED}0.${NC} Volver                         ${BLUE}|${NC}"
+    echo -e "${BLUE}+-------------------------------------+${NC}"
     echo -e ""
-    read -rp "Introduce una opcion: " opcSelect
+
+    read -rp "${BLUE}Introduce una opción:${NC} " opcSelect
 
     case $opcSelect in
         1)
-            echo -e "Discos y particiones:"
+            clear
+            echo -e "${BLUE}Discos y particiones:${NC}"
             lsblk
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         2)
-            read -rp "Introduce el disco (ej: /dev/sdb): " disco
-            echo -e "Lanzando fdisk para crear partición..."
+            clear
+            read -rp "${BLUE}Introduce el disco (ej: /dev/sdb):${NC} " disco
+            echo -e "${BLUE}Lanzando fdisk para crear partición...${NC}"
             sudo fdisk "$disco"
-            echo -e "Partición creada (si completaste el proceso en fdisk)."
-            read -n1 -srp "Presione una tecla para continuar..."
+            echo -e "${GREEN}Partición creada (si completaste el proceso en fdisk).${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         3)
-            read -rp "Introduce la partición (ej: /dev/sdb1): " particion
-            read -rp "Introduce el tipo de sistema de archivos (ej: ext4): " tipo
+            clear
+            read -rp "${BLUE}Introduce la partición (ej: /dev/sdb1):${NC} " particion
+            read -rp "${BLUE}Introduce el tipo de sistema de archivos (ej: ext4):${NC} " tipo
             sudo mkfs -t "$tipo" "$particion"
-            echo -e "Sistema de archivos '$tipo' creado en $particion."
-            read -n1 -srp "Presione una tecla para continuar..."
+            echo -e "${GREEN}Sistema de archivos '$tipo' creado en $particion.${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
+
         4)
-            read -rp "¿Montar (m) o desmontar (d)?: " accion
-            if [[ $accion == "m" ]]
-            then
-                read -rp "Introduce la partición (ej: /dev/sdb1): " particion
-                read -rp "Introduce el punto de montaje (ej: /mnt/datos): " punto
+            clear
+            read -rp "${BLUE}¿Montar (m) o desmontar (d)?:${NC} " accion
+            if [[ $accion == "m" ]]; then
+                read -rp "${BLUE}Introduce la partición (ej: /dev/sdb1):${NC} " particion
+                read -rp "${BLUE}Introduce el punto de montaje (ej: /mnt/datos):${NC} " punto
                 sudo mkdir -p "$punto"
                 sudo mount "$particion" "$punto"
-                echo -e "Partición montada en $punto."
-            elif [[ $accion == "d" ]]
-            then
-                read -rp "Introduce el punto de montaje a desmontar: " punto
+                echo -e "${GREEN}Partición montada en $punto.${NC}"
+            elif [[ $accion == "d" ]]; then
+                read -rp "${BLUE}Introduce el punto de montaje a desmontar:${NC} " punto
                 sudo umount "$punto"
-                echo -e "Partición desmontada de $punto."
+                echo -e "${GREEN}Partición desmontada de $punto.${NC}"
             else
-                echo -e "Opción inválida."
+                echo -e "${RED}ERROR:${NC} Opción inválida."
             fi
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         5)
-            read -rp "Introduce la partición (ej: /dev/sdb1): " particion
-            read -rp "Introduce el punto de montaje (ej: /mnt/datos): " punto
-            read -rp "Introduce el tipo de sistema de archivos (ej: ext4): " tipo
+            clear
+            read -rp "${BLUE}Introduce la partición (ej: /dev/sdb1):${NC} " particion
+            read -rp "${BLUE}Introduce el punto de montaje (ej: /mnt/datos):${NC} " punto
+            read -rp "${BLUE}Introduce el tipo de sistema de archivos (ej: ext4):${NC} " tipo
             echo -e "$particion $punto $tipo defaults 0 2" | sudo tee -a /etc/fstab > /dev/null
-            echo -e "Entrada añadida a /etc/fstab."
-            read -n1 -srp "Presione una tecla para continuar..."
+            echo -e "${GREEN}Entrada añadida a /etc/fstab.${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         6)
-            read -rp "Introduce los dispositivos para RAID separados por espacio (ej: /dev/sdb1 /dev/sdc1): " dispositivos
-            read -rp "Introduce el nombre del RAID (ej: /dev/md0): " nombre
-            read -rp "Introduce el nivel RAID (ej: 1): " nivel
-            if sudo mdadm --create "$nombre" --level="$nivel" --raid-devices="$(echo -e "$dispositivos" | wc -w)" $dispositivos; then
-                echo -e "RAID creado como $nombre."
+            clear
+            read -rp "${BLUE}Introduce los dispositivos para RAID separados por espacio:${NC} " dispositivos
+            read -rp "${BLUE}Introduce el nombre del RAID (ej: /dev/md0):${NC} " nombre
+            read -rp "${BLUE}Introduce el nivel RAID (ej: 1):${NC} " nivel
+
+            if sudo mdadm --create "$nombre" --level="$nivel" --raid-devices="$(echo "$dispositivos" | wc -w)" $dispositivos; then
+                echo -e "${GREEN}RAID creado como $nombre.${NC}"
             else
-                echo -e "ERROR: No se pudo crear el RAID."
+                echo -e "${RED}ERROR:${NC} No se pudo crear el RAID."
             fi
-            echo -e "RAID creado como $nombre."
-            read -n1 -srp "Presione una tecla para continuar..."
+
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         7)
+            clear
             sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf > /dev/null
-            echo -e "Configuración RAID guardada en /etc/mdadm/mdadm.conf."
-            read -n1 -srp "Presione una tecla para continuar..."
+            echo -e "${GREEN}Configuración RAID guardada en /etc/mdadm/mdadm.conf.${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         8)
+            clear
             sudo mdadm --detail /dev/md0
-            read -n1 -srp "Presione una tecla para continuar..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         9)
-            read -rp "Introduce el nombre del volumen físico (ej: /dev/sdb1): " pv
-            read -rp "Introduce el nombre del grupo de volumen: " vg
-            read -rp "Introduce el nombre del volumen lógico: " lv
-            read -rp "Introduce el tamaño (ej: 5G): " tam
+            clear
+            read -rp "${BLUE}Introduce el volumen físico (ej: /dev/sdb1):${NC} " pv
+            read -rp "${BLUE}Introduce el nombre del grupo de volumen:${NC} " vg
+            read -rp "${BLUE}Introduce el nombre del volumen lógico:${NC} " lv
+            read -rp "${BLUE}Introduce el tamaño (ej: 5G):${NC} " tam
+
             sudo pvcreate "$pv"
             sudo vgcreate "$vg" "$pv"
             sudo lvcreate -L "$tam" -n "$lv" "$vg"
-            echo -e "Volumen LVM creado: /dev/$vg/$lv"
-            read -n1 -srp "Presione una tecla para continuar..."
+
+            echo -e "${GREEN}Volumen LVM creado: /dev/$vg/$lv${NC}"
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
+
         0)
             break
             ;;
+
         *)
-            echo -e "Introduce una opcion valida..."
-            read -n1 -srp "Presione una tecla para continuar..."
+            clear
+            echo -e "${RED}ERROR:${NC} Introduce una opción válida..."
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
     esac
 done
 }
+

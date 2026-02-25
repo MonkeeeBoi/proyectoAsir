@@ -53,9 +53,13 @@ function menuGestNetwork() {
 
     case $opcSelect in
         1)
+        clear
             seleccionar_interfaz
+        read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
             ;;
         2)
+        clear
             echo -e "${BLUE}Configuración de red:${NC}"
             if [ -n "$interfaz_seleccionada" ]; then
                 nmcli device show "$interfaz_seleccionada"
@@ -66,12 +70,14 @@ function menuGestNetwork() {
             clear
             ;;
         3)
+        clear
             read -rp "${BLUE}Introduce una IP o dominio para probar conectividad:${NC} " destino
             ping -c 4 "$destino"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         4)
+        clear
             echo -e "${BLUE}Reiniciando servicio de red...${NC}"
             sudo nmcli networking off && sudo nmcli networking on
             echo -e "${GREEN}Servicio de red reiniciado.${NC}"
@@ -79,6 +85,7 @@ function menuGestNetwork() {
             clear
             ;;
         5)
+        clear
             if [ -z "$interfaz_seleccionada" ]; then
                 echo -e "${RED}ERROR: Debe seleccionar una interfaz primero (opción 1).${NC}"
                 read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
@@ -141,6 +148,7 @@ function menuGestNetwork() {
             break
             ;;
         *)
+        clear
             echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear

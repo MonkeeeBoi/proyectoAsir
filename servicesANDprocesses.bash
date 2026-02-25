@@ -21,12 +21,14 @@ function menuServicesANDprocesses() {
 
     case $opcSelect in
         1)
+        clear
             echo -e "${BLUE}Servicios activos:${NC}"
             systemctl list-units --type=service --state=running
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         2)
+        clear
             read -rp "${BLUE}Introduce el nombre del servicio a iniciar (ej: cron):${NC} " servicio
             sudo systemctl start "$servicio"
             echo -e "${GREEN}Servicio '$servicio' iniciado.${NC}"
@@ -34,6 +36,7 @@ function menuServicesANDprocesses() {
             clear
             ;;
         3)
+        clear
             read -rp "${BLUE}Introduce el nombre del servicio a detener (ej: cron):${NC} " servicio
             sudo systemctl stop "$servicio"
             echo -e "${GREEN}Servicio '$servicio' detenido.${NC}"
@@ -41,6 +44,7 @@ function menuServicesANDprocesses() {
             clear
             ;;
         4)
+        clear
             read -rp "${BLUE}Introduce el nombre del servicio a habilitar al inicio (ej: cron):${NC} " servicio
             sudo systemctl enable "$servicio"
             echo -e "${GREEN}Servicio '$servicio' habilitado para iniciar con el sistema.${NC}"
@@ -51,6 +55,7 @@ function menuServicesANDprocesses() {
             break
             ;;
         *)
+        clear
             echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear

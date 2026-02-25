@@ -23,24 +23,28 @@ function menuGestPacks() {
 
     case $opcSelect in
         1)
+        clear
             echo -e "${BLUE}Actualizando lista de paquetes...${NC}"
             sudo apt update
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         2)
+        clear
             echo -e "${BLUE}Actualizando el sistema...${NC}"
             sudo apt upgrade -y
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         3)
+        clear
             echo -e "${BLUE}Eliminando paquetes innecesarios...${NC}"
             sudo apt autoremove -y
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         4)
+        clear
             read -rp "${BLUE}Introduce el nombre del paquete a buscar:${NC} " paquete
             resultado=$(apt search "$paquete" )
             if [[ $resultado != "" ]]
@@ -54,12 +58,14 @@ function menuGestPacks() {
             clear
             ;;
         5)
+        clear
             read -rp "${BLUE}Introduce el nombre del paquete a instalar:${NC} " paquete
             sudo apt install "$paquete" -y
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         6)
+        clear
             read -rp "${BLUE}Introduce el nombre del paquete a desinstalar:${NC} " paquete
             sudo apt remove "$paquete" -y
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
@@ -69,6 +75,7 @@ function menuGestPacks() {
             break
             ;;
         *)
+        clear
             echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear

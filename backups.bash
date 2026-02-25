@@ -22,6 +22,7 @@ function menuBackups() {
 
     case $opcSelect in
         1)
+        clear
         read -rp "${BLUE}Introduce ruta a respaldar:${NC} " ruta
 
         if [[ -e "$ruta" ]]; then
@@ -48,6 +49,7 @@ function menuBackups() {
 
 
         2)
+            clear
             read -rp "${BLUE}Introduce el nombre del archivo de backup (.tar.gz):${NC} " archivo
             if [[ -f "$archivo" ]]
             then
@@ -65,6 +67,7 @@ function menuBackups() {
             break
             ;;
         *)
+        clear
             echo -e "${RED}Introduce una opción válida...${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
