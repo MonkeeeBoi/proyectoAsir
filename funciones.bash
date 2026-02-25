@@ -4,7 +4,7 @@ source colores.bash
 function comprobarCadena() {
     if [[ -z "$1" ]]; then
         clear
-        echo -e "ERROR: la cadena introducida no puede ser vacia..."
+        echo -e "${RED}ERROR: la cadena introducida no puede ser vacia...${NC}"
         return 0
     else
         return 1
@@ -25,7 +25,7 @@ function comprobarYesOrNo() {
             return 0   # Entrada válida
             ;;
         *)
-            echo -e "ERROR: Opción no válida..."
+            echo -e "${RED}ERROR: Opción no válida...${NC}"
             return 1   # Entrada inválida
             ;;
     esac
@@ -44,7 +44,7 @@ function YesOrNo() {
 
 
 function securePass() {
-    printf '%s\n' "$1" | openssl passwd -6 -stdin 2>/dev/null || echo -e "ERROR: No se pudo generar hash de contraseña"
+    printf '%s\n' "$1" | openssl passwd -6 -stdin 2>/dev/null || echo -e "${RED}ERROR: No se pudo generar hash de contraseña${NC}"
 }
 
 function estaInstalado() {
@@ -70,28 +70,27 @@ function soloNumeros(){
 comprobar_dependencias() {
     dependenciasNecesarias="openssl inxi btop fastfetch nmcli docker"
     dependenciasNoInstaladas=""
-    echo -e "SYSTEM: comprobando/actualizando paquetes necesarios..."
-    echo -e "SYSTEM: Actualizando paquetes..."
+    echo -e "${BLUE}SYSTEM: comprobando/actualizando paquetes necesarios...${NC}"
+    echo -e "${BLUE}SYSTEM: Actualizando paquetes...${NC}"
 
     if sudo apt update -q; then
-        echo -e "SYSTEM: se ha realizado la actualizacion de repositorios correctamente..."
+        echo -e "${BLUE}SYSTEM: se ha realizado la actualizacion de repositorios correctamente...${NC}"
     else
-        echo -e "ERROR: fallo al actualizar los paquetes..."
+        echo -e "${RED}ERROR: fallo al actualizar los paquetes...${NC}"
     fi
     for cmd in ${dependenciasNecesarias}; do
         if ! command -v "$cmd" > /dev/null 2>&1; then
             dependenciasNoInstaladas+="$cmd "
         fi
     done
-    echo -e "Se necesitan los paquetes [$dependenciasNoInstaladas]"
+    echo -e "${YELLOW}Se necesitan los paquetes:${NC} [$dependenciasNoInstaladas]"
     # Si no hay paquetes que instalar, continuar
     if [[ -z "${dependenciasNoInstaladas// }" ]]; then
         return 0
     fi
     
-    echo -e "Se necesitan los paquetes [${dependenciasNoInstaladas}]"
     while true; do
-        read -rp "quiere continuar [Y/n]: " respuesta
+        read -rp "${BLUE}¿Quiere continuar? [Y/n]:${NC} " respuesta
         if comprobarYesOrNo "$respuesta"; then
             if YesOrNo "$respuesta"; then
                 break
@@ -99,12 +98,12 @@ comprobar_dependencias() {
                 exit 0
             fi
         else
-            echo -e "ERROR: Introduce un respuesta valida..."  
+            echo -e "${RED}ERROR: Introduce un respuesta valida...${NC}"  
             sleep 1
         fi
     done
     for cmd in ${dependenciasNoInstaladas}; do
-        echo -e "SYSTEM: Instalando la dependencia $cmd"
+        echo -e "${BLUE}SYSTEM: Instalando la dependencia${NC} ${YELLOW}$cmd${NC}"
         if [ "$cmd" == "fastfetch" ]; then
             if ! command -v fastfetch > /dev/null 2>&1; then
                 sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
@@ -127,7 +126,7 @@ comprobar_dependencias() {
 
     for cmd in ${dependenciasNoInstaladas}; do
         if ! command -v "$cmd" > /dev/null 2>&1; then
-            echo -e "ERROR: Falta el comando '$cmd'. Saliendo..."
+            echo -e "${RED}ERROR: Falta el comando '$cmd'. Saliendo...${NC}"
             exit 1
         fi
     done
