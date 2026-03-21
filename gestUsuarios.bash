@@ -132,7 +132,7 @@ function crearUsuario() {
       continue
     fi
 
-    # AHORA SÍ: validar correctamente
+    # Validación
     if ! comprobarYesOrNo "$usuarioHome"; then
       continue
     fi
