@@ -140,7 +140,7 @@ function crearUsuario() {
     break
   done
 
-  # Crear usuario según respuesta
+  # Crear usuario
   if YesOrNo "$usuarioHome"; then
     echo -e "${BLUE}Creando home del usuario...${NC}"
     sudo useradd -m -p "$(securePass "$usuarioPass")" "$nombreUsuario" &>/dev/null
