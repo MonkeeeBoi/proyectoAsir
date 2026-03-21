@@ -176,7 +176,7 @@ function eliminarUsuario() {
       continue
     fi
 
-    # VALIDACIÓN CORRECTA
+    # VALIDACIÓN
     if ! comprobarYesOrNo "$usuarioHome"; then
       continue
     fi
