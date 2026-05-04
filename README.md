@@ -53,7 +53,7 @@
 - 7.3 Revisar logs del sistema
 
 **8.Copias de seguridad**
-- 8.1 Crear backup de directorio
+- 8.1 Crear backup
 - 8.2 Restaurar backup
 
 **9.Seguridad**
