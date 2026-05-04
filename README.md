@@ -35,16 +35,11 @@
 - 4.8 Información de batería
 
 **5.Gestión de RED** 
-- 5.1 Mostrar configuración de red
-- 5.2 Probar conectividad
-- 5.3 Reiniciar red
-- 5.4 Ver IP
-- 5.5 Cambiar IP
-- 5.6 Cambiar puerta de enlace
-- 5.7 Cambiar DNS
-- 5.8 Habilitar o desabilitar interfaz de red
-- 5.9 Monstrar redes
-- 5.10 Conectar a una red Wifi
+- 5.1 Seleccionar Interfaz
+- 5.2 Mostrar configuracion de red
+- 5.3 Probar conectividad
+- 5.4 Reiniciar red
+- 5.5 Cambiar configuracion de red
 
 **6.Servicios y procesos**
 - 6.1 Ver servicios activos
