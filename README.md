@@ -47,7 +47,6 @@
 - 6.3 Detener un servicio
 - 6.4 Habilitar al inicio
 
-
 **7.Mantenimiento y limpieza**
 - 7.1 Limpiar caché de apt
 - 7.2 Eliminar dependencias obsoletas
