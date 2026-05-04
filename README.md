@@ -34,7 +34,7 @@
 - 4.7 Temperaturas y sensores
 - 4.8 Información de batería
 
-**5.Gestión de RED (usar nmcli)** 
+**5.Gestión de RED** 
 - 5.1 Mostrar configuración de red
 - 5.2 Probar conectividad
 - 5.3 Reiniciar red
