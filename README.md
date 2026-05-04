@@ -46,10 +46,7 @@
 - 6.2 Iniciar un servicio
 - 6.3 Detener un servicio
 - 6.4 Habilitar al inicio
-- 6.5 Cambiar la prioridad de un proceso
-- 6.6 Detener servicios de un usuario
-- 6.7 Ver servicios de un usuario
-- 6.8 Buscar servicios
+
 
 **7.Mantenimiento y limpieza**
 - 7.1 Limpiar caché de apt
