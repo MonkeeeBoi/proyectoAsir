@@ -57,7 +57,7 @@
 - 8.2 Restaurar backup
 
 **9.Seguridad**
-- 9.1 Actualizar reglas de firewall (UFW)
+- 9.1 Recargar Firewall
 - 9.2 Escanear puertos abiertos
 - 9.3 Activar/Desactivar firewall
 
