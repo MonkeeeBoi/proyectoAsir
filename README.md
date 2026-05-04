@@ -24,11 +24,15 @@
 - 3.4 Buscar un paquete
 - 3.5 Instalar un paquete
 
-**4.Gestión del sistema (Usar btop y fastfetch)**
-- 4.1 Ver uso de disco
-- 4.2 Ver uso de memoria
-- 4.3 Monitorear procesos
-- 4.4 Ver información del sistema
+**4.Gestión del sistema**
+- 4.1 Información completa del sistema
+- 4.2 Hardware y componentes
+- 4.3 Uso de disco detallado
+- 4.4 Información de memoria
+- 4.5 Información de red
+- 4.6 Monitor de procesos en tiempo real
+- 4.7 Temperaturas y sensores
+- 4.8 Información de batería
 
 **5.Gestión de RED (usar nmcli)** 
 - 5.1 Mostrar configuración de red
