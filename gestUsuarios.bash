@@ -197,9 +197,10 @@ function eliminarUsuario() {
 
 
 function permisosUsuario() {
+
   # --- Selección del usuario ---
   while true; do
-    read -rp "${BLUE}Introduce el NOMBRE DEL USUARIO cuyos archivos quieres modificar:${NC} " nombreUsuario
+    read -rp "${BLUE}Introduce el NOMBRE DEL USUARIO:${NC} " nombreUsuario
 
     if comprobarCadena "$nombreUsuario"; then
       continue
@@ -207,7 +208,7 @@ function permisosUsuario() {
 
     if comprobarUsuario "$nombreUsuario"; then
       clear
-      echo -e "${RED}Error: El usuario '$nombreUsuario' no existe en el sistema.${NC}"
+      echo -e "${RED}Error: El usuario '$nombreUsuario' no existe.${NC}"
       continue
     fi
 
@@ -216,69 +217,61 @@ function permisosUsuario() {
 
   clear
 
-  # --- Permisos para archivos ---
+  # --- Ruta del archivo o directorio ---
   while true; do
-    read -rp "${BLUE}Introduce los NUEVOS PERMISOS en octal para los ARCHIVOS (644, 755):${NC} " permisosArchivos
+    read -rp "${BLUE}Introduce la RUTA COMPLETA del archivo o directorio:${NC} " ruta
 
-    if comprobarCadena "$permisosArchivos" || soloNumerosPermisos "$permisosArchivos"; then
-      clear
-      echo -e "${RED}Error: entrada no aceptada...${NC}"
-      echo -e "${YELLOW}Introduce de nuevo los permisos para los archivos.${NC} '$permisosArchivos'."
+    if comprobarCadena "$ruta"; then
       continue
     fi
+
+    if [[ ! -e "$ruta" ]]; then
+      echo -e "${RED}Error: La ruta no existe.${NC}"
+      continue
+    fi
+
     break
   done
 
-  # --- Permisos para directorios ---
-  while true; do
-    read -rp "${BLUE}Introduce los NUEVOS PERMISOS en octal para los DIRECTORIOS (644, 755):${NC} " permisosDirectorios
+  clear
 
-    if comprobarCadena "$permisosDirectorios" || soloNumerosPermisos "$permisosDirectorios"; then
+  # --- Permisos ---
+  while true; do
+    read -rp "${BLUE}Introduce los NUEVOS PERMISOS en octal (644, 755, etc.):${NC} " permisos
+
+    if [[ ! "$permisos" =~ ^[0-7]{3}$ ]]; then
       clear
-      echo -e "${RED}Error: entrada no aceptada...${NC}"
-      echo -e "${YELLOW}Introduce de nuevo los permisos para los directorios del usuario ${NC} '$permisosDirectorios'."
+      echo -e "${RED}Error: permisos inválidos.${NC}"
       continue
     fi
+
     break
   done
 
+  clear
 
   # --- Confirmación ---
-  while true; do
-    echo -e ""
-    echo -e "${YELLOW}ADVERTENCIA: Esta operación buscará y modificará los permisos de todos los archivos${NC}"
-    echo -e "${YELLOW}y directorios propiedad de '$nombreUsuario' en el sistema.${NC}"
-    read -rp "${BLUE}¿Estás seguro de continuar y aplicar permisos $permisosArchivos para los archivos y $permisosDirectorios para los directorios? [Y/n]:${NC}" confirmacion
+  echo -e "${YELLOW}Vas a cambiar los permisos de:${NC}"
+  echo -e "${BLUE}$ruta${NC}"
+  echo -e "${YELLOW}Nuevos permisos:${NC} $permisos"
 
-    if comprobarYesOrNo "$confirmacion"; then
-      continue
-    fi
+  read -rp "${BLUE}¿Continuar? [Y/n]: ${NC}" confirmacion
+  confirmacion=${confirmacion,,}
 
-    if ! YesOrNo "$confirmacion"; then
-      echo -e "${RED}Operación cancelada.${NC}\n"
-      break
-    fi
+  if [[ "$confirmacion" != "y" && "$confirmacion" != "" ]]; then
+    echo -e "${RED}Operación cancelada.${NC}"
+    return 1
+  fi
 
-    # --- Ejecución de cambios ---
-    echo -e "${BLUE}Iniciando búsqueda y cambio de permisos...${NC}\n"
+  # --- Cambio de permisos ---
+  sudo chmod "$permisos" "$ruta"
 
-    # Cambiar permisos de archivos
-    echo -e "\n${YELLOW}Cambiando permisos de archivos...${NC}\n"
-    echo -e "${YELLOW}Esto puede tardar unos minutos...${NC}\n"
-    sudo find / -user "$nombreUsuario" -type f -exec chmod "$permisosArchivos" {} \; 2> /dev/null
-    archivos_result=$?
-
-        echo -e "${YELLOW}Cambiando permisos de directorios...${NC}"
-        sudo find / -user "$nombreUsuario" -type d -exec chmod "$permisosDirectorios" {} \; 2>/dev/null
-        directorios_result=$?
-
-        if [[ $archivos_result -eq 0 && $directorios_result -eq 0 ]]; then
-          echo -e "${GREEN}Permisos de ARCHIVOS cambiados a '$permisosArchivos' y DIRECTORIOS a '$permisosDirectorios' al usuario '$nombreUsuario'${NC}"
-        else
-          echo -e "${RED}Error al intentar ejecutar el comando de cambio de permisos.${NC}"
-        fi
-    break
-  done
+  if [[ $? -eq 0 ]]; then
+    echo -e "${GREEN}Permisos cambiados correctamente.${NC}"
+    ls -l "$ruta"
+  else
+    echo -e "${RED}Error al cambiar permisos.${NC}"
+  fi
 }
 
 
