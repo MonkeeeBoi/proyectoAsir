@@ -29,7 +29,7 @@ function menuServicesANDprocesses() {
             ;;
         2)
         clear
-            read -rp "${BLUE}Introduce el nombre del servicio a iniciar (ej: cron):${NC} " servicio
+            read -rp "${BLUE}Introduce el nombre del servicio a iniciar (ej: apache2):${NC} " servicio
             sudo systemctl start "$servicio"
             echo -e "${GREEN}Servicio '$servicio' iniciado.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
@@ -37,7 +37,7 @@ function menuServicesANDprocesses() {
             ;;
         3)
         clear
-            read -rp "${BLUE}Introduce el nombre del servicio a detener (ej: cron):${NC} " servicio
+            read -rp "${BLUE}Introduce el nombre del servicio a detener (ej: apache2):${NC} " servicio
             sudo systemctl stop "$servicio"
             echo -e "${GREEN}Servicio '$servicio' detenido.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
@@ -45,7 +45,7 @@ function menuServicesANDprocesses() {
             ;;
         4)
         clear
-            read -rp "${BLUE}Introduce el nombre del servicio a habilitar al inicio (ej: cron):${NC} " servicio
+            read -rp "${BLUE}Introduce el nombre del servicio a habilitar al inicio (ej: apache2):${NC} " servicio
             sudo systemctl enable "$servicio"
             echo -e "${GREEN}Servicio '$servicio' habilitado para iniciar con el sistema.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
