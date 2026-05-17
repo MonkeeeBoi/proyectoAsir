@@ -85,63 +85,40 @@ function menuGestNetwork() {
             clear
             ;;
         5)
-        clear
-            if [ -z "$interfaz_seleccionada" ]; then
-                echo -e "${RED}ERROR: Debe seleccionar una interfaz primero (opción 1).${NC}"
-                read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
-                clear
-                continue
-            fi
-            interfaz="$interfaz_seleccionada"
-            NETPLAN_DIR="/etc/netplan/$interfaz.yaml"
-            while true; do 
-                read -rp "${BLUE}¿Quieres que sea DHCP? [Y/n]:${NC} " yesOrNo
-                if comprobarYesOrNo "$yesOrNo"; then
-                    continue
-                fi
-                if YesOrNo "$yesOrNo"; then
-                    echo -e "${BLUE}Configurando $interfaz con DHCP...${NC}"
-                    sudo nmcli con modify "$interfaz" ipv4.method auto
-                    sudo nmcli con up "$interfaz"
-                    echo -e "${GREEN}Interfaz $interfaz configurada con DHCP.${NC}"
-                    read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
-                    clear
-                else
-                    while true; do
-                        read -rp "${BLUE}Dirección IP con máscara (ej: 192.168.1.100/24):${NC} " ip
-                        if ! echo -e "$ip" | grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[1-9]{1,2}"; then
-                            echo -e "${RED}ip no valida...${NC}"
-                            continue
-                        fi
-                        break
-                    done
-                    
-                    while true; do
-                        read -rp "${BLUE}Gateway (ej: 192.168.1.1):${NC} " gateway
-                        if ! echo -e "$gateway" | grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"; then
-                            echo -e "${RED}ip no valida...${NC}"
-                            continue
-                        fi
-                        break
-                    done
-                    
-                    while true; do
-                        read -rp "${BLUE}Servidores DNS separados por comas (ej: 8.8.8.8,8.8.4.4):${NC} " dns
-                        if ! echo -e "$dns" | grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"; then
-                            echo -e "${RED}DNS no válido...${NC}"
-                            continue
-                        fi
-                        break
-                    done
-                    echo -e "${BLUE}Configurando $interfaz con IP estática...${NC}"
-                    sudo nmcli con modify "$interfaz" ipv4.method manual ipv4.addresses "$ip" ipv4.gateway "$gateway" ipv4.dns "${dns// /}"
-                    sudo nmcli con up "$interfaz"
-                    echo -e "${GREEN}Interfaz $interfaz configurada con IP estática.${NC}"
-                    read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
-                    clear
-                fi
-                break
-            done
+function configurarRed() {
+    clear
+    read -rp "Introduce la interfaz de red a configurar (ejemplo: enp0s3): " interfaz_seleccionada
+
+    # Obtener la conexión asociada
+    conexion=$(nmcli -t -f NAME,DEVICE con show --active | grep ":$interfaz_seleccionada$" | cut -d: -f1)
+    if [[ -z "$conexion" ]]; then
+        conexion="$interfaz_seleccionada"
+        sudo nmcli con add type ethernet ifname "$interfaz_seleccionada" con-name "$conexion"
+    fi
+
+    read -rp "¿Quieres DHCP? [Y/n]: " yesOrNo
+    yesOrNo=${yesOrNo,,}
+
+    if [[ "$yesOrNo" == "y" || "$yesOrNo" == "" ]]; then
+        echo "Configurando $interfaz_seleccionada con DHCP..."
+        sudo nmcli con modify "$conexion" ipv4.method auto
+        sudo nmcli con up "$conexion"
+        echo "Interfaz $interfaz_seleccionada configurada con DHCP."
+    else
+        read -rp "IP con máscara (ej: 192.168.1.100/24): " ip
+        read -rp "Gateway: " gateway
+        read -rp "DNS (separados por comas): " dns
+
+        sudo nmcli con modify "$conexion" ipv4.method manual ipv4.addresses "$ip" ipv4.gateway "$gateway" ipv4.dns "$dns"
+        sudo nmcli con up "$conexion" --ask 2>/dev/null
+        echo "Interfaz $interfaz_seleccionada configurada con IP estática."
+    fi
+    read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
+            clear
+}
+
+# --- Ejecutar función ---
+configurarRed
             
             ;;
         0)
