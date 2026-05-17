@@ -76,6 +76,7 @@ function menuGestGroups() {
             else
                 echo -e "${RED}El grupo '$grupo' no existe en el sistema.${NC}"
             fi
+            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
             ;;
         0)
