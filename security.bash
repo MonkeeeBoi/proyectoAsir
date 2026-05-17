@@ -35,12 +35,12 @@ function menuSecurity() {
         clear
         # Comprobar si ss está instalado
         if ! command -v ss > /dev/null 2>&1; then
-            echo "El comando 'ss' no está instalado. Instalando..."
+            echo -e "${BLUE}El comando 'ss' no está instalado. Instalando...${NC}"
             sudo apt update -q
             sudo apt install iproute2 -y
         fi
 
-        echo "Mostrando puertos abiertos..."
+        echo -e "${BLUE}Mostrando puertos abiertos...${NC}"
         echo ""
 
         sudo ss -tulnp
