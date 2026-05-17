@@ -49,19 +49,40 @@ function menuBackups() {
 
 
         2)
-            clear
-            read -rp "${BLUE}Introduce el nombre del archivo de backup (.tar.gz):${NC} " archivo
-            if [[ -f "$archivo" ]]
-            then
-                read -rp "${BLUE}Introduce el directorio destino para restaurar:${NC} " destino
-                mkdir -p "$destino"
-                tar -xzf "$archivo" -C "$destino"
-                echo -e "${GREEN}Backup restaurado en: $destino${NC}"
-            else
-                echo -e "${RED}El archivo no existe.${NC}"
-            fi
-            read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
-            clear
+       
+# Directorio donde están los backups
+backup_dir="/copias_de_seguridad"
+
+clear
+
+# Mostrar los backups disponibles
+echo -e "${YELLOW}Backups disponibles:${NC}"
+ls "$backup_dir"
+echo
+
+# Pedir el nombre del archivo
+read -rp "$(echo -e "${BLUE}Introduce el nombre del archivo de backup (.tar.gz): ${NC}")" archivo
+
+# Construir la ruta completa
+archivo="$backup_dir/$archivo"
+
+echo -e "${YELLOW}Buscando archivo en:${NC} $archivo"
+
+if [[ -f "$archivo" ]]; then
+    # Pedir directorio destino
+    read -rp "$(echo -e "${BLUE}Introduce el directorio destino para restaurar: ${NC}")" destino
+
+    mkdir -p "$destino"
+
+    tar -xzf "$archivo" -C "$destino"
+
+    echo -e "${GREEN}Backup restaurado en: $destino${NC}"
+else
+    echo -e "${RED}El archivo no existe.${NC}"
+fi
+
+read -n1 -srp "$(echo -e "${YELLOW}Presione una tecla para continuar...${NC}")"
+clear
             ;;
         0)
             break
