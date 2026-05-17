@@ -23,7 +23,10 @@ function menuMaintenanceANDcleaning() {
         1)
         clear
             echo -e "${BLUE}Limpiando caché de apt...${NC}"
-            sudo apt clean
+            sudo apt-get clean
+            sudo rm -rf /var/lib/apt/lists/*
+            sudo apt-get update
+
             echo -e "${GREEN}Caché de apt limpiada correctamente.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             ;;
