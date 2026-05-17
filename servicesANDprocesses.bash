@@ -39,6 +39,7 @@ function menuServicesANDprocesses() {
         clear
             read -rp "${BLUE}Introduce el nombre del servicio a detener (ej: apache2):${NC} " servicio
             sudo systemctl stop "$servicio"
+            sudo systemctl disable "$servicio"
             echo -e "${GREEN}Servicio '$servicio' detenido.${NC}"
             read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
             clear
