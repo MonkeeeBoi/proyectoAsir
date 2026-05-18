@@ -168,7 +168,7 @@ function menuDisksPartitionsRaid() {
 
                 read -rp "Introduce el sistema de archivos (ext4, xfs, etc.): " fs
                 sudo mkfs -t "$fs" "$disco"
-                echo "Disco formateado correctamente."
+                echo -e "${GREEN}Disco formateado correctamente.${NC}"
                 read -n1 -srp "${YELLOW}Presione una tecla para continuar...${NC}"
                 clear
                 ;;
